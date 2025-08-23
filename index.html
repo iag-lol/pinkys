@@ -7,16 +7,11 @@
     <title>Pinky Eyelashess — Extensiones de Pestañas & Cejas | Reserva Online</title>
     <meta name="description"
         content="Extensiones de pestañas (clásicas, híbridas, volumen 3D/5D, foxy, doll) y diseño/laminado de cejas. Reserva online, precios claros, reseñas y cuidado post. Atención dedicada.">
-
-    <!-- Canonical -->
     <link rel="canonical" href="https://pinkyeyelashess.com/">
-
-    <!-- Favicon -->
     <link rel="icon"
         href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23FFE9F5'/%3E%3Cpath d='M50,25 Q65,45 50,75 Q35,45 50,25 Z' fill='%23E6B884'/%3E%3C/svg%3E"
         type="image/svg+xml">
 
-    <!-- Open Graph / Social Media -->
     <meta property="og:title" content="Pinky Eyelashess — Extensiones de Pestañas & Cejas">
     <meta property="og:description"
         content="Extensiones de pestañas (clásicas, híbridas, volumen 3D/5D, foxy, doll) y diseño/laminado de cejas. Reserva online, precios claros, reseñas y cuidado post.">
@@ -24,31 +19,22 @@
     <meta property="og:url" content="https://pinkyeyelashess.com/">
     <meta property="og:type" content="website">
 
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Pinky Eyelashess — Extensiones de Pestañas & Cejas">
     <meta name="twitter:description"
         content="Extensiones de pestañas y diseño/laminado de cejas. Reserva online, precios claros.">
     <meta name="twitter:image" content="https://pinkyeyelashess.com/og-image.webp">
 
-    <!-- Manifest -->
     <link rel="manifest" href="manifest.webmanifest">
     <meta name="theme-color" content="#FFE9F5">
-
-    <!-- Fuentes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Montserrat:wght@300;400;500;600;700&family=Great+Vibes&display=swap"
         rel="stylesheet" media="print" onload="this.media='all'">
 
-    <!-- Supabase -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.38.4/dist/umd/supabase.min.js" defer></script>
-
-    <!-- Chart.js para métricas en panel admin -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.38.4/dist/umd/supabase.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js" defer></script>
-
-    <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -87,8 +73,7 @@
   </script>
 
     <style>
-        /* Variables CSS */
-        :root {
+                :root {
             --color-primary: #FFDFF2;
             --color-primary-light: #FFF0F9;
             --color-primary-dark: #FFCCEA;
@@ -159,8 +144,7 @@
             --z-admin: 500;
         }
 
-        /* Reset y base */
-        *,
+                *,
         *::before,
         *::after {
             box-sizing: border-box;
@@ -471,8 +455,7 @@
             margin-right: auto;
         }
 
-        /* Utilidades */
-        .text-center {
+                .text-center {
             text-align: center;
         }
 
@@ -959,8 +942,7 @@
             color: var(--color-white);
         }
 
-        /* Toast notificaciones */
-        .toast-container {
+                .toast-container {
             position: fixed;
             bottom: 20px;
             right: 20px;
@@ -1061,8 +1043,7 @@
             }
         }
 
-        /* Header y Navegación */
-        .header {
+                .header {
             position: fixed;
             top: 0;
             left: 0;
@@ -1277,8 +1258,7 @@
             transform: translateY(-2px);
         }
 
-        /* Hero Section */
-        .hero {
+                .hero {
             padding-top: calc(var(--header-height) + var(--spacing-xl));
             padding-bottom: var(--spacing-3xl);
             position: relative;
@@ -1386,8 +1366,7 @@
             height: 20px;
         }
 
-        /* Lashbook (Portafolio) */
-        .lashbook {
+                .lashbook {
             background-color: var(--color-white);
             position: relative;
         }
@@ -1491,8 +1470,7 @@
             opacity: 0.8;
         }
 
-        /* Modal */
-        .modal-backdrop {
+                .modal-backdrop {
             position: fixed;
             top: 0;
             left: 0;
@@ -1586,8 +1564,7 @@
             margin-bottom: var(--spacing-lg);
         }
 
-        /* Precios */
-        .precios {
+                .precios {
             background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-white) 100%);
             position: relative;
         }
@@ -1739,8 +1716,7 @@
             align-self: center;
         }
 
-        /* Formulario de Reserva */
-        .reservar {
+                .reservar {
             background-color: var(--color-white);
             position: relative;
         }
@@ -1822,194 +1798,355 @@
             margin-top: var(--spacing-xs);
         }
 
-        .time-slots {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-            gap: var(--spacing-xs);
-            margin-top: var(--spacing-sm);
-        }
-
-        .time-slot {
-            padding: var(--spacing-sm);
-            border: 1px solid var(--color-gray-300);
-            border-radius: var(--radius-sm);
-            text-align: center;
-            cursor: pointer;
-            transition: all var(--transition-fast);
-            font-size: 0.9375rem;
-        }
-
-        .time-slot:hover:not(.disabled) {
-            border-color: var(--color-accent);
-            background-color: rgba(210, 121, 165, 0.1);
-        }
-
-        .time-slot.selected {
-            border-color: var(--color-accent);
-            background-color: var(--color-accent);
-            color: var(--color-white);
-        }
-
-        .time-slot.disabled {
-            background-color: var(--color-gray-100);
-            color: var(--color-gray-500);
-            cursor: not-allowed;
-            border-color: var(--color-gray-200);
-        }
-
-        /* Calendar custom styles */
         .calendar-container {
             width: 100%;
             background-color: var(--color-white);
-            border-radius: var(--radius-md);
+            border-radius: var(--radius-lg);
             overflow: hidden;
-            box-shadow: var(--shadow-sm);
-            margin-bottom: var(--spacing-md);
+            box-shadow: var(--shadow-md);
+            margin-bottom: var(--spacing-xl);
+            border: 1px solid var(--color-primary-light);
         }
-
         .calendar-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: var(--spacing-md);
-            background-color: var(--color-primary-light);
+            padding: var(--spacing-md) var(--spacing-lg);
+            background: linear-gradient(135deg, var(--color-accent-light), var(--color-accent));
+            color: var(--color-white);
         }
-
         .calendar-month {
             font-weight: 600;
-            font-size: 1.125rem;
-            color: var(--color-text);
+            font-size: 1.25rem;
+            color: var(--color-white);
+            letter-spacing: 0.5px;
         }
-
         .calendar-nav {
             display: flex;
-            gap: var(--spacing-xs);
+            gap: var(--spacing-sm);
         }
-
         .calendar-btn {
-            background: none;
+            background: rgba(255, 255, 255, 0.2);
             border: none;
-            width: 30px;
-            height: 30px;
+            width: 35px;
+            height: 35px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: var(--radius-full);
             cursor: pointer;
-            color: var(--color-text);
+            color: var(--color-white);
             font-size: 1.25rem;
             transition: all var(--transition-fast);
             padding: 0;
+            box-shadow: var(--shadow-sm);
         }
-
         .calendar-btn:hover {
-            background-color: rgba(210, 121, 165, 0.2);
-            transform: none;
+            background-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
         }
-
         .calendar-weekdays {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
             padding: var(--spacing-sm) var(--spacing-md);
-            border-bottom: 1px solid var(--color-gray-200);
-            background-color: var(--color-gray-100);
+            border-bottom: 1px solid var(--color-primary-light);
+            background-color: var(--color-primary-light);
         }
-
         .weekday {
             text-align: center;
-            font-size: 0.75rem;
+            font-size: 0.85rem;
             font-weight: 600;
-            color: var(--color-text-light);
+            color: var(--color-accent-dark);
             text-transform: uppercase;
+            padding: var(--spacing-xs) 0;
         }
-
         .calendar-days {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            padding: var(--spacing-sm);
-            gap: 2px;
+            padding: var(--spacing-md);
+            gap: 8px;
+            background-color: var(--color-primary-light);
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23D279A5' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
         }
-
         .calendar-day {
             aspect-ratio: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: var(--radius-sm);
+            border-radius: var(--radius-md);
             cursor: pointer;
             transition: all var(--transition-fast);
-            font-size: 0.875rem;
+            font-size: 0.95rem;
             position: relative;
+            background-color: var(--color-white);
+            box-shadow: var(--shadow-sm);
+            color: var(--color-text);
+            font-weight: 500;
         }
-
         .calendar-day:hover:not(.disabled):not(.outside-month) {
-            background-color: var(--color-primary-light);
+            background-color: var(--color-accent-light);
+            color: var(--color-white);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
         }
-
         .calendar-day.selected {
-            background-color: var(--color-accent);
+            background: linear-gradient(135deg, var(--color-accent), var(--color-accent-dark));
             color: var(--color-white);
             font-weight: 600;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(210, 121, 165, 0.4);
         }
-
         .calendar-day.today {
-            border: 1px solid var(--color-accent);
+            border: 2px solid var(--color-accent);
+            font-weight: 600;
         }
-
         .calendar-day.disabled {
             color: var(--color-gray-400);
             cursor: not-allowed;
             background-color: var(--color-gray-100);
-            position: relative;
-            opacity: 0.6;
+            box-shadow: none;
         }
-
-        .calendar-day.disabled::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 10%;
-            right: 10%;
-            height: 1px;
-            background-color: var(--color-gray-400);
-            transform: translateY(-50%);
-        }
-
-        .calendar-day.blackout {
-            background-color: #ffe6e6;
-            color: #d32f2f;
-            border: 1px solid #ffcdd2;
-        }
-
-        .calendar-day.blackout::before {
-            background-color: #d32f2f;
-        }
-
-        .calendar-day.closed-day {
-            background-color: #f5f5f5;
-            color: var(--color-gray-500);
-            border: 1px solid #e0e0e0;
-        }
-
         .calendar-day.outside-month {
             color: var(--color-gray-400);
+            background-color: rgba(255, 255, 255, 0.5);
             cursor: default;
+            box-shadow: none;
         }
-
         .calendar-day.has-events::after {
             content: '';
             position: absolute;
-            bottom: 3px;
+            bottom: 4px;
             left: 50%;
             transform: translateX(-50%);
-            width: 4px;
-            height: 4px;
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
             background-color: var(--color-accent);
         }
+        .time-slots-container {
+            margin-top: var(--spacing-xl);
+            position: relative;
+        }
+        .time-slots-title {
+            font-family: var(--font-title);
+            font-size: 1.6rem;
+            margin-bottom: var(--spacing-md);
+            color: var(--color-text);
+            position: relative;
+            display: inline-block;
+        }
+        .time-slots-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(to right, var(--color-accent), var(--color-gold));
+        }
+        .time-slots-periods {
+            display: flex;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin-bottom: var(--spacing-md);
+            box-shadow: var(--shadow-sm);
+        }
+        .time-period {
+            flex: 1;
+            padding: var(--spacing-sm) var(--spacing-md);
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            background-color: var(--color-white);
+            color: var(--color-text-light);
+            border-right: 1px solid var(--color-gray-200);
+        }
+        .time-period:last-child {
+            border-right: none;
+        }
+        .time-period:hover {
+            background-color: var(--color-primary-light);
+            color: var(--color-accent);
+        }
+        .time-period.active {
+            background: linear-gradient(135deg, var(--color-accent-light), var(--color-accent));
+            color: var(--color-white);
+        }
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+        }
+        .time-slot {
+            padding: var(--spacing-sm);
+            border-radius: var(--radius-md);
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            font-size: 0.95rem;
+            background-color: var(--color-white);
+            color: var(--color-text);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--color-gray-200);
+            position: relative;
+            overflow: hidden;
+        }
+        .time-slot::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--color-accent-light), var(--color-accent));
+            opacity: 0;
+            transition: opacity var(--transition-normal);
+            z-index: 0;
+        }
+        .time-slot:hover:not(.disabled) {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--color-accent-light);
+            color: var(--color-accent-dark);
+        }
+        .time-slot.selected {
+            border-color: var(--color-accent);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(210, 121, 165, 0.2);
+            color: var(--color-white);
+        }
+        .time-slot.selected::before {
+            opacity: 1;
+        }
+        .time-slot.disabled {
+            background-color: var(--color-gray-100);
+            color: var(--color-gray-500);
+            cursor: not-allowed;
+            border-color: var(--color-gray-200);
+            box-shadow: none;
+        }
+        .time-slot span {
+            position: relative;
+            z-index: 1;
+            display: block;
+        }
+        .time-slot.selected span {
+            font-weight: 600;
+        }
+        .time-slots-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+        .time-slots-column {
+            flex: 1;
+            min-width: 180px;
+        }
+        .time-slots-column-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-xs);
+            border-bottom: 2px solid var(--color-primary-light);
+            color: var(--color-accent);
+        }
+        .reserva-summary {
+            background: linear-gradient(to right, var(--color-primary-light), var(--color-white));
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            margin-top: var(--spacing-xl);
+            box-shadow: var(--shadow-md);
+            border-left: 4px solid var(--color-accent);
+            position: relative;
+            overflow: hidden;
+        }
+        .reserva-summary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 150px;
+            height: 150px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z' fill='%23D279A5' fill-opacity='0.07'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            z-index: 0;
+            opacity: 0.6;
+        }
+        .reserva-summary h4 {
+            font-family: var(--font-title);
+            color: var(--color-accent-dark);
+            font-size: 1.5rem;
+            margin-bottom: var(--spacing-md);
+            position: relative;
+        }
+        .reserva-summary h4::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(to right, var(--color-accent), var(--color-gold));
+        }
+        .reserva-summary-row {
+            display: flex;
+            margin-bottom: var(--spacing-sm);
+            position: relative;
+            z-index: 1;
+        }
+        .reserva-summary-label {
+            font-weight: 600;
+            flex: 0 0 120px;
+            color: var(--color-text);
+        }
+        .reserva-summary-value {
+            flex: 1;
+            color: var(--color-accent-dark);
+            font-weight: 500;
+        }
+        .reserva-submit {
+            margin-top: var(--spacing-xl);
+            text-align: center;
+        }
+        .reserva-submit .button {
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            transition: all var(--transition-normal);
+            background: linear-gradient(135deg, var(--color-accent), var(--color-accent-dark));
+            box-shadow: 0 4px 15px rgba(210, 121, 165, 0.3);
+        }
+        .reserva-submit .button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(210, 121, 165, 0.4);
+        }
+        .reserva-submit .button:disabled {
+            background: var(--color-gray-400);
+            box-shadow: none;
+            cursor: not-allowed;
+            transform: none;
+        }
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(210, 121, 165, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(210, 121, 165, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(210, 121, 165, 0); }
+        }
+        .calendar-day.today, .time-slot.pulse {
+            animation: pulseGlow 2s infinite;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .reserva-summary {
+            animation: fadeInUp 0.5s ease-out;
+        }
 
-        /* Referencias (Antes/Después) */
-        .referencias {
+                .referencias {
             background: linear-gradient(135deg, var(--color-primary-light), var(--color-white));
             position: relative;
         }
@@ -2128,8 +2265,7 @@
             box-shadow: var(--shadow-lg);
         }
 
-        /* Comparación antes/después */
-        .comparison-slider {
+                .comparison-slider {
             position: relative;
             width: 100%;
             max-width: 800px;
@@ -2219,8 +2355,7 @@
             right: 20px;
         }
 
-        /* FAQ */
-        .faq {
+                .faq {
             background-color: var(--color-white);
         }
 
@@ -2284,8 +2419,7 @@
             max-height: 500px;
         }
 
-        /* Sobre Mi */
-        .sobre-mi {
+                .sobre-mi {
             background: linear-gradient(135deg, var(--color-primary-light), var(--color-white));
         }
 
@@ -2427,8 +2561,7 @@
             color: var(--color-text-light);
         }
 
-        /* Reseñas */
-        .resenas {
+                .resenas {
             background-color: var(--color-white);
             position: relative;
         }
@@ -2644,8 +2777,7 @@
             background: none;
         }
 
-        /* Redes Sociales */
-        .redes {
+                .redes {
             background: linear-gradient(135deg, var(--color-primary-light), var(--color-white));
             position: relative;
         }
@@ -2727,8 +2859,7 @@
             color: var(--color-text-light);
         }
 
-        /* Footer */
-        .footer {
+                .footer {
             background-color: var(--color-text);
             color: var(--color-white);
             padding: var(--spacing-2xl) 0;
@@ -2853,8 +2984,7 @@
             color: var(--color-gray-400);
         }
 
-        /* Modales */
-        .modal-overlay {
+                .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
@@ -2932,8 +3062,7 @@
             }
         }
 
-        /* Responsive para modales */
-        @media (max-width: 768px) {
+                @media (max-width: 768px) {
             .modal-large {
                 width: 100vw;
                 height: 100vh;
@@ -3021,8 +3150,7 @@
             }
         }
 
-        /* Admin Panel */
-        .admin-login {
+                .admin-login {
             width: 100%;
             max-width: 400px;
             margin: 0;
@@ -3444,8 +3572,7 @@
             gap: var(--spacing-xs);
         }
 
-        /* Custom File Input */
-        .file-input-container {
+                .file-input-container {
             position: relative;
             width: 100%;
             margin-bottom: var(--spacing-md);
@@ -3522,8 +3649,7 @@
             z-index: 1;
         }
 
-        /* Media Queries */
-        @media (max-width: 1100px) {
+                @media (max-width: 1100px) {
             :root {
                 --header-height: 70px;
             }
@@ -3673,11 +3799,9 @@
 </head>
 
 <body>
-    <!-- Contenedor para Toast Notifications -->
-    <div class="toast-container" id="toastContainer"></div>
+        <div class="toast-container" id="toastContainer"></div>
 
-    <!-- Header -->
-    <header class="header" id="header">
+        <header class="header" id="header">
         <div class="container header-container">
             <a href="#" class="logo">
                 <div class="logo-icon"></div>
@@ -3734,8 +3858,7 @@
         </div>
     </header>
 
-    <!-- Hero -->
-    <section class="hero" id="hero">
+        <section class="hero" id="hero">
         <div class="container hero-container">
             <div class="hero-content">
                 <h2 class="hero-subtitle">Mirada que habla</h2>
@@ -3765,8 +3888,7 @@
         </div>
     </section>
 
-    <!-- Lashbook / Galería -->
-    <section class="section lashbook" id="lashbook">
+        <section class="section lashbook" id="lashbook">
         <div class="container">
             <h2 class="section-title">Nuestra Galería</h2>
             <p class="section-subtitle">Descubre nuestros diferentes estilos y técnicas que realzarán tu mirada</p>
@@ -3783,105 +3905,113 @@
             </div>
 
             <div class="lashbook-grid" id="lashbookGrid">
-                <!-- Los items se cargarán dinámicamente desde Supabase -->
-            </div>
+                            </div>
         </div>
     </section>
 
-    <!-- Modal para detalles de la galería -->
-    <div class="modal-backdrop" id="lashbookModal">
+        <div class="modal-backdrop" id="lashbookModal">
         <div class="modal">
             <button class="modal-close" id="modalClose" aria-label="Cerrar">×</button>
             <div class="modal-content" id="modalContent">
-                <!-- Contenido dinámico del modal -->
-            </div>
+                            </div>
         </div>
     </div>
 
-    <!-- Servicios y Precios -->
-    <section class="section precios" id="precios">
+        <section class="section precios" id="precios">
         <div class="container">
             <h2 class="section-title">Nuestros Servicios</h2>
             <p class="section-subtitle">Descubre nuestros tratamientos exclusivos diseñados para realzar tu belleza
                 natural</p>
 
             <div class="precios-grid" id="preciosGrid">
-                <!-- Los servicios se cargarán dinámicamente desde Supabase -->
-            </div>
+                            </div>
         </div>
     </section>
 
-    <!-- Reservar -->
-    <section class="section reservar" id="reservar">
-        <div class="container">
-            <h2 class="section-title">Reserva tu Cita</h2>
-            <p class="section-subtitle">Selecciona el servicio, fecha y horario que prefieras</p>
+        <section class="section reservar" id="reservar">
+    <div class="container">
+        <h2 class="section-title">Reserva tu Cita</h2>
+        <p class="section-subtitle">Selecciona el servicio, fecha y horario que prefieras</p>
 
-            <div class="reservar-container">
-                <form class="reservar-form" id="reservarForm">
-                    <div class="form-group">
-                        <label for="servicio">Servicio</label>
-                        <select id="servicio" name="servicio" required>
-                            <option value="">Selecciona un servicio</option>
-                            <!-- Las opciones se cargarán dinámicamente desde Supabase -->
-                        </select>
+        <div class="reservar-container">
+            <form class="reservar-form" id="reservarForm">
+                <div class="form-group">
+                    <label for="servicio">Servicio</label>
+                    <select id="servicio" name="servicio" required>
+                        <option value="">Selecciona un servicio</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group" style="flex: 1;">
+                        <label for="nombre">Nombre completo</label>
+                        <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
                     </div>
 
-                    <div class="form-row">
-                        <div class="form-group" style="flex: 1;">
-                            <label for="nombre">Nombre completo</label>
-                            <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+                    <div class="form-group" style="flex: 1;">
+                        <label for="telefono">Teléfono</label>
+                        <input type="tel" id="telefono" name="telefono" placeholder="+56 9 1234 5678" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Fecha</label>
+                    <div class="calendar-container" id="calendar"></div>
+                </div>
+
+                <div class="time-slots-container">
+                    <h3 class="time-slots-title">Horarios disponibles</h3>
+                    <div class="time-slots-periods">
+                        <div class="time-period active" data-period="morning">Mañana</div>
+                        <div class="time-period" data-period="afternoon">Tarde</div>
+                    </div>
+                    <div class="time-slots-grid">
+                        <div class="time-slots-column" id="morningSlots">
+                            <div class="time-slots" id="timeSlots">
+                                <p class="text-center text-light" id="noSlotsMessage" style="display: none; width: 100%;">Selecciona una fecha para ver horarios disponibles</p>
+                            </div>
                         </div>
-
-                        <div class="form-group" style="flex: 1;">
-                            <label for="telefono">Teléfono</label>
-                            <input type="tel" id="telefono" name="telefono" placeholder="+56 9 1234 5678" required>
-                        </div>
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        <label>Fecha</label>
-                        <div class="calendar-container" id="calendar">
-                            <!-- Calendario dinámico -->
-                        </div>
+                <div class="reserva-summary" id="reservaSummary" style="display: none;">
+                    <h4>Resumen de reserva</h4>
+                    <div class="reserva-summary-row">
+                        <div class="reserva-summary-label">Servicio:</div>
+                        <div class="reserva-summary-value" id="summaryServicio"></div>
                     </div>
+                    <div class="reserva-summary-row">
+                        <div class="reserva-summary-label">Fecha:</div>
+                        <div class="reserva-summary-value" id="summaryFecha"></div>
+                    </div>
+                    <div class="reserva-summary-row">
+                        <div class="reserva-summary-label">Hora:</div>
+                        <div class="reserva-summary-value" id="summaryHora"></div>
+                    </div>
+                    <div class="reserva-summary-row">
+                        <div class="reserva-summary-label">Duración:</div>
+                        <div class="reserva-summary-value" id="summaryDuracion"></div>
+                    </div>
+                    <div class="reserva-summary-row">
+                        <div class="reserva-summary-label">Precio:</div>
+                        <div class="reserva-summary-value" id="summaryPrecio"></div>
+                    </div>
+                </div>
 
-                    <div class="form-group">
-                        <label>Horarios disponibles</label>
-                        <div class="time-slots" id="timeSlots">
-                            <!-- Slots dinámicos según disponibilidad -->
-                            <p class="text-center text-light" id="noSlotsMessage" style="display: none; width: 100%;">
-                                Selecciona una fecha para ver horarios disponibles</p>
-                        </div>
-                    </div>
-
-                    <div class="form-group" id="reservaSummary"
-                        style="display: none; background-color: var(--color-primary-light); padding: var(--spacing-md); border-radius: var(--radius-md);">
-                        <h4 class="mb-2">Resumen de reserva</h4>
-                        <p class="mb-1"><strong>Servicio:</strong> <span id="summaryServicio"></span></p>
-                        <p class="mb-1"><strong>Fecha:</strong> <span id="summaryFecha"></span></p>
-                        <p class="mb-1"><strong>Hora:</strong> <span id="summaryHora"></span></p>
-                        <p class="mb-1"><strong>Duración:</strong> <span id="summaryDuracion"></span></p>
-                        <p class="mb-0"><strong>Precio:</strong> <span id="summaryPrecio"></span></p>
-                    </div>
-
-                    <div class="mt-5 text-center">
-                        <button type="submit" class="button button-large" id="btnReservar" disabled>Reservar
-                            Ahora</button>
-                    </div>
-                </form>
-            </div>
+                <div class="reserva-submit">
+                    <button type="submit" class="button button-large" id="btnReservar" disabled>Reservar Ahora</button>
+                </div>
+            </form>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Referencias Antes/Después -->
-    <section class="section referencias" id="referencias">
+        <section class="section referencias" id="referencias">
         <div class="container">
             <h2 class="section-title">Antes y Después</h2>
             <p class="section-subtitle">Transformaciones reales que muestran el impacto de nuestros servicios</p>
 
-            <!-- Comparador antes/después con slider -->
-            <div class="comparison-slider" id="comparisonSlider" style="--slider-position: 50%">
+                        <div class="comparison-slider" id="comparisonSlider" style="--slider-position: 50%">
                 <div class="comparison-before">
                     <img src="https://images.unsplash.com/photo-1508152392300-3dcc5a8ad0e6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
                         alt="Antes del tratamiento" class="comparison-image">
@@ -3903,8 +4033,7 @@
         </div>
     </section>
 
-    <!-- FAQ -->
-    <section class="section faq" id="faq">
+        <section class="section faq" id="faq">
         <div class="container">
             <h2 class="section-title">Preguntas Frecuentes</h2>
             <p class="section-subtitle">Respuestas a las dudas más comunes sobre nuestros servicios</p>
@@ -4018,8 +4147,7 @@
         </div>
     </section>
 
-    <!-- Sobre Mi -->
-    <section class="section sobre-mi" id="sobre-mi">
+        <section class="section sobre-mi" id="sobre-mi">
         <div class="container">
             <h2 class="section-title">Sobre Mí</h2>
             <p class="section-subtitle">Conoce a la persona detrás de Pinky Eyelashess</p>
@@ -4058,8 +4186,7 @@
         </div>
     </section>
 
-    <!-- Reseñas -->
-    <section class="section resenas" id="resenas">
+        <section class="section resenas" id="resenas">
         <div class="container">
             <h2 class="section-title">Reseñas de Clientes</h2>
             <p class="section-subtitle">Descubre lo que nuestras clientas opinan sobre nuestros servicios</p>
@@ -4110,8 +4237,7 @@
                 </div>
 
                 <div class="resenas-list" id="resenasGrid">
-                    <!-- Las reseñas se cargarán dinámicamente desde Supabase -->
-                </div>
+                                    </div>
 
                 <div class="add-resena">
                     <h3 class="mb-3">Comparte tu experiencia</h3>
@@ -4147,8 +4273,7 @@
         </div>
     </section>
 
-    <!-- Redes Sociales -->
-    <section class="section redes" id="redes">
+        <section class="section redes" id="redes">
         <div class="container">
             <h2 class="section-title">Síguenos en Redes</h2>
             <p class="section-subtitle">Mantente al día con nuestras últimas creaciones y promociones</p>
@@ -4196,8 +4321,7 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer">
+        <footer class="footer">
         <div class="container">
             <div class="footer-container">
                 <div class="footer-col">
@@ -4281,8 +4405,7 @@
         </div>
     </footer>
 
-    <!-- Modal de Login Admin -->
-    <div class="modal-overlay" id="adminLoginModal" style="display: none;">
+        <div class="modal-overlay" id="adminLoginModal" style="display: none;">
         <div class="modal-container">
             <div class="admin-login" id="adminLogin">
                 <div class="modal-header">
@@ -4309,8 +4432,7 @@
         </div>
     </div>
 
-    <!-- Modal del Panel Admin -->
-    <div class="modal-overlay" id="adminPanelModal" style="display: none;">
+        <div class="modal-overlay" id="adminPanelModal" style="display: none;">
         <div class="modal-container modal-large">
             <div class="modal-header">
                 <h3 class="modal-title">Panel Administrativo</h3>
@@ -4451,8 +4573,7 @@
                 </div>
 
                 <div class="admin-content">
-                    <!-- Dashboard Admin -->
-                    <div class="admin-section active" id="adminDashboard">
+                                        <div class="admin-section active" id="adminDashboard">
                         <div class="admin-header">
                             <h2 class="admin-header-title">Dashboard</h2>
                             <div class="admin-header-actions">
@@ -4599,8 +4720,7 @@
                         </div>
                     </div>
 
-                    <!-- Sección Reservas -->
-                    <div class="admin-section" id="adminReservas">
+                                        <div class="admin-section" id="adminReservas">
                         <div class="admin-header">
                             <h2 class="admin-header-title">Reservas</h2>
                             <div class="admin-header-actions">
@@ -4649,14 +4769,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Las filas se cargarán dinámicamente desde Supabase -->
-                                </tbody>
+                                                                    </tbody>
                             </table>
                         </div>
                     </div>
 
-                    <!-- Sección Servicios -->
-                    <div class="admin-section" id="adminServicios">
+                                        <div class="admin-section" id="adminServicios">
                         <div class="admin-header">
                             <h2 class="admin-header-title">Gestión de Servicios</h2>
                             <div class="admin-header-actions">
@@ -4806,14 +4924,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Los servicios se cargarán dinámicamente desde Supabase -->
-                                </tbody>
+                                                                    </tbody>
                             </table>
                         </div>
                     </div>
 
-                    <!-- Sección Galería -->
-                    <div class="admin-section" id="adminGaleria">
+                                        <div class="admin-section" id="adminGaleria">
                         <div class="admin-header">
                             <h2 class="admin-header-title">Gestión de Galería</h2>
                             <div class="admin-header-actions">
@@ -4840,8 +4956,7 @@
                                     <label for="mediaServicio">Asociar a Servicio</label>
                                     <select id="mediaServicio">
                                         <option value="">Ninguno (general)</option>
-                                        <!-- Los servicios se cargarán dinámicamente desde Supabase -->
-                                    </select>
+                                                                            </select>
                                 </div>
 
                                 <div class="file-input-container">
@@ -4886,13 +5001,11 @@
                         <div class="admin-table-container">
                             <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; padding: 20px;"
                                 id="mediaGrid">
-                                <!-- Las imágenes se cargarán dinámicamente desde Supabase -->
-                            </div>
+                                                            </div>
                         </div>
                     </div>
 
-                    <!-- Sección Reseñas -->
-                    <div class="admin-section" id="adminResenas">
+                                        <div class="admin-section" id="adminResenas">
                         <div class="admin-header">
                             <h2 class="admin-header-title">Gestión de Reseñas</h2>
                             <div class="admin-header-actions">
@@ -4929,14 +5042,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Las reseñas se cargarán dinámicamente desde Supabase -->
-                                </tbody>
+                                                                    </tbody>
                             </table>
                         </div>
                     </div>
 
-                    <!-- Sección Disponibilidad -->
-                    <div class="admin-section" id="adminDisponibilidad">
+                                        <div class="admin-section" id="adminDisponibilidad">
                         <div class="admin-header">
                             <h2 class="admin-header-title">Gestión de Disponibilidad</h2>
                             <div class="admin-header-actions">
@@ -4956,8 +5067,7 @@
                             <div class="admin-tab" data-tab="blackoutDates">Cierres Especiales</div>
                         </div>
 
-                        <!-- Horario Semanal -->
-                        <div class="tab-content active" id="weeklyAvailabilityContent">
+                                                <div class="tab-content active" id="weeklyAvailabilityContent">
                             <div class="admin-form">
                                 <h3 class="admin-form-title">Horario de Atención por Día</h3>
 
@@ -5088,8 +5198,7 @@
                             </div>
                         </div>
 
-                        <!-- Cierres Especiales -->
-                        <div class="tab-content" id="blackoutDatesContent">
+                                                <div class="tab-content" id="blackoutDatesContent">
                             <div class="admin-form" id="blackoutForm">
                                 <h3 class="admin-form-title">Añadir Cierre Especial</h3>
 
@@ -5124,15 +5233,13 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- Los cierres se cargarán dinámicamente desde Supabase -->
-                                    </tbody>
+                                                                            </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Sección Descuentos -->
-                    <div class="admin-section" id="adminDescuentos">
+                                        <div class="admin-section" id="adminDescuentos">
                         <div class="admin-header">
                             <h2 class="admin-header-title">Gestión de Descuentos</h2>
                             <div class="admin-header-actions">
@@ -5162,8 +5269,7 @@
                                         <label for="descuentoServicio">Servicio</label>
                                         <select id="descuentoServicio" required>
                                             <option value="">Seleccionar servicio</option>
-                                            <!-- Los servicios se cargarán dinámicamente desde Supabase -->
-                                        </select>
+                                                                                    </select>
                                     </div>
 
                                     <div class="form-group" style="flex: 1;">
@@ -5221,14 +5327,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Los descuentos se cargarán dinámicamente desde Supabase -->
-                                </tbody>
+                                                                    </tbody>
                             </table>
                         </div>
                     </div>
 
-                    <!-- Sección Métricas -->
-                    <div class="admin-section" id="adminMetricas">
+                                        <div class="admin-section" id="adminMetricas">
                         <div class="admin-header">
                             <h2 class="admin-header-title">Métricas y Análisis</h2>
                             <div class="admin-header-actions">
@@ -5356,16 +5460,13 @@
     </div>
 
     <script>
-
-        // Configuración de Supabase
         const SUPABASE_URL = 'https://tcmtxvuucjttngcazgff.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRjbXR4dnV1Y2p0dG5nY2F6Z2ZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA3MjUwMDEsImV4cCI6MjA1NjMwMTAwMX0.2WcIjMUEhSM6j9kYpbsYArQocZdHx86k7wXk-NyjIs0';
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-        // Contraseña hash SHA-256 del admin
+        let supabase = null;
+        if (window.supabase && window.supabase.createClient) {
+            supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        }
         const ADMIN_PASSWORD = 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3';
-
-        // Datos de la aplicación
         let appData = {
             services: [],
             availability: [],
@@ -5381,8 +5482,6 @@
                 averageRating: 0
             }
         };
-
-        // Cache para mejorar el rendimiento
         const cache = {
             charts: {},
             dateFilters: {
@@ -5391,8 +5490,6 @@
                 last90Days: null
             }
         };
-
-        // Utilidades
         const utils = {
             formatCurrency: (amount) => {
                 return new Intl.NumberFormat('es-CL', {
@@ -5404,7 +5501,8 @@
 
             formatDate: (dateString, options = { year: 'numeric', month: 'long', day: 'numeric' }) => {
                 if (!dateString) return '';
-                return new Date(dateString).toLocaleDateString('es-CL', options);
+                const [y, m, d] = dateString.split('-').map(Number);
+                return new Date(y, m - 1, d).toLocaleDateString('es-CL', options);
             },
 
             formatTime: (timeString) => {
@@ -5430,8 +5528,6 @@
         `;
 
                 toastContainer.appendChild(toast);
-
-                // Auto-remove after specified duration
                 setTimeout(() => {
                     const toastElement = document.getElementById(toastId);
                     if (toastElement) {
@@ -5455,21 +5551,14 @@
                 const [hours, minutes] = startTime.split(':').map(Number);
                 let endHours = hours + Math.floor((minutes + durationMinutes) / 60);
                 const endMinutes = (minutes + durationMinutes) % 60;
-
-                // Handle day overflow
                 endHours = endHours % 24;
 
                 return `${endHours.toString().padStart(2, '0')}:${endMinutes.toString().padStart(2, '0')}`;
             },
 
             sha256: async (message) => {
-                // Encode as UTF-8
                 const msgBuffer = new TextEncoder().encode(message);
-
-                // Hash the message
                 const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-
-                // Convert to hex string
                 return Array.from(new Uint8Array(hashBuffer))
                     .map(b => b.toString(16).padStart(2, '0'))
                     .join('');
@@ -5532,26 +5621,20 @@
             },
 
             getNextAvailableSlot: (date, serviceId) => {
-                // Implementación avanzada para sugerir próximo slot disponible
                 const service = appData.services.find(s => s.id == serviceId);
                 if (!service) return null;
 
                 const serviceDuration = service ? parseInt(service.work_minutes, 10) : 30;
-                const dateObj = new Date(date);
+                const [y, m, d] = date.split('-').map(Number);
+                const dateObj = new Date(y, m - 1, d);
                 let checkDate = new Date(dateObj);
-
-                // Buscar en los próximos 14 días
                 for (let i = 0; i < 14; i++) {
                     const dateStr = checkDate.toISOString().split('T')[0];
                     const dayOfWeek = checkDate.getDay();
-
-                    // Skip closed days or blackout dates
                     if (utils.isDayClosed(dayOfWeek) || utils.isBlackoutDate(dateStr)) {
                         checkDate.setDate(checkDate.getDate() + 1);
                         continue;
                     }
-
-                    // Encontrar slots disponibles para esta fecha
                     const dayAvailability = appData.availability.find(a => a.weekday === dayOfWeek);
                     if (!dayAvailability) {
                         checkDate.setDate(checkDate.getDate() + 1);
@@ -5590,59 +5673,40 @@
                 document.body.removeChild(link);
             }
         };
-
-        // =========== FUNCIÓN DE INICIALIZACIÓN PRINCIPAL ===========
         async function initApp() {
             try {
-                // Mostrar loader para mejor UX
                 showLoader(true);
-
-                // 1) Servicios públicos activos (clave para todo)
                 const { data: services, error: servicesError } = await supabase
                     .from('services').select('*').eq('is_active', true);
                 if (servicesError) throw servicesError;
                 appData.services = services;
-
-                // Llenar select de servicio (reserva)
                 const servicioSelect = document.getElementById('servicio');
                 if (servicioSelect) {
                     servicioSelect.innerHTML = '<option value="">Selecciona un servicio</option>';
                     services.forEach(service => {
                         const option = document.createElement('option');
                         option.value = service.id;
-                        option.textContent = `${service.name} (${utils.formatCurrency(service.base_price)})`;
+                        option.dataset.price = service.base_price;
+                        option.dataset.duration = service.work_minutes;
+                        option.textContent = `${service.name} - ${utils.formatCurrency(service.base_price)}`;
                         servicioSelect.appendChild(option);
                     });
                 }
-
-                // 2) Cargar datos en paralelo para mejor rendimiento
                 await Promise.all([
                     loadAvailability(),
                     loadBlackoutDates(),
                     loadDiscounts(),
                     loadMedia()
                 ]);
-
-                // 3) Cargar componentes visuales
                 await Promise.all([
                     loadLashbook(),
                     loadServicesAndPrices(),
                     loadReviews()
                 ]);
-
-                // 4) Inicializa calendario (ya con availability/blackouts en appData)
-                initCalendar();
-
-                // 5) Configurar observadores para elementos dinámicos
+                generateCalendar();
                 setupObservers();
-
-                // 6) Configurar event listeners para la página
                 setupEventListeners();
-
-                // Ocultar loader cuando todo esté listo
                 showLoader(false);
-
-                // Mensaje de bienvenida
                 setTimeout(() => {
                     utils.showToast('¡Bienvenido/a!', 'Pinky Eyelashess - Estamos encantados de atenderte', 'success');
                 }, 1000);
@@ -5653,8 +5717,6 @@
                 showLoader(false);
             }
         }
-
-        // Función para mostrar/ocultar loader
         function showLoader(show) {
             const loader = document.getElementById('pageLoader');
             if (!loader) return;
@@ -5669,10 +5731,7 @@
                 }, 300);
             }
         }
-
-        // Configurar observadores para mejoras de UX
         function setupObservers() {
-            // Observador de imágenes para efecto de carga suave
             const imgObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -5687,13 +5746,9 @@
                     }
                 });
             }, { threshold: 0.1 });
-
-            // Aplicar lazy loading a todas las imágenes
             document.querySelectorAll('img[data-src]').forEach(img => {
                 imgObserver.observe(img);
             });
-
-            // Observador para efectos de animación al hacer scroll
             const animateObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -5702,16 +5757,11 @@
                     }
                 });
             }, { threshold: 0.1 });
-
-            // Aplicar animaciones a elementos con class 'animate-on-scroll'
             document.querySelectorAll('.animate-on-scroll').forEach(el => {
                 animateObserver.observe(el);
             });
         }
-
-        // Configurar event listeners principales
         function setupEventListeners() {
-            // Header scroll effect
             window.addEventListener('scroll', () => {
                 const header = document.getElementById('header');
                 if (!header) return;
@@ -5722,8 +5772,6 @@
                     header.classList.remove('scrolled');
                 }
             });
-
-            // Navegación móvil
             const navToggle = document.getElementById('navToggle');
             const nav = document.getElementById('nav');
 
@@ -5733,8 +5781,6 @@
                     nav.classList.toggle('active');
                 });
             }
-
-            // Smooth scroll para enlaces de navegación
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
@@ -5743,19 +5789,14 @@
                     const targetElement = document.querySelector(targetId);
 
                     if (targetElement) {
-                        // Cerrar menú móvil si está abierto
                         if (navToggle && nav) {
                             navToggle.classList.remove('active');
                             nav.classList.remove('active');
                         }
-
-                        // Scroll to target con offset para el header
                         window.scrollTo({
                             top: targetElement.offsetTop - 80,
                             behavior: 'smooth'
                         });
-
-                        // Update active link
                         document.querySelectorAll('.nav-link').forEach(navLink => {
                             navLink.classList.remove('active');
                         });
@@ -5763,16 +5804,12 @@
                     }
                 });
             });
-
-            // FAQ accordion
             document.querySelectorAll('.faq-question').forEach(question => {
                 question.addEventListener('click', () => {
                     const faqItem = question.parentElement;
                     faqItem.classList.toggle('active');
                 });
             });
-
-            // Modal de Lashbook
             const modal = document.getElementById('lashbookModal');
             const modalClose = document.getElementById('modalClose');
 
@@ -5780,16 +5817,12 @@
                 modalClose.addEventListener('click', () => {
                     modal.classList.remove('active');
                 });
-
-                // Cerrar modal al hacer clic fuera
                 modal.addEventListener('click', (e) => {
                     if (e.target === modal) {
                         modal.classList.remove('active');
                     }
                 });
             }
-
-            // Formulario de reseñas
             const reviewForm = document.getElementById('reviewForm');
             const ratingButtons = document.querySelectorAll('.rating-btn');
 
@@ -5798,8 +5831,6 @@
                     btn.addEventListener('click', () => {
                         const value = btn.getAttribute('data-value');
                         document.getElementById('reviewRating').value = value;
-
-                        // Update buttons UI
                         ratingButtons.forEach(button => {
                             if (button.getAttribute('data-value') <= value) {
                                 button.classList.add('active');
@@ -5812,43 +5843,27 @@
 
                 reviewForm.addEventListener('submit', handleReviewSubmit);
             }
-
-            // Formulario de reserva
             const reservarForm = document.getElementById('reservarForm');
             if (reservarForm) {
                 reservarForm.addEventListener('submit', handleBookingSubmit);
             }
-
-            // Al cambiar servicio, recalcula horarios del día seleccionado
             const servicioSelect = document.getElementById('servicio');
             if (servicioSelect) {
                 servicioSelect.addEventListener('change', () => {
-                    const calendarContainer = document.getElementById('calendar');
-                    const selectedDate = calendarContainer ? calendarContainer.getAttribute('data-selected-date') : null;
-                    if (selectedDate) loadTimeSlots(selectedDate);
-
-                    // Sugerir próxima fecha disponible si no hay una seleccionada
-                    if (!selectedDate && servicioSelect.value) {
-                        suggestNextAvailableDate(servicioSelect.value);
-                    }
+                    const selectedDate = document.querySelector('.calendar-day.selected')?.dataset.date;
+                    if (selectedDate) generateTimeSlots(selectedDate);
                 });
             }
-
-            // Admin Access Button
             const adminAccessBtn = document.getElementById('adminAccessBtn');
             if (adminAccessBtn) {
                 adminAccessBtn.addEventListener('click', () => {
                     document.getElementById('adminLoginModal').style.display = 'flex';
                 });
             }
-
-            // Admin Login
             const adminLoginForm = document.getElementById('adminLoginForm');
             if (adminLoginForm) {
                 adminLoginForm.addEventListener('submit', handleAdminLogin);
             }
-
-            // Admin Logout
             const adminLogout = document.getElementById('adminLogout');
             if (adminLogout) {
                 adminLogout.addEventListener('click', () => {
@@ -5858,8 +5873,6 @@
                     document.getElementById('adminLoginForm').reset();
                 });
             }
-
-            // Cerrar modales
             const closeButtons = {
                 'closeAdminLoginModal': 'adminLoginModal',
                 'closeAdminPanelModal': 'adminPanelModal'
@@ -5873,8 +5886,6 @@
                     });
                 }
             });
-
-            // Cerrar modales al hacer clic fuera
             ['adminLoginModal', 'adminPanelModal'].forEach(modalId => {
                 const modal = document.getElementById(modalId);
                 if (modal) {
@@ -5885,8 +5896,6 @@
                     });
                 }
             });
-
-            // Verificar #admin en la URL
             if (window.location.hash === '#admin') {
                 setTimeout(() => {
                     const adminLoginModal = document.getElementById('adminLoginModal');
@@ -5895,14 +5904,8 @@
                     }
                 }, 500);
             }
-
-            // Inicialización de Slider de antes/después
             initComparisonSlider();
         }
-
-        // ======== HANDLERS DE FORMULARIOS ========
-
-        // Handler para el formulario de reseñas
         async function handleReviewSubmit(e) {
             e.preventDefault();
 
@@ -5916,7 +5919,6 @@
             }
 
             try {
-                // Deshabilitar el botón durante el envío
                 const submitBtn = e.target.querySelector('button[type="submit"]');
                 if (submitBtn) submitBtn.disabled = true;
 
@@ -5933,76 +5935,56 @@
 
                 const ratingButtons = document.querySelectorAll('.rating-btn');
                 ratingButtons.forEach(btn => btn.classList.remove('active'));
-
-                // Habilitar el botón después del envío
                 if (submitBtn) submitBtn.disabled = false;
             } catch (error) {
                 console.error('Error submitting review:', error);
                 utils.showToast('Error', 'Hubo un problema al enviar tu reseña. Por favor intenta nuevamente.', 'error');
-
-                // Asegurar que el botón vuelva a habilitarse
                 const submitBtn = e.target.querySelector('button[type="submit"]');
                 if (submitBtn) submitBtn.disabled = false;
             }
         }
-
-        // Handler para el formulario de reserva
         async function handleBookingSubmit(e) {
             e.preventDefault();
 
             const servicioId = document.getElementById('servicio').value;
             const nombre = document.getElementById('nombre').value;
             const telefono = document.getElementById('telefono').value;
-            const calendar = document.getElementById('calendar');
-            const fechaSeleccionada = calendar ? calendar.getAttribute('data-selected-date') : null;
-            const horaSeleccionada = document.querySelector('.time-slot.selected')?.getAttribute('data-time');
+            const fechaSeleccionada = document.querySelector('.calendar-day.selected')?.dataset.date;
+            const horaSeleccionada = document.querySelector('.time-slot.selected')?.dataset.time;
 
             if (!servicioId || !nombre || !telefono || !fechaSeleccionada || !horaSeleccionada) {
                 utils.showToast('Error', 'Por favor completa todos los campos y selecciona fecha y hora.', 'error');
                 return;
             }
-
-            // Validación de teléfono (formato chileno)
             const phoneRegex = /^(\+?56)?(\s?)(0?9)(\s?)[9876543]\d{7}$/;
             if (!phoneRegex.test(telefono)) {
                 utils.showToast('Error', 'Por favor ingresa un número de teléfono válido (ej: +56912345678).', 'error');
                 return;
             }
-
-            // Find service
             const service = appData.services.find(s => s.id == servicioId);
             if (!service) {
                 utils.showToast('Error', 'Servicio no encontrado.', 'error');
                 return;
             }
-
-            // Calculate end time
             const endTime = utils.calculateEndTime(horaSeleccionada, service.work_minutes);
 
             try {
-                // Deshabilitar botón durante el envío
                 const submitBtn = document.getElementById('btnReservar');
                 if (submitBtn) submitBtn.disabled = true;
-
-                // Insert appointment
                 const { data, error } = await supabase
-                    .from('appointments')
+                    .from('reservas')
                     .insert([
                         {
-                            service_id: servicioId,
-                            customer_name: nombre,
-                            customer_phone: telefono,
-                            date: fechaSeleccionada,
-                            start_time: horaSeleccionada,
-                            end_time: endTime,
-                            status: 'PENDING',
-                            source: 'WEB'
+                            servicio: servicioId,
+                            nombre,
+                            telefono,
+                            fecha: fechaSeleccionada,
+                            hora: horaSeleccionada,
+                            estado: 'pendiente'
                         }
                     ]);
 
                 if (error) throw error;
-
-                // Check for active discounts
                 const activeDiscounts = appData.discounts.filter(d =>
                     d.service_id === parseInt(service.id) &&
                     d.is_active &&
@@ -6014,8 +5996,6 @@
                 const finalPrice = hasDiscount
                     ? Math.round(service.base_price * (1 - discount.percent_off / 100))
                     : service.base_price;
-
-                // Prepare WhatsApp message
                 const message = encodeURIComponent(
                     `Nueva reserva Pinky Eyelashess:\n` +
                     `Cliente: ${nombre}\n` +
@@ -6030,31 +6010,21 @@
                 );
 
                 utils.showToast('¡Reserva Confirmada!', 'Te redirigiremos a WhatsApp para confirmar tu cita.', 'success');
-
-                // Reset form
                 e.target.reset();
                 document.getElementById('reservaSummary').style.display = 'none';
                 document.getElementById('btnReservar').disabled = true;
                 document.querySelector('.time-slot.selected')?.classList.remove('selected');
-
-                // Redirect to WhatsApp after a short delay
                 setTimeout(() => {
                     window.open(`https://wa.me/56936486082?text=${message}`, '_blank');
                 }, 2000);
-
-                // Reload available time slots
-                loadTimeSlots(fechaSeleccionada);
+                generateTimeSlots(fechaSeleccionada);
             } catch (error) {
                 console.error('Error submitting appointment:', error);
                 utils.showToast('Error', 'Hubo un problema al enviar tu reserva. Por favor intenta nuevamente.', 'error');
-
-                // Re-habilitar el botón
                 const submitBtn = document.getElementById('btnReservar');
                 if (submitBtn) submitBtn.disabled = false;
             }
         }
-
-        // Handler para el login de admin
         async function handleAdminLogin(e) {
             e.preventDefault();
 
@@ -6067,8 +6037,6 @@
             try {
                 const submitBtn = e.target.querySelector('button[type="submit"]');
                 if (submitBtn) submitBtn.disabled = true;
-
-                // Mostrar indicador de carga
                 const loadingIndicator = document.createElement('span');
                 loadingIndicator.className = 'loading-indicator';
                 loadingIndicator.textContent = 'Verificando...';
@@ -6077,13 +6045,10 @@
                 const passwordHash = await utils.sha256(password);
 
                 if (passwordHash === ADMIN_PASSWORD) {
-                    // Cerrar modal de login y abrir modal del panel admin
                     document.getElementById('adminLoginModal').style.display = 'none';
                     document.getElementById('adminPanelModal').style.display = 'flex';
                     document.getElementById('adminPassword').value = '';
                     document.getElementById('adminLoginForm').reset();
-
-                    // Initialize admin panel
                     initAdminPanel();
 
                     utils.showToast('Bienvenido/a', 'Panel de administración iniciado correctamente', 'success');
@@ -6094,7 +6059,6 @@
                 console.error('Error login admin:', error);
                 utils.showToast('Error', 'Error al iniciar sesión', 'error');
             } finally {
-                // Siempre re-habilitar el botón y quitar indicador de carga
                 const submitBtn = e.target.querySelector('button[type="submit"]');
                 if (submitBtn) {
                     submitBtn.disabled = false;
@@ -6103,10 +6067,6 @@
                 }
             }
         }
-
-        // ======== CARGAR DATOS ========
-
-        // Cargar disponibilidad semanal
         async function loadAvailability() {
             try {
                 const { data, error } = await supabase
@@ -6123,8 +6083,6 @@
                 return [];
             }
         }
-
-        // Cargar fechas de cierre
         async function loadBlackoutDates() {
             try {
                 const { data, error } = await supabase
@@ -6145,8 +6103,6 @@
                 return [];
             }
         }
-
-        // Cargar descuentos activos
         async function loadDiscounts() {
             try {
                 const { data, error } = await supabase
@@ -6164,8 +6120,6 @@
                 return [];
             }
         }
-
-        // Cargar media
         async function loadMedia() {
             try {
                 const { data, error } = await supabase
@@ -6174,7 +6128,7 @@
                     .eq('is_public', true);
 
                 if (error) throw error;
-                appData.media = media || [];
+                appData.media = data || [];
 
                 return data;
             } catch (error) {
@@ -6182,8 +6136,6 @@
                 return [];
             }
         }
-
-        // Cargar galería de trabajos
         async function loadLashbook() {
             try {
                 const { data, error } = await supabase
@@ -6197,8 +6149,6 @@
                 if (!lashbookGrid) return;
 
                 lashbookGrid.innerHTML = '';
-
-                // Ordenar por servicios más recientes primero
                 const sortedMedia = data.sort((a, b) => {
                     return new Date(b.created_at || 0) - new Date(a.created_at || 0);
                 });
@@ -6229,22 +6179,14 @@
 
                     lashbookGrid.appendChild(lashbookItem);
                 });
-
-                // Aplicar lazy loading a las imágenes agregadas
                 setupObservers();
-
-                // Filter functionality
                 document.querySelectorAll('.filter-btn').forEach(btn => {
                     btn.addEventListener('click', () => {
                         const filter = btn.getAttribute('data-filter');
-
-                        // Update active button
                         document.querySelectorAll('.filter-btn').forEach(filterBtn => {
                             filterBtn.classList.remove('active');
                         });
                         btn.classList.add('active');
-
-                        // Filter items with animación
                         document.querySelectorAll('.lashbook-item').forEach(item => {
                             item.classList.remove('filtered-in', 'filtered-out');
 
@@ -6269,8 +6211,6 @@
                 utils.showToast('Error', 'No se pudo cargar la galería de trabajos', 'error', 2000);
             }
         }
-
-        // Mostrar modal de galería
         function showLashbookModal(item) {
             const modal = document.getElementById('lashbookModal');
             const modalContent = document.getElementById('modalContent');
@@ -6291,16 +6231,12 @@
 
             modal.classList.add('active');
         }
-
-        // Cargar servicios y precios
         async function loadServicesAndPrices() {
             try {
                 const preciosGrid = document.getElementById('preciosGrid');
                 if (!preciosGrid) return;
 
                 preciosGrid.innerHTML = '';
-
-                // Organizar servicios por categoría
                 const servicesByCategory = {};
                 appData.services.forEach(service => {
                     const category = service.category || 'OTROS';
@@ -6309,24 +6245,13 @@
                     }
                     servicesByCategory[category].push(service);
                 });
-
-                // Primero categorías, luego servicios dentro de cada categoría
                 Object.entries(servicesByCategory).forEach(([category, services]) => {
-                    // Crear encabezado de categoría
-                    const categoryHeader = document.createElement('div');
-                    categoryHeader.className = 'precio-category-header';
-                    categoryHeader.innerHTML = `<h2>${category === 'LASH' ? 'Servicios de Pestañas' : category === 'BROW' ? 'Servicios de Cejas' : 'Otros Servicios'}</h2>`;
-                    preciosGrid.appendChild(categoryHeader);
-
-                    // Crear grid para esta categoría
                     const categoryGrid = document.createElement('div');
                     categoryGrid.className = 'precio-category-grid';
 
                     services.forEach(service => {
                         const precioCard = document.createElement('div');
                         precioCard.className = 'precio-card animate-on-scroll';
-
-                        // Load discounts for this service
                         const activeDiscounts = appData.discounts.filter(d =>
                             d.service_id === service.id &&
                             d.is_active &&
@@ -6339,8 +6264,6 @@
                         const discountedPrice = hasDiscount
                             ? Math.round(service.base_price * (1 - discount.percent_off / 100))
                             : null;
-
-                        // Find image for this service
                         const serviceMedia = appData.media.find(m => m.service_id === service.id && m.is_public);
                         const imageUrl = serviceMedia ? serviceMedia.url_storage : '';
 
@@ -6382,15 +6305,11 @@
 
                     preciosGrid.appendChild(categoryGrid);
                 });
-
-                // Aplicar lazy loading a las imágenes agregadas
                 setupObservers();
 
             } catch (error) {
                 console.error('Error loading services and prices:', error);
                 utils.showToast('Error', 'No se pudieron cargar los servicios y precios', 'error', 2000);
-
-                // Fallback: mostrar servicios sin imágenes en caso de error
                 const preciosGrid = document.getElementById('preciosGrid');
                 if (!preciosGrid) return;
 
@@ -6434,8 +6353,6 @@
                 });
             }
         }
-
-        // Cargar reseñas
         async function loadReviews() {
             try {
                 const { data: reviews, error } = await supabase
@@ -6447,8 +6364,6 @@
                 if (error) throw error;
 
                 appData.reviews = reviews;
-
-                // Update stats
                 const totalReviews = reviews.length;
                 const totalReviewsElement = document.getElementById('totalReviews');
                 if (totalReviewsElement) {
@@ -6456,7 +6371,6 @@
                 }
 
                 if (totalReviews > 0) {
-                    // Calculate average rating
                     const totalStars = reviews.reduce((acc, review) => acc + review.stars, 0);
                     const averageRating = (totalStars / totalReviews).toFixed(1);
 
@@ -6464,20 +6378,14 @@
                     if (promedioElement) {
                         promedioElement.textContent = averageRating;
                     }
-
-                    // Update stars display
                     const starsElement = document.querySelector('.resenas-stars');
                     if (starsElement) {
                         starsElement.textContent = utils.generateStars(Math.round(averageRating));
                     }
-
-                    // Count ratings by star level
-                    const ratingCounts = [0, 0, 0, 0, 0]; // 1-5 stars
+                    const ratingCounts = [0, 0, 0, 0, 0];
                     reviews.forEach(review => {
                         ratingCounts[review.stars - 1]++;
                     });
-
-                    // Update rating distribution
                     for (let i = 0; i < 5; i++) {
                         const percentage = totalReviews > 0 ? (ratingCounts[i] / totalReviews) * 100 : 0;
                         const barElement = document.querySelector(`.rating-bar:nth-child(${5 - i}) .rating-bar-fill`);
@@ -6491,14 +6399,10 @@
                         }
                     }
                 }
-
-                // Display reviews
                 const resenasGrid = document.getElementById('resenasGrid');
                 if (!resenasGrid) return;
 
                 resenasGrid.innerHTML = '';
-
-                // Mostrar hasta 6 reseñas más recientes
                 reviews.slice(0, 6).forEach(review => {
                     const resenaItem = document.createElement('div');
                     resenaItem.className = 'resena-item animate-on-scroll';
@@ -6531,8 +6435,6 @@
 
                     resenasGrid.appendChild(resenaItem);
                 });
-
-                // Si hay más de 6 reseñas, agregar botón para ver todas
                 if (reviews.length > 6) {
                     const verMasBtn = document.createElement('div');
                     verMasBtn.className = 'ver-mas-resenas';
@@ -6545,10 +6447,7 @@
                 utils.showToast('Error', 'No se pudieron cargar las reseñas', 'error', 2000);
             }
         }
-
-        // Mostrar todas las reseñas en un modal
         function showAllReviews(reviews) {
-            // Crear modal para todas las reseñas
             const modalId = 'allReviewsModal';
             let modal = document.getElementById(modalId);
 
@@ -6577,8 +6476,6 @@
                     }
                 });
             }
-
-            // Llenar el modal con todas las reseñas
             const resenasGrid = modal.querySelector('.all-reviews-grid');
             resenasGrid.innerHTML = '';
 
@@ -6614,12 +6511,8 @@
 
                 resenasGrid.appendChild(resenaItem);
             });
-
-            // Mostrar el modal
             modal.classList.add('active');
         }
-
-        // Slider de antes/después
         function initComparisonSlider() {
             const slider = document.getElementById('comparisonSlider');
             if (!slider) return;
@@ -6630,8 +6523,6 @@
             const setSliderPosition = (position) => {
                 const containerWidth = slider.offsetWidth;
                 let posPercent = (position / containerWidth) * 100;
-
-                // Constrain between 0% and 100%
                 posPercent = Math.max(0, Math.min(100, posPercent));
 
                 slider.style.setProperty('--slider-position', `${posPercent}%`);
@@ -6658,19 +6549,13 @@
 
                 setSliderPosition(position);
             };
-
-            // Mouse events
             handle.addEventListener('mousedown', startDrag);
             window.addEventListener('mouseup', stopDrag);
             window.addEventListener('mousemove', updateSliderPosition);
-
-            // Touch events
             handle.addEventListener('touchstart', startDrag);
             window.addEventListener('touchend', stopDrag);
             window.addEventListener('touchcancel', stopDrag);
             window.addEventListener('touchmove', updateSliderPosition);
-
-            // Click on slider to move handle
             slider.addEventListener('click', (e) => {
                 if (e.target !== handle) {
                     const containerRect = slider.getBoundingClientRect();
@@ -6678,442 +6563,252 @@
                     setSliderPosition(position);
                 }
             });
-
-            // Add support for slider dots to change images
             document.querySelectorAll('.slider-dot').forEach(dot => {
                 dot.addEventListener('click', () => {
                     const index = dot.getAttribute('data-index');
                     const beforeImg = slider.querySelector('.comparison-before img');
                     const afterImg = slider.querySelector('.comparison-after img');
-
-                    // Update active dot
                     document.querySelectorAll('.slider-dot').forEach(d => {
                         d.classList.remove('active');
                     });
                     dot.classList.add('active');
-
-                    // Cambiar imágenes con transición suave
                     if (beforeImg && afterImg) {
                         const beforeImgSets = [
-                            'img/before1.jpg',
-                            'img/before2.jpg',
-                            'img/before3.jpg'
+                            'https://via.placeholder.com/400x300?text=Before1',
+                            'https://via.placeholder.com/400x300?text=Before2',
+                            'https://via.placeholder.com/400x300?text=Before3'
                         ];
 
                         const afterImgSets = [
-                            'img/after1.jpg',
-                            'img/after2.jpg',
-                            'img/after3.jpg'
+                            'https://via.placeholder.com/400x300?text=After1',
+                            'https://via.placeholder.com/400x300?text=After2',
+                            'https://via.placeholder.com/400x300?text=After3'
                         ];
-
-                        // Aplicar fade out
                         beforeImg.style.opacity = '0';
                         afterImg.style.opacity = '0';
-
-                        // Cambiar imagen después de la transición
                         setTimeout(() => {
                             beforeImg.src = beforeImgSets[index] || beforeImgSets[0];
                             afterImg.src = afterImgSets[index] || afterImgSets[0];
-
-                            // Aplicar fade in
                             beforeImg.style.opacity = '1';
                             afterImg.style.opacity = '1';
                         }, 300);
                     }
                 });
             });
-
-            // Inicializar en el centro
             setSliderPosition(slider.offsetWidth / 2);
         }
-
-        // ======== CALENDARIO Y RESERVAS ========
-
-        // Inicializar calendario
-        function initCalendar() {
+        function generateCalendar(month, year) {
             const calendarContainer = document.getElementById('calendar');
-            if (!calendarContainer) return;
-
             const today = new Date();
-            renderCalendar(today.getMonth(), today.getFullYear());
-        }
-
-        // Renderizar calendario
-        function renderCalendar(month, year) {
-            const calendarContainer = document.getElementById('calendar');
-            if (!calendarContainer) return;
-
-            const today = new Date();
-            calendarContainer.innerHTML = '';
-
-            // Header mes/año + flechas
-            const header = document.createElement('div');
-            header.className = 'calendar-header';
-
-            const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-
-            header.innerHTML = `
-        <div class="calendar-month">${monthNames[month]} ${year}</div>
-        <div class="calendar-controls">
-            <button class="button-text" id="prevMonth">‹</button>
-            <button class="button-text" id="nextMonth">›</button>
-        </div>`;
-            calendarContainer.appendChild(header);
-
-            // Encabezados de días (LUN a DOM)
-            const daysHeader = document.createElement('div');
-            daysHeader.className = 'calendar-weekdays';
-
-            const weekdayNames = ['LUN', 'MAR', 'MIÉ', 'JUE', 'VIE', 'SÁB', 'DOM'];
-            weekdayNames.forEach(d => {
-                const el = document.createElement('div');
-                el.className = 'weekday';
-                el.textContent = d;
-                daysHeader.appendChild(el);
-            });
-            calendarContainer.appendChild(daysHeader);
-
-            // Cálculos base
-            // Posición del primer día del mes considerando semana iniciando en lunes (0=lunes, 6=domingo)
-            const firstDay = new Date(year, month, 1);
-            const firstDayIndex = (firstDay.getDay() + 6) % 7;
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-            const prevMonthLastDay = new Date(year, month, 0).getDate();
-
-            // Contenedor de días
-            const daysContainer = document.createElement('div');
-            daysContainer.className = 'calendar-days';
-
-            // Días del mes anterior (relleno)
-            for (let i = 0; i < firstDayIndex; i++) {
+            const currentMonth = month !== undefined ? month : today.getMonth();
+            const currentYear = year !== undefined ? year : today.getFullYear();
+            const firstDay = new Date(currentYear, currentMonth, 1);
+            const lastDay = new Date(currentYear, currentMonth + 1, 0);
+            const daysInMonth = lastDay.getDate();
+            let startingDay = firstDay.getDay() - 1;
+            if (startingDay === -1) startingDay = 6;
+            const monthNames = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+            const weekdays = ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
+            calendarContainer.innerHTML = `\n        <div class="calendar-header">\n            <div class="calendar-month">${monthNames[currentMonth]} ${currentYear}</div>\n            <div class="calendar-nav">\n                <button class="calendar-btn" id="prevMonth">‹</button>\n                <button class="calendar-btn" id="nextMonth">›</button>\n            </div>\n        </div>\n        <div class="calendar-weekdays">\n            ${weekdays.map(day => `<div class="weekday">${day}</div>`).join('')}\n        </div>\n        <div class="calendar-days" id="calendarDays"></div>\n    `;
+            const daysContainer = document.getElementById('calendarDays');
+            for (let i = 0; i < startingDay; i++) {
+                const prevMonthDay = new Date(currentYear, currentMonth, -startingDay + i + 1);
                 const dayElement = document.createElement('div');
                 dayElement.className = 'calendar-day outside-month';
-                dayElement.textContent = prevMonthLastDay - firstDayIndex + i + 1;
+                dayElement.textContent = prevMonthDay.getDate();
                 daysContainer.appendChild(dayElement);
             }
-
-            // Días del mes actual
             for (let day = 1; day <= daysInMonth; day++) {
-                const dateObj = new Date(year, month, day);
-                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-
+                const date = new Date(currentYear, currentMonth, day);
                 const dayElement = document.createElement('div');
                 dayElement.className = 'calendar-day';
                 dayElement.textContent = day;
-
-                // Estado: hoy
-                const isToday = (dateObj.toDateString() === today.toDateString());
-                if (isToday) dayElement.classList.add('today');
-
-                // Estado: fechas pasadas
-                const isPast = dateObj < new Date(today.setHours(0, 0, 0, 0));
-                if (isPast) dayElement.classList.add('past');
-
-                // Estado: cierre o blackout
-                const dayOfWeekJS = dateObj.getDay(); // 0=Dom..6=Sáb
-                const closedByWeekday = utils.isDayClosed(dayOfWeekJS);
-                const isBlackout = utils.isBlackoutDate(dateStr);
-
-                if (closedByWeekday || isBlackout || isPast) {
-                    dayElement.classList.add('disabled');
-
-                    // Tooltips para el usuario
-                    if (isBlackout) {
-                        const blackoutInfo = utils.getBlackoutInfo(dateStr);
-                        dayElement.setAttribute('title', blackoutInfo?.reason || 'Cerrado');
-                    } else if (closedByWeekday) {
-                        dayElement.setAttribute('title', 'No atendemos este día');
-                    } else if (isPast) {
-                        dayElement.setAttribute('title', 'Fecha pasada');
-                    }
-                } else {
-                    // Click: seleccionar fecha y cargar horarios disponibles
-                    dayElement.addEventListener('click', () => {
-                        document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
-                        dayElement.classList.add('selected');
-                        calendarContainer.setAttribute('data-selected-date', dateStr);
-                        loadTimeSlots(dateStr);
-                    });
+                dayElement.dataset.date = date.toISOString().split('T')[0];
+                if (date.toDateString() === today.toDateString()) {
+                    dayElement.classList.add('today');
                 }
-
+                if (date < new Date(today.setHours(0,0,0,0))) {
+                    dayElement.classList.add('disabled');
+                } else {
+                    dayElement.addEventListener('click', () => selectDate(dayElement));
+                }
                 daysContainer.appendChild(dayElement);
             }
-
-            // Calcular cuántos días necesitamos del mes siguiente
-            const totalCellsUsed = firstDayIndex + daysInMonth;
-            const cellsToComplete = totalCellsUsed % 7 === 0 ? 0 : 7 - (totalCellsUsed % 7);
-
-            // Días del mes siguiente (relleno)
-            for (let i = 1; i <= cellsToComplete; i++) {
-                const dayElement = document.createElement('div');
-                dayElement.className = 'calendar-day outside-month';
-                dayElement.textContent = i;
-                daysContainer.appendChild(dayElement);
+            const totalDaysDisplayed = startingDay + daysInMonth;
+            const remainingCells = 7 - (totalDaysDisplayed % 7);
+            if (remainingCells < 7) {
+                for (let i = 1; i <= remainingCells; i++) {
+                    const nextMonthDay = new Date(currentYear, currentMonth + 1, i);
+                    const dayElement = document.createElement('div');
+                    dayElement.className = 'calendar-day outside-month';
+                    dayElement.textContent = nextMonthDay.getDate();
+                    daysContainer.appendChild(dayElement);
+                }
             }
-
-            calendarContainer.appendChild(daysContainer);
-
-            // Navegación de mes
             document.getElementById('prevMonth').addEventListener('click', () => {
-                let m = month - 1, y = year;
-                if (m < 0) { m = 11; y--; }
-                renderCalendar(m, y);
+                if (currentMonth === 0) {
+                    generateCalendar(11, currentYear - 1);
+                } else {
+                    generateCalendar(currentMonth - 1, currentYear);
+                }
             });
             document.getElementById('nextMonth').addEventListener('click', () => {
-                let m = month + 1, y = year;
-                if (m > 11) { m = 0; y++; }
-                renderCalendar(m, y);
+                if (currentMonth === 11) {
+                    generateCalendar(0, currentYear + 1);
+                } else {
+                    generateCalendar(currentMonth + 1, currentYear);
+                }
             });
+            if (today.getMonth() === currentMonth && today.getFullYear() === currentYear) {
+                const todayElement = document.querySelector('.calendar-day.today');
+                if (todayElement && !todayElement.classList.contains('disabled')) {
+                    selectDate(todayElement);
+                }
+            }
         }
-
-        // Cargar horarios disponibles
-        async function loadTimeSlots(date) {
+        async function generateTimeSlots(date) {
             const timeSlotsContainer = document.getElementById('timeSlots');
             const noSlotsMessage = document.getElementById('noSlotsMessage');
-            const servicioSelect = document.getElementById('servicio');
-            const btnReservar = document.getElementById('btnReservar');
-            const reservaSummary = document.getElementById('reservaSummary');
-
-            if (!timeSlotsContainer) return;
-
             timeSlotsContainer.innerHTML = '';
-
-            if (!date || !servicioSelect || !servicioSelect.value) {
-                if (noSlotsMessage) {
-                    noSlotsMessage.style.display = 'block';
-                    noSlotsMessage.textContent = 'Selecciona una fecha y servicio para ver horarios disponibles';
-                }
-                if (btnReservar) btnReservar.disabled = true;
-                if (reservaSummary) reservaSummary.style.display = 'none';
-                return;
-            }
-
-            const serviceId = parseInt(servicioSelect.value, 10);
-
             try {
-                // Mostrar indicador de carga
-                timeSlotsContainer.innerHTML = '<div class="loading-slots">Cargando horarios disponibles...</div>';
-
-                const [y, m, d] = date.split('-').map(Number);
-                const dateObj = new Date(y, m - 1, d);
-                const dayOfWeek = dateObj.getDay(); // 0=Dom..6=Sáb
-                const dayAvailability = appData.availability.find(a => a.weekday === dayOfWeek);
-
-                if (!dayAvailability || dayAvailability.is_closed) {
-                    if (noSlotsMessage) {
-                        noSlotsMessage.style.display = 'block';
-                        noSlotsMessage.textContent = 'Sin horarios disponibles (día cerrado)';
-                    }
-                    timeSlotsContainer.innerHTML = '';
-                    return;
-                }
-
-                const { open_time, close_time, break_start, break_end, slot_minutes } = dayAvailability;
-                const interval = parseInt(slot_minutes || 15, 10);
-
-                const service = appData.services.find(s => s.id == serviceId);
-                const serviceDuration = service ? parseInt(service.work_minutes, 10) : 30;
-
-                const { data: appointments, error } = await supabase
-                    .from('appointments')
-                    .select('*')
-                    .eq('date', date)
-                    .in('status', ['PENDING', 'CONFIRMED']);
+                const { data: reservedSlots, error } = await supabase
+                    .from('reservas')
+                    .select('hora, servicio, servicios(duracion)')
+                    .eq('fecha', date)
+                    .in('estado', ['pendiente', 'confirmada']);
                 if (error) throw error;
-
-                // Generar slots disponibles
-                const slots = utils.toTimeSlots(open_time, close_time, break_start, break_end, interval, serviceDuration);
-
-                // Filtrar slots que se solapan con citas existentes
-                const availableSlots = slots.filter(slot => {
-                    const startMinutes = timeToMinutes(slot.time);
-                    const endMinutes = startMinutes + serviceDuration;
-
-                    return !appointments.some(appt => {
-                        const apptStartMinutes = timeToMinutes(appt.start_time);
-                        const apptEndMinutes = timeToMinutes(appt.end_time);
-                        return startMinutes < apptEndMinutes && endMinutes > apptStartMinutes;
-                    });
-                });
-
-                timeSlotsContainer.innerHTML = '';
-
-                if (noSlotsMessage) {
-                    noSlotsMessage.style.display = availableSlots.length ? 'none' : 'block';
-                    if (!availableSlots.length) {
-                        noSlotsMessage.textContent = 'No hay horarios disponibles para esta fecha';
-
-                        // Sugerir próximo día disponible
-                        const nextAvailable = utils.getNextAvailableSlot(date, serviceId);
-                        if (nextAvailable) {
-                            noSlotsMessage.innerHTML += `<div class="next-available">Próximo día disponible: <button class="link-button">${nextAvailable.formattedDate}</button></div>`;
-
-                            // Evento para seleccionar próximo día disponible
-                            noSlotsMessage.querySelector('.link-button').addEventListener('click', () => {
-                                const calendarContainer = document.getElementById('calendar');
-                                if (calendarContainer) {
-                                    const [nextY, nextM, nextD] = nextAvailable.date.split('-').map(Number);
-                                    renderCalendar(nextM - 1, nextY);
-
-                                    // Seleccionar el día en el calendario
-                                    setTimeout(() => {
-                                        const dayElements = document.querySelectorAll('.calendar-day:not(.outside-month)');
-                                        dayElements.forEach(dayEl => {
-                                            if (parseInt(dayEl.textContent, 10) === nextD) {
-                                                dayEl.click();
-                                            }
-                                        });
-                                    }, 100);
-                                }
-                            });
+                const openTime = '09:00';
+                const closeTime = '19:00';
+                const slotDuration = 30;
+                const openMinutes = parseInt(openTime.split(':')[0]) * 60 + parseInt(openTime.split(':')[1]);
+                const closeMinutes = parseInt(closeTime.split(':')[0]) * 60 + parseInt(closeTime.split(':')[1]);
+                const allSlots = [];
+                for (let time = openMinutes; time < closeMinutes; time += slotDuration) {
+                    const hours = Math.floor(time / 60);
+                    const minutes = time % 60;
+                    const timeString = `${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}`;
+                    const endTime = time + slotDuration;
+                    const endHours = Math.floor(endTime / 60);
+                    const endMinutes = endTime % 60;
+                    const endTimeString = `${endHours.toString().padStart(2,'0')}:${endMinutes.toString().padStart(2,'0')}`;
+                    allSlots.push({ start: timeString, end: endTimeString, display: `${utils.formatTime(timeString)} a ${utils.formatTime(endTimeString)}` });
+                }
+                const unavailableSlots = new Set();
+                if (reservedSlots && reservedSlots.length > 0) {
+                    reservedSlots.forEach(slot => {
+                        const reservedTime = slot.hora;
+                        const serviceDuration = slot.servicios ? slot.servicios.duracion : 60;
+                        const slotCount = Math.ceil(serviceDuration / slotDuration);
+                        const reservedMinutes = parseInt(reservedTime.split(':')[0]) * 60 + parseInt(reservedTime.split(':')[1]);
+                        for (let i = 0; i < slotCount; i++) {
+                            const blockedTime = reservedMinutes + i * slotDuration;
+                            const blockedHours = Math.floor(blockedTime / 60);
+                            const blockedMinutes = blockedTime % 60;
+                            const blockedTimeString = `${blockedHours.toString().padStart(2,'0')}:${blockedMinutes.toString().padStart(2,'0')}`;
+                            unavailableSlots.add(blockedTimeString);
                         }
-
-                        return;
-                    }
-                }
-
-                // Agrupar slots por hora para mejor organización
-                const slotsByHour = {};
-                availableSlots.forEach(slot => {
-                    const hour = slot.time.substring(0, 2);
-                    if (!slotsByHour[hour]) {
-                        slotsByHour[hour] = [];
-                    }
-                    slotsByHour[hour].push(slot);
-                });
-
-                // Crear contenedor por cada hora
-                Object.entries(slotsByHour).forEach(([hour, hourSlots]) => {
-                    const hourContainer = document.createElement('div');
-                    hourContainer.className = 'hour-slots';
-                    hourContainer.innerHTML = `<div class="hour-label">${hour}:00</div><div class="hour-slots-grid"></div>`;
-
-                    const slotsGrid = hourContainer.querySelector('.hour-slots-grid');
-
-                    hourSlots.forEach(slot => {
-                        const el = document.createElement('div');
-                        el.className = 'time-slot';
-                        el.textContent = slot.time;
-                        el.dataset.time = slot.time;
-                        el.dataset.endTime = slot.endTime;
-
-                        el.addEventListener('click', () => {
-                            document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
-                            el.classList.add('selected');
-                            if (btnReservar) btnReservar.disabled = false;
-                            updateReservaSummary(date, slot.time, slot.endTime, service);
-                        });
-
-                        slotsGrid.appendChild(el);
                     });
-
-                    timeSlotsContainer.appendChild(hourContainer);
+                }
+                const morningSlots = allSlots.filter(slot => parseInt(slot.start.split(':')[0]) < 13);
+                const afternoonSlots = allSlots.filter(slot => parseInt(slot.start.split(':')[0]) >= 13);
+                let availableSlotsCount = 0;
+                const activePeriod = document.querySelector('.time-period.active').dataset.period;
+                const slotsToShow = activePeriod === 'morning' ? morningSlots : afternoonSlots;
+                slotsToShow.forEach(slotInfo => {
+                    const slot = document.createElement('div');
+                    slot.className = 'time-slot';
+                    slot.innerHTML = `<span>${slotInfo.display}</span>`;
+                    slot.dataset.time = slotInfo.start;
+                    slot.dataset.end = slotInfo.end;
+                    if (unavailableSlots.has(slotInfo.start)) {
+                        slot.classList.add('disabled');
+                        slot.title = 'No disponible';
+                    } else {
+                        availableSlotsCount++;
+                        slot.addEventListener('click', () => selectTimeSlot(slot));
+                    }
+                    timeSlotsContainer.appendChild(slot);
                 });
-
-                // Añadir título para mejor UX
-                if (Object.keys(slotsByHour).length > 0) {
-                    timeSlotsContainer.insertAdjacentHTML('afterbegin', '<h3 class="time-slots-title">Horarios disponibles</h3>');
-                }
-
-            } catch (error) {
-                console.error('Error loading time slots:', error);
-                if (noSlotsMessage) {
+                if (availableSlotsCount === 0) {
+                    noSlotsMessage.textContent = 'No hay horarios disponibles para esta fecha. Por favor, selecciona otra fecha.';
                     noSlotsMessage.style.display = 'block';
-                    noSlotsMessage.textContent = 'Error al cargar horarios. Intenta nuevamente.';
-                }
-                timeSlotsContainer.innerHTML = '';
-            }
-        }
-
-        // Convertir hora a minutos
-        function timeToMinutes(time) {
-            if (!time) return 0;
-            const [hours, minutes] = time.split(':').map(Number);
-            return hours * 60 + minutes;
-        }
-
-        // Actualizar resumen de reserva
-        function updateReservaSummary(date, startTime, endTime, service) {
-            const reservaSummary = document.getElementById('reservaSummary');
-            if (!reservaSummary) return;
-
-            const formattedDate = utils.formatDate(date);
-            const formattedTime = `${startTime} - ${endTime}`;
-
-            const servicioElement = document.getElementById('summaryServicio');
-            const fechaElement = document.getElementById('summaryFecha');
-            const horaElement = document.getElementById('summaryHora');
-            const duracionElement = document.getElementById('summaryDuracion');
-            const precioElement = document.getElementById('summaryPrecio');
-
-            if (servicioElement) servicioElement.textContent = service.name;
-            if (fechaElement) fechaElement.textContent = formattedDate;
-            if (horaElement) horaElement.textContent = formattedTime;
-            if (duracionElement) duracionElement.textContent = `${service.work_minutes} minutos`;
-
-            // Check for active discounts
-            const activeDiscounts = appData.discounts.filter(d =>
-                d.service_id === service.id &&
-                d.is_active &&
-                new Date(d.date_start) <= new Date() &&
-                new Date(d.date_end) >= new Date()
-            );
-
-            const hasDiscount = activeDiscounts.length > 0;
-            const discount = hasDiscount ? activeDiscounts[0] : null;
-            const finalPrice = hasDiscount
-                ? Math.round(service.base_price * (1 - discount.percent_off / 100))
-                : service.base_price;
-
-            if (precioElement) {
-                if (hasDiscount) {
-                    precioElement.innerHTML = `<del>${utils.formatCurrency(service.base_price)}</del> ${utils.formatCurrency(finalPrice)} <span class="badge badge-accent">-${discount.percent_off}%</span>`;
                 } else {
-                    precioElement.textContent = utils.formatCurrency(service.base_price);
+                    noSlotsMessage.style.display = 'none';
                 }
+                const timePeriods = document.querySelectorAll('.time-period');
+                timePeriods.forEach(period => {
+                    period.addEventListener('click', () => {
+                        timePeriods.forEach(p => p.classList.remove('active'));
+                        period.classList.add('active');
+                        generateTimeSlots(date);
+                    });
+                });
+            } catch (error) {
+                console.error('Error generando horarios:', error);
+                utils.showToast('Error', 'No se pudieron cargar los horarios disponibles. Inténtalo de nuevo más tarde.', 'error');
+                noSlotsMessage.textContent = 'Error al cargar horarios disponibles.';
+                noSlotsMessage.style.display = 'block';
             }
-
-            reservaSummary.style.display = 'block';
-
-            // Scroll hacia el resumen
+        }
+        function selectTimeSlot(slotElement) {
+            const selectedSlot = document.querySelector('.time-slot.selected');
+            if (selectedSlot) {
+                selectedSlot.classList.remove('selected');
+                selectedSlot.classList.remove('pulse');
+            }
+            slotElement.classList.add('selected');
+            slotElement.classList.add('pulse');
+            updateReservaSummary();
+            document.getElementById('btnReservar').disabled = false;
             setTimeout(() => {
-                reservaSummary.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }, 100);
+                const summaryElement = document.getElementById('reservaSummary');
+                summaryElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 300);
         }
-
-        // Sugerir próxima fecha disponible
-        function suggestNextAvailableSlot(serviceId) {
-            const today = new Date();
-            const nextSlot = utils.getNextAvailableSlot(today.toISOString().split('T')[0], serviceId);
-
-            if (nextSlot) {
-                const calendarContainer = document.getElementById('calendar');
-                if (calendarContainer) {
-                    const [nextY, nextM, nextD] = nextSlot.date.split('-').map(Number);
-                    renderCalendar(nextM - 1, nextY);
-
-                    // Seleccionar el día en el calendario
-                    setTimeout(() => {
-                        const dayElements = document.querySelectorAll('.calendar-day:not(.outside-month)');
-                        dayElements.forEach(dayEl => {
-                            if (parseInt(dayEl.textContent, 10) === nextD) {
-                                dayEl.click();
-                            }
-                        });
-                    }, 100);
-                }
+        function updateReservaSummary() {
+            const servicioSelect = document.getElementById('servicio');
+            const selectedDate = document.querySelector('.calendar-day.selected');
+            const selectedTime = document.querySelector('.time-slot.selected');
+            if (servicioSelect.value && selectedDate && selectedTime) {
+                const servicioOption = servicioSelect.options[servicioSelect.selectedIndex];
+                const servicioNombre = servicioOption.text.split(' - ')[0];
+                const servicioPrecio = utils.formatCurrency(servicioOption.dataset.price);
+                const servicioDuracion = servicioOption.dataset.duration || 60;
+                const fechaStr = selectedDate.dataset.date;
+                const fecha = utils.formatDate(fechaStr);
+                const horaInicio = utils.formatTime(selectedTime.dataset.time);
+                const horaFin = utils.formatTime(selectedTime.dataset.end);
+                document.getElementById('summaryServicio').textContent = servicioNombre;
+                document.getElementById('summaryFecha').textContent = fecha;
+                document.getElementById('summaryHora').textContent = `${horaInicio} a ${horaFin}`;
+                document.getElementById('summaryDuracion').textContent = `${servicioDuracion} minutos`;
+                document.getElementById('summaryPrecio').textContent = servicioPrecio;
+                const summaryElement = document.getElementById('reservaSummary');
+                summaryElement.style.display = 'block';
+                summaryElement.style.animation = 'none';
+                summaryElement.offsetHeight;
+                summaryElement.style.animation = 'fadeInUp 0.5s ease-out';
             }
         }
-
-        // ======== FUNCIONES PARA EL PANEL DE ADMINISTRACIÓN ========
-
-        // Inicializar panel de administración
+        function selectDate(dayElement) {
+            const selectedDay = document.querySelector('.calendar-day.selected');
+            if (selectedDay) {
+                selectedDay.classList.remove('selected');
+            }
+            dayElement.classList.add('selected');
+            const selectedDate = dayElement.dataset.date;
+            const timePeriods = document.querySelectorAll('.time-period');
+            timePeriods.forEach(p => p.classList.remove('active'));
+            document.querySelector('.time-period[data-period="morning"]').classList.add('active');
+            generateTimeSlots(selectedDate);
+            setTimeout(() => {
+                const timeSlotsContainer = document.querySelector('.time-slots-container');
+                timeSlotsContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 300);
+        }
         async function initAdminPanel() {
             try {
-                // Mostrar loader para el panel admin
                 showAdminLoader(true);
-
-                // Load all data for admin panel in parallel
                 await Promise.all([
                     loadAdminServices(),
                     loadAdminAppointments(),
@@ -7123,35 +6818,23 @@
                     loadAdminAvailability(),
                     loadAdminBlackouts()
                 ]);
-
-                // Initialize charts
                 initAdminCharts();
-
-                // Setup admin event handlers
                 setupAdminEventHandlers();
-
-                // Admin Panel Navigation
                 document.querySelectorAll('.admin-menu-link').forEach(link => {
                     link.addEventListener('click', (e) => {
                         e.preventDefault();
 
                         const sectionId = link.getAttribute('data-section');
-
-                        // Update active link
                         document.querySelectorAll('.admin-menu-link').forEach(menuLink => {
                             menuLink.classList.remove('active');
                         });
                         link.classList.add('active');
-
-                        // Show selected section
                         document.querySelectorAll('.admin-section').forEach(section => {
                             section.classList.remove('active');
                         });
                         document.getElementById(`admin${sectionId.charAt(0).toUpperCase() + sectionId.slice(1)}`).classList.add('active');
                     });
                 });
-
-                // Ocultar loader
                 showAdminLoader(false);
 
                 console.log('Admin panel initialized successfully');
@@ -7161,8 +6844,6 @@
                 showAdminLoader(false);
             }
         }
-
-        // Mostrar/ocultar loader del panel admin
         function showAdminLoader(show) {
             const loader = document.getElementById('adminLoader');
             if (!loader) return;
@@ -7177,8 +6858,6 @@
                 }, 300);
             }
         }
-
-        // Cargar servicios para admin
         async function loadAdminServices() {
             try {
                 const { data, error } = await supabase
@@ -7189,8 +6868,6 @@
                 if (error) throw error;
 
                 appData.services = data;
-
-                // Update services table
                 const serviciosTable = document.getElementById('serviciosTable').querySelector('tbody');
                 if (!serviciosTable) return;
 
@@ -7229,8 +6906,6 @@
 
                     serviciosTable.appendChild(row);
                 });
-
-                // Also update service dropdowns
                 updateServiceDropdowns();
 
                 return data;
@@ -7240,10 +6915,7 @@
                 return [];
             }
         }
-
-        // Actualizar dropdowns de servicios
         function updateServiceDropdowns() {
-            // Media service dropdown
             const mediaServicio = document.getElementById('mediaServicio');
             if (mediaServicio) {
                 mediaServicio.innerHTML = '<option value="">Ninguno (general)</option>';
@@ -7257,8 +6929,6 @@
                     }
                 });
             }
-
-            // Discount service dropdown
             const descuentoServicio = document.getElementById('descuentoServicio');
             if (descuentoServicio) {
                 descuentoServicio.innerHTML = '<option value="">Seleccionar servicio</option>';
@@ -7273,8 +6943,6 @@
                 });
             }
         }
-
-        // Cargar citas para admin
         async function loadAdminAppointments(statusFilter = 'all') {
             try {
                 let query = supabase
@@ -7292,8 +6960,6 @@
                 if (error) throw error;
 
                 appData.appointments = data;
-
-                // Update appointments table
                 const appointmentsTable = document.getElementById('reservasTable')?.querySelector('tbody');
                 if (!appointmentsTable) return;
 
@@ -7360,8 +7026,6 @@
 
                     appointmentsTable.appendChild(row);
                 });
-
-                // Update dashboard metrics
                 updateAdminDashboardMetrics();
 
                 return data;
@@ -7371,8 +7035,6 @@
                 return [];
             }
         }
-
-        // Cargar reseñas para admin
         async function loadAdminReviews(approvedFilter = 'all') {
             try {
                 let query = supabase
@@ -7389,8 +7051,6 @@
                 if (error) throw error;
 
                 appData.reviews = data;
-
-                // Update reviews table
                 const reviewsTable = document.getElementById('resenasTable')?.querySelector('tbody');
                 if (!reviewsTable) return;
 
@@ -7432,8 +7092,6 @@
 
                     reviewsTable.appendChild(row);
                 });
-
-                // Update pending reviews count in dashboard
                 const pendingReviewsCount = data.filter(r => !r.is_approved).length;
                 const pendingReviewsElement = document.getElementById('resenasPendientes');
                 if (pendingReviewsElement) {
@@ -7447,8 +7105,6 @@
                 return [];
             }
         }
-
-        // Cargar descuentos para admin
         async function loadAdminDiscounts() {
             try {
                 const { data, error } = await supabase
@@ -7459,8 +7115,6 @@
                 if (error) throw error;
 
                 appData.discounts = data;
-
-                // Update discounts table
                 const discountsTable = document.getElementById('descuentosTable')?.querySelector('tbody');
                 if (!discountsTable) return;
 
@@ -7507,8 +7161,6 @@
 
                     discountsTable.appendChild(row);
                 });
-
-                // Reload services prices which may be affected by discounts
                 loadServicesAndPrices();
 
                 return data;
@@ -7518,8 +7170,6 @@
                 return [];
             }
         }
-
-        // Cargar medios para admin
         async function loadAdminMedia() {
             try {
                 const { data, error } = await supabase
@@ -7530,8 +7180,6 @@
                 if (error) throw error;
 
                 appData.media = data;
-
-                // Update media grid
                 const mediaGrid = document.getElementById('mediaGrid');
                 if (!mediaGrid) return;
 
@@ -7577,8 +7225,6 @@
                 return [];
             }
         }
-
-        // Cargar disponibilidad para admin
         async function loadAdminAvailability() {
             try {
                 const { data, error } = await supabase
@@ -7589,8 +7235,6 @@
                 if (error) throw error;
 
                 appData.availability = data;
-
-                // Update availability form
                 data.forEach(day => {
                     const dayName = getDayName(day.weekday).toLowerCase();
                     const openInput = document.getElementById(`${dayName}-open`);
@@ -7609,8 +7253,6 @@
                         }
 
                         closedCheckbox.checked = day.is_closed;
-
-                        // Disable time inputs if closed
                         if (day.is_closed) {
                             openInput.disabled = true;
                             closeInput.disabled = true;
@@ -7622,8 +7264,6 @@
                             if (breakStartInput) breakStartInput.disabled = false;
                             if (breakEndInput) breakEndInput.disabled = false;
                         }
-
-                        // Add event listener to checkbox
                         closedCheckbox.addEventListener('change', function () {
                             openInput.disabled = this.checked;
                             closeInput.disabled = this.checked;
@@ -7640,14 +7280,10 @@
                 return [];
             }
         }
-
-        // Obtener nombre del día de la semana
         function getDayName(weekday) {
             const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
             return days[weekday];
         }
-
-        // Cargar fechas de cierre para admin
         async function loadAdminBlackouts() {
             try {
                 const { data, error } = await supabase
@@ -7661,8 +7297,6 @@
                     ...b,
                     date: (b.date || '').split('T')[0]
                 }));
-
-                // Update blackouts table
                 const blackoutsTable = document.getElementById('blackoutsTable')?.querySelector('tbody');
                 if (!blackoutsTable) return;
 
@@ -7695,18 +7329,13 @@
                 return [];
             }
         }
-
-        // Inicializar gráficos de admin
         function initAdminCharts() {
-            // Destruir gráficos existentes si existen
             ['chartIngresos', 'chartServicios', 'chartIngresosPorServicio', 'chartReservasPorDia', 'chartHorarioPopular'].forEach(chartId => {
                 const existingChart = Chart.getChart(chartId);
                 if (existingChart) {
                     existingChart.destroy();
                 }
             });
-
-            // Chart: Ingresos por mes
             const ctxIngresos = document.getElementById('chartIngresos')?.getContext('2d');
             if (ctxIngresos) {
                 const chartIngresos = new Chart(ctxIngresos, {
@@ -7750,12 +7379,8 @@
                         }
                     }
                 });
-
-                // Guardar referencia del gráfico en cache
                 cache.charts.ingresos = chartIngresos;
             }
-
-            // Chart: Servicios más populares
             const ctxServicios = document.getElementById('chartServicios')?.getContext('2d');
             if (ctxServicios) {
                 const serviciosData = calculatePopularServices();
@@ -7803,12 +7428,8 @@
                         }
                     }
                 });
-
-                // Guardar referencia del gráfico en cache
                 cache.charts.servicios = chartServicios;
             }
-
-            // Chart: Ingresos por servicio (métricas)
             const ctxIngresosPorServicio = document.getElementById('chartIngresosPorServicio')?.getContext('2d');
             if (ctxIngresosPorServicio) {
                 const ingresosPorServicioData = calculateIncomeByService();
@@ -7851,12 +7472,8 @@
                         }
                     }
                 });
-
-                // Guardar referencia del gráfico en cache
                 cache.charts.ingresosPorServicio = chartIngresosPorServicio;
             }
-
-            // Chart: Reservas por día de la semana
             const ctxReservasPorDia = document.getElementById('chartReservasPorDia')?.getContext('2d');
             if (ctxReservasPorDia) {
                 const reservasPorDiaData = calculateBookingsByDay();
@@ -7890,12 +7507,8 @@
                         }
                     }
                 });
-
-                // Guardar referencia del gráfico en cache
                 cache.charts.reservasPorDia = chartReservasPorDia;
             }
-
-            // Chart: Horarios más populares
             const ctxHorarioPopular = document.getElementById('chartHorarioPopular')?.getContext('2d');
             if (ctxHorarioPopular) {
                 const horarioPopularData = calculatePopularTimeSlots();
@@ -7931,12 +7544,8 @@
                         }
                     }
                 });
-
-                // Guardar referencia del gráfico en cache
                 cache.charts.horarioPopular = chartHorarioPopular;
             }
-
-            // Crear gráfico de KPIs en tiempo real
             const ctxKPIs = document.getElementById('chartKPIs')?.getContext('2d');
             if (ctxKPIs) {
                 const kpiData = calculateKPIs();
@@ -7974,29 +7583,19 @@
                         }
                     }
                 });
-
-                // Guardar referencia del gráfico en cache
                 cache.charts.kpis = chartKPIs;
             }
         }
-
-        // Calcular KPIs para radar chart
         function calculateKPIs() {
             const now = new Date();
             const currentMonth = now.getMonth();
             const currentYear = now.getFullYear();
-
-            // Mes actual
             const currentMonthStart = new Date(currentYear, currentMonth, 1);
             const currentMonthEnd = new Date(currentYear, currentMonth + 1, 0);
-
-            // Mes anterior
             const lastMonth = currentMonth === 0 ? 11 : currentMonth - 1;
             const lastMonthYear = currentMonth === 0 ? currentYear - 1 : currentYear;
             const lastMonthStart = new Date(lastMonthYear, lastMonth, 1);
             const lastMonthEnd = new Date(lastMonthYear, lastMonth + 1, 0);
-
-            // Filtrar citas por mes
             const thisMonthAppointments = appData.appointments.filter(a =>
                 a.status !== 'CANCELLED' &&
                 new Date(a.date) >= currentMonthStart &&
@@ -8008,12 +7607,8 @@
                 new Date(a.date) >= lastMonthStart &&
                 new Date(a.date) <= lastMonthEnd
             );
-
-            // Calcular ingresos
             const thisMonthIncome = calculateMonthIncome(thisMonthAppointments);
             const lastMonthIncome = calculateMonthIncome(lastMonthAppointments);
-
-            // Máximo ingreso histórico para normalizar
             const maxIncome = Math.max(
                 ...Array.from({ length: 12 }, (_, i) => {
                     const monthAppointments = appData.appointments.filter(a =>
@@ -8023,20 +7618,14 @@
                     );
                     return calculateMonthIncome(monthAppointments);
                 })
-            ) || 1; // Evitar división por cero
-
-            // Número de citas
+            ) || 1;
             const thisMonthAppointmentsCount = thisMonthAppointments.length;
             const lastMonthAppointmentsCount = lastMonthAppointments.length;
             const maxAppointments = Math.max(thisMonthAppointmentsCount, lastMonthAppointmentsCount, 1);
-
-            // Clientes nuevos (primera cita)
             const allClients = new Set();
             const thisMonthNewClients = countNewClients(thisMonthAppointments, allClients);
             const lastMonthNewClients = countNewClients(lastMonthAppointments, allClients);
             const maxNewClients = Math.max(thisMonthNewClients, lastMonthNewClients, 1);
-
-            // Reseñas
             const thisMonthReviews = appData.reviews.filter(r =>
                 new Date(r.created_at) >= currentMonthStart &&
                 new Date(r.created_at) <= currentMonthEnd
@@ -8048,12 +7637,8 @@
             ).length;
 
             const maxReviews = Math.max(thisMonthReviews, lastMonthReviews, 1);
-
-            // Tasa de ocupación (% de slots reservados del total disponible)
             const thisMonthOccupancy = calculateOccupancyRate(thisMonthAppointments, currentMonthStart, currentMonthEnd);
             const lastMonthOccupancy = calculateOccupancyRate(lastMonthAppointments, lastMonthStart, lastMonthEnd);
-
-            // Normalizar todos los valores a escala 0-100 para el radar chart
             return {
                 thisMonth: [
                     (thisMonthAppointmentsCount / maxAppointments) * 100,
@@ -8071,10 +7656,7 @@
                 ]
             };
         }
-
-        // Calcular tasa de ocupación
         function calculateOccupancyRate(appointments, startDate, endDate) {
-            // Calcular número total de días hábiles en el rango
             let workingDays = 0;
             let currentDate = new Date(startDate);
 
@@ -8085,8 +7667,6 @@
                 }
                 currentDate.setDate(currentDate.getDate() + 1);
             }
-
-            // Estimar slots disponibles por día (promedio)
             const availabilityData = appData.availability.filter(a => !a.is_closed);
             let averageSlotsPerDay = 0;
 
@@ -8106,20 +7686,13 @@
 
                 averageSlotsPerDay = slotsByDay.reduce((sum, slots) => sum + slots, 0) / slotsByDay.length;
             } else {
-                // Valor predeterminado si no hay datos de disponibilidad
-                averageSlotsPerDay = 16; // Aproximadamente 8 horas con slots de 30 minutos
+                averageSlotsPerDay = 16;
             }
-
-            // Total de slots disponibles en el período
             const totalAvailableSlots = workingDays * averageSlotsPerDay;
-
-            // Porcentaje de ocupación
             return totalAvailableSlots > 0
                 ? Math.min(100, (appointments.length / totalAvailableSlots) * 100)
                 : 0;
         }
-
-        // Contar clientes nuevos
         function countNewClients(appointments, allClientsSet) {
             const existingClientsCount = allClientsSet.size;
 
@@ -8129,8 +7702,6 @@
 
             return allClientsSet.size - existingClientsCount;
         }
-
-        // Calcular ingresos mensuales por mes específico
         function calculateMonthIncome(appointments) {
             let totalIncome = 0;
 
@@ -8138,7 +7709,6 @@
                 const service = appData.services.find(s => s.id === appointment.service_id);
 
                 if (service) {
-                    // Check for active discounts at the time of appointment
                     const dateAppointment = new Date(appointment.date);
                     const activeDiscounts = appData.discounts.filter(d =>
                         d.service_id === service.id &&
@@ -8159,8 +7729,6 @@
 
             return totalIncome;
         }
-
-        // Calcular ingresos mensuales
         function calculateMonthlyIncome() {
             const now = new Date();
             const currentYear = now.getFullYear();
@@ -8173,7 +7741,6 @@
                     const service = appData.services.find(s => s.id === appointment.service_id);
 
                     if (service) {
-                        // Check for active discounts at the time of appointment
                         const dateAppointment = new Date(appointment.date);
                         const activeDiscounts = appData.discounts.filter(d =>
                             d.service_id === service.id &&
@@ -8194,8 +7761,6 @@
 
             return monthlyIncome;
         }
-
-        // Calcular servicios más populares
         function calculatePopularServices() {
             const serviceCount = {};
             const confirmedAppointments = appData.appointments.filter(a => a.status !== 'CANCELLED');
@@ -8204,11 +7769,9 @@
                 const serviceId = appointment.service_id;
                 serviceCount[serviceId] = (serviceCount[serviceId] || 0) + 1;
             });
-
-            // Sort by count
             const sortedServices = Object.entries(serviceCount)
                 .sort((a, b) => b[1] - a[1])
-                .slice(0, 5); // Top 5
+                .slice(0, 5);
 
             const labels = sortedServices.map(([serviceId]) => {
                 const service = appData.services.find(s => s.id == serviceId);
@@ -8216,8 +7779,6 @@
             });
 
             const data = sortedServices.map(([_, count]) => count);
-
-            // Update most popular service in dashboard
             if (sortedServices.length > 0) {
                 const topServiceId = sortedServices[0][0];
                 const topService = appData.services.find(s => s.id == topServiceId);
@@ -8238,8 +7799,6 @@
 
             return { labels, data };
         }
-
-        // Calcular ingresos por servicio
         function calculateIncomeByService() {
             const serviceIncome = {};
 
@@ -8250,7 +7809,6 @@
                     const service = appData.services.find(s => s.id === serviceId);
 
                     if (service) {
-                        // Check for active discounts at the time of appointment
                         const dateAppointment = new Date(appointment.date);
                         const activeDiscounts = appData.discounts.filter(d =>
                             d.service_id === service.id &&
@@ -8268,8 +7826,6 @@
                         serviceIncome[serviceId] = (serviceIncome[serviceId] || 0) + finalPrice;
                     }
                 });
-
-            // Sort by income
             const sortedServices = Object.entries(serviceIncome)
                 .sort((a, b) => b[1] - a[1]);
 
@@ -8282,8 +7838,6 @@
 
             return { labels, data };
         }
-
-        // Calcular reservas por día de la semana
         function calculateBookingsByDay() {
             const dayCount = Array(7).fill(0);
 
@@ -8296,8 +7850,6 @@
 
             return dayCount;
         }
-
-        // Calcular horarios más populares
         function calculatePopularTimeSlots() {
             const timeSlots = {};
 
@@ -8307,8 +7859,6 @@
                     const hour = appointment.start_time.substring(0, 2);
                     timeSlots[hour] = (timeSlots[hour] || 0) + 1;
                 });
-
-            // Generate all hours from 9 to 20
             const labels = [];
             const data = [];
 
@@ -8320,10 +7870,7 @@
 
             return { labels, data };
         }
-
-        // Actualizar métricas del dashboard
         function updateAdminDashboardMetrics() {
-            // Current month appointments
             const now = new Date();
             const currentMonth = now.getMonth();
             const currentYear = now.getFullYear();
@@ -8338,8 +7885,6 @@
             if (reservasMensualesElement) {
                 reservasMensualesElement.textContent = currentMonthAppointments.length;
             }
-
-            // Previous month appointments
             const prevMonth = currentMonth === 0 ? 11 : currentMonth - 1;
             const prevMonthYear = currentMonth === 0 ? currentYear - 1 : currentYear;
 
@@ -8348,8 +7893,6 @@
                 new Date(a.date).getMonth() === prevMonth &&
                 new Date(a.date).getFullYear() === prevMonthYear
             );
-
-            // Calculate change percentage
             let changePercent = 0;
             if (prevMonthAppointments.length > 0) {
                 changePercent = Math.round(
@@ -8377,15 +7920,12 @@
             `;
                 }
             }
-
-            // Calculate current month income
             let currentMonthIncome = 0;
 
             currentMonthAppointments.forEach(appointment => {
                 const service = appData.services.find(s => s.id === appointment.service_id);
 
                 if (service) {
-                    // Check for active discounts at the time of appointment
                     const dateAppointment = new Date(appointment.date);
                     const activeDiscounts = appData.discounts.filter(d =>
                         d.service_id === service.id &&
@@ -8408,15 +7948,12 @@
             if (ingresosMensualesElement) {
                 ingresosMensualesElement.textContent = utils.formatCurrency(currentMonthIncome);
             }
-
-            // Calculate previous month income
             let prevMonthIncome = 0;
 
             prevMonthAppointments.forEach(appointment => {
                 const service = appData.services.find(s => s.id === appointment.service_id);
 
                 if (service) {
-                    // Check for active discounts at the time of appointment
                     const dateAppointment = new Date(appointment.date);
                     const activeDiscounts = appData.discounts.filter(d =>
                         d.service_id === service.id &&
@@ -8434,8 +7971,6 @@
                     prevMonthIncome += finalPrice;
                 }
             });
-
-            // Calculate income change percentage
             let incomeChangePercent = 0;
             if (prevMonthIncome > 0) {
                 incomeChangePercent = Math.round(
@@ -8463,12 +7998,8 @@
             `;
                 }
             }
-
-            // Update metrics
             const lastMonth = new Date();
             lastMonth.setMonth(lastMonth.getMonth() - 1);
-
-            // Calculate total income
             let totalIncome = 0;
             appData.appointments
                 .filter(a => a.status !== 'CANCELLED')
@@ -8476,7 +8007,6 @@
                     const service = appData.services.find(s => s.id === appointment.service_id);
 
                     if (service) {
-                        // Check for active discounts at the time of appointment
                         const dateAppointment = new Date(appointment.date);
                         const activeDiscounts = appData.discounts.filter(d =>
                             d.service_id === service.id &&
@@ -8499,8 +8029,6 @@
             if (metricaIngresoTotalElement) {
                 metricaIngresoTotalElement.textContent = utils.formatCurrency(totalIncome);
             }
-
-            // Calculate unique clients
             const uniqueClients = new Set();
             appData.appointments
                 .filter(a => a.status !== 'CANCELLED')
@@ -8512,8 +8040,6 @@
             if (metricaClientesTotalElement) {
                 metricaClientesTotalElement.textContent = uniqueClients.size;
             }
-
-            // Calculate cancellation rate
             const totalAppointments = appData.appointments.length;
             const cancelledAppointments = appData.appointments.filter(a => a.status === 'CANCELLED').length;
 
@@ -8525,8 +8051,6 @@
             if (metricaCancelacionRateElement) {
                 metricaCancelacionRateElement.textContent = `${cancellationRate}%`;
             }
-
-            // Calculate average rating
             const approvedReviews = appData.reviews.filter(r => r.is_approved);
 
             const metricaRatingPromedioElement = document.getElementById('metricaRatingPromedio');
@@ -8539,8 +8063,6 @@
                     metricaRatingPromedioElement.textContent = 'N/A';
                 }
             }
-
-            // Actualizar métricas en caché
             appData.stats = {
                 monthlyIncome: currentMonthIncome,
                 monthlyAppointments: currentMonthAppointments.length,
@@ -8550,25 +8072,17 @@
                     : 0
             };
         }
-
-        // Configurar event handlers del panel admin
         function setupAdminEventHandlers() {
-            // Tabs de reservas
             document.querySelectorAll('#adminReservas .admin-tab').forEach(tab => {
                 tab.addEventListener('click', () => {
-                    // Update active tab
                     document.querySelectorAll('#adminReservas .admin-tab').forEach(t => {
                         t.classList.remove('active');
                     });
                     tab.classList.add('active');
-
-                    // Filter appointments by status
                     const status = tab.getAttribute('data-status');
                     loadAdminAppointments(status);
                 });
             });
-
-            // Refresh reservas
             const refreshReservasBtn = document.getElementById('refreshReservas');
             if (refreshReservasBtn) {
                 refreshReservasBtn.addEventListener('click', () => {
@@ -8577,31 +8091,22 @@
                     loadAdminAppointments(status);
                 });
             }
-
-            // Export reservas
             const exportReservasBtn = document.getElementById('exportReservas');
             if (exportReservasBtn) {
                 exportReservasBtn.addEventListener('click', () => {
                     exportAppointmentsToCSV();
                 });
             }
-
-            // Tabs de reseñas
             document.querySelectorAll('#adminResenas .admin-tab').forEach(tab => {
                 tab.addEventListener('click', () => {
-                    // Update active tab
                     document.querySelectorAll('#adminResenas .admin-tab').forEach(t => {
                         t.classList.remove('active');
                     });
                     tab.classList.add('active');
-
-                    // Filter reviews by approved status
                     const approved = tab.getAttribute('data-approved');
                     loadAdminReviews(approved);
                 });
             });
-
-            // Refresh reseñas
             const refreshResenasBtn = document.getElementById('refreshResenas');
             if (refreshResenasBtn) {
                 refreshResenasBtn.addEventListener('click', () => {
@@ -8610,25 +8115,18 @@
                     loadAdminReviews(approved);
                 });
             }
-
-            // Refresh dashboard
             const refreshDashboardBtn = document.getElementById('refreshDashboard');
             if (refreshDashboardBtn) {
                 refreshDashboardBtn.addEventListener('click', () => {
                     initAdminPanel();
                 });
             }
-
-            // Tabs de disponibilidad
             document.querySelectorAll('#adminDisponibilidad .admin-tab').forEach(tab => {
                 tab.addEventListener('click', () => {
-                    // Update active tab
                     document.querySelectorAll('#adminDisponibilidad .admin-tab').forEach(t => {
                         t.classList.remove('active');
                     });
                     tab.classList.add('active');
-
-                    // Show selected tab content
                     const tabId = tab.getAttribute('data-tab');
                     document.querySelectorAll('#adminDisponibilidad .tab-content').forEach(content => {
                         content.classList.remove('active');
@@ -8639,19 +8137,14 @@
                     }
                 });
             });
-
-            // Formulario de disponibilidad
             const availabilityForm = document.getElementById('availabilityForm');
             if (availabilityForm) {
                 availabilityForm.addEventListener('submit', async (e) => {
                     e.preventDefault();
 
                     try {
-                        // Deshabilitar botón durante el envío
                         const submitBtn = e.target.querySelector('button[type="submit"]');
                         if (submitBtn) submitBtn.disabled = true;
-
-                        // Process each day of the week
                         const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
 
                         for (let i = 0; i < days.length; i++) {
@@ -8664,7 +8157,6 @@
                             const closedCheckbox = document.getElementById(`${day}-closed`);
 
                             if (openInput && closeInput && closedCheckbox) {
-                                // Primero busca el registro existente para este día
                                 const { data: existingData, error: checkError } = await supabase
                                     .from('availability')
                                     .select('id')
@@ -8683,7 +8175,6 @@
                                 };
 
                                 if (existingData && existingData.length > 0) {
-                                    // Actualiza el registro existente
                                     const { error: updateError } = await supabase
                                         .from('availability')
                                         .update(update)
@@ -8691,7 +8182,6 @@
 
                                     if (updateError) throw updateError;
                                 } else {
-                                    // Inserta un nuevo registro
                                     const { error: insertError } = await supabase
                                         .from('availability')
                                         .insert([update]);
@@ -8702,25 +8192,17 @@
                         }
 
                         utils.showToast('Éxito', 'Horario actualizado correctamente', 'success');
-
-                        // Reload availability
                         await loadAdminAvailability();
-                        await loadAvailability(); // Update public availability
-
-                        // Re-habilitar botón
+                        await loadAvailability();
                         if (submitBtn) submitBtn.disabled = false;
                     } catch (error) {
                         console.error('Error updating availability:', error);
                         utils.showToast('Error', 'Hubo un problema al actualizar el horario', 'error');
-
-                        // Re-habilitar botón
                         const submitBtn = e.target.querySelector('button[type="submit"]');
                         if (submitBtn) submitBtn.disabled = false;
                     }
                 });
             }
-
-            // Formulario de cierres
             const blackoutAddForm = document.getElementById('blackoutAddForm');
             if (blackoutAddForm) {
                 blackoutAddForm.addEventListener('submit', async (e) => {
@@ -8735,37 +8217,34 @@
                     }
 
                     try {
-                        // Deshabilitar botón durante el envío
                         const submitBtn = e.target.querySelector('button[type="submit"]');
                         if (submitBtn) submitBtn.disabled = true;
-
-                        const { data, error } = await supabase
+                        const { data: existing } = await supabase
+                            .from('blackouts')
+                            .select('id')
+                            .eq('date', date);
+                        if (existing && existing.length) {
+                            utils.showToast('Error', 'La fecha ya está registrada', 'error');
+                            if (submitBtn) submitBtn.disabled = false;
+                            return;
+                        }
+                        const { error } = await supabase
                             .from('blackouts')
                             .insert([{ date, reason }]);
-
                         if (error) throw error;
-
                         utils.showToast('Éxito', 'Cierre añadido correctamente', 'success');
                         e.target.reset();
-
-                        // Reload blackouts
                         await loadAdminBlackouts();
-                        await loadBlackoutDates(); // Update public blackouts
-
-                        // Re-habilitar botón
+                        await loadBlackoutDates();
                         if (submitBtn) submitBtn.disabled = false;
                     } catch (error) {
                         console.error('Error adding blackout:', error);
                         utils.showToast('Error', 'Hubo un problema al añadir el cierre', 'error');
-
-                        // Re-habilitar botón
                         const submitBtn = e.target.querySelector('button[type="submit"]');
                         if (submitBtn) submitBtn.disabled = false;
                     }
                 });
             }
-
-            // Add servicio button
             const addServicioBtn = document.getElementById('addServicio');
             if (addServicioBtn) {
                 addServicioBtn.addEventListener('click', () => {
@@ -8784,8 +8263,6 @@
                     if (servicioForm) servicioForm.style.display = 'block';
                 });
             }
-
-            // Cancel servicio form
             const cancelServicioFormBtn = document.getElementById('cancelServicioForm');
             if (cancelServicioFormBtn) {
                 cancelServicioFormBtn.addEventListener('click', () => {
@@ -8793,14 +8270,10 @@
                     if (servicioForm) servicioForm.style.display = 'none';
                 });
             }
-
-            // Submit servicio form with image upload
             const servicioEditForm = document.getElementById('servicioEditForm');
             if (servicioEditForm) {
                 servicioEditForm.addEventListener('submit', async (e) => {
                     e.preventDefault();
-
-                    // Disable submit button to prevent double submission
                     const submitButton = e.target.querySelector('button[type="submit"]');
                     if (submitButton) submitButton.disabled = true;
 
@@ -8816,8 +8289,6 @@
                         const descripcion = document.getElementById('servicioDescripcion').value;
                         const activo = document.getElementById('servicioActivo').checked;
                         const fileInput = document.getElementById('servicioImagen');
-
-                        // Check for duplicates if creating a new service
                         if (!servicioId) {
                             const { data: existingServices, error: checkError } = await supabase
                                 .from('services')
@@ -8838,7 +8309,6 @@
                         let data, error;
 
                         if (servicioId) {
-                            // Update existing service
                             ({ data, error } = await supabase
                                 .from('services')
                                 .update({
@@ -8855,7 +8325,6 @@
                                 .eq('id', servicioId)
                                 .select());
                         } else {
-                            // Insert new service
                             ({ data, error } = await supabase
                                 .from('services')
                                 .insert([{
@@ -8873,8 +8342,6 @@
                         }
 
                         if (error) throw error;
-
-                        // Handle image upload if a file is selected
                         if (fileInput && fileInput.files && fileInput.files.length > 0) {
                             const file = fileInput.files[0];
                             const serviceIdToUse = servicioId || (data && data[0] ? data[0].id : null);
@@ -8882,18 +8349,14 @@
                             if (!serviceIdToUse) {
                                 throw new Error('No se pudo obtener ID del servicio');
                             }
-
-                            // Generate a unique filename
                             const timestamp = new Date().getTime();
                             const fileExt = file.name.split('.').pop();
                             const fileName = `${timestamp}.${fileExt}`;
                             const filePath = `service_${serviceIdToUse}_${fileName}`;
 
                             console.log('Uploading to bucket: pinky-portfolio, path:', filePath);
-
-                            // Upload the file to Supabase Storage
                             const { data: storageData, error: storageError } = await supabase.storage
-                                .from('pinky-portfolio')  // Usar el nombre del bucket que creaste
+                                .from('pinky-portfolio')
                                 .upload(filePath, file, {
                                     cacheControl: '3600',
                                     upsert: false
@@ -8905,15 +8368,11 @@
                             }
 
                             console.log('Upload successful:', storageData);
-
-                            // Get public URL for the uploaded file
                             const { data: urlData } = supabase.storage
-                                .from('pinky-portfolio')  // Usar el nombre del bucket que creaste
+                                .from('pinky-portfolio')
                                 .getPublicUrl(filePath);
 
                             console.log('Public URL:', urlData);
-
-                            // Insert record in media table linking to this service
                             const { error: mediaError } = await supabase
                                 .from('media')
                                 .insert([{
@@ -8929,7 +8388,6 @@
 
                             console.log('Media record created successfully');
                         } else if (!servicioId) {
-                            // For new services without image, show a warning
                             console.warn('Servicio creado sin imagen. Los clientes verán un placeholder.');
                         }
 
@@ -8937,26 +8395,21 @@
                         const imageMessage = fileInput && fileInput.files && fileInput.files.length > 0 ? ' con imagen' : '';
                         utils.showToast('Éxito', `${message}${imageMessage}`, 'success');
                         document.getElementById('servicioForm').style.display = 'none';
-
-                        // Reload services and media
                         await Promise.all([
                             loadAdminServices(),
                             loadAdminMedia(),
                             loadLashbook()
                         ]);
 
-                        loadServicesAndPrices(); // Update public services
+                        loadServicesAndPrices();
                     } catch (error) {
                         console.error('Error saving service:', error);
                         utils.showToast('Error', 'Hubo un problema al guardar el servicio: ' + error.message, 'error');
                     } finally {
-                        // Re-enable submit button
                         if (submitButton) submitButton.disabled = false;
                     }
                 });
             }
-
-            // Add descuento button
             const addDescuentoBtn = document.getElementById('addDescuento');
             if (addDescuentoBtn) {
                 addDescuentoBtn.addEventListener('click', () => {
@@ -8972,8 +8425,6 @@
                     if (descuentoEditForm) descuentoEditForm.reset();
                     if (descuentoId) descuentoId.value = '';
                     if (descuentoActivo) descuentoActivo.checked = true;
-
-                    // Set default dates
                     const today = new Date().toISOString().split('T')[0];
                     const oneMonthFromNow = new Date();
                     oneMonthFromNow.setMonth(oneMonthFromNow.getMonth() + 1);
@@ -8988,8 +8439,6 @@
                     if (descuentoForm) descuentoForm.style.display = 'block';
                 });
             }
-
-            // Cancel descuento form
             const cancelDescuentoFormBtn = document.getElementById('cancelDescuentoForm');
             if (cancelDescuentoFormBtn) {
                 cancelDescuentoFormBtn.addEventListener('click', () => {
@@ -8997,8 +8446,6 @@
                     if (descuentoForm) descuentoForm.style.display = 'none';
                 });
             }
-
-            // Submit descuento form
             const descuentoEditForm = document.getElementById('descuentoEditForm');
             if (descuentoEditForm) {
                 descuentoEditForm.addEventListener('submit', async (e) => {
@@ -9013,14 +8460,12 @@
                     const activo = document.getElementById('descuentoActivo').checked;
 
                     try {
-                        // Deshabilitar botón durante el envío
                         const submitBtn = e.target.querySelector('button[type="submit"]');
                         if (submitBtn) submitBtn.disabled = true;
 
                         let data, error;
 
                         if (descuentoId) {
-                            // Update existing discount
                             ({ data, error } = await supabase
                                 .from('discounts')
                                 .update({
@@ -9033,7 +8478,6 @@
                                 })
                                 .eq('id', descuentoId));
                         } else {
-                            // Insert new discount
                             ({ data, error } = await supabase
                                 .from('discounts')
                                 .insert([{
@@ -9050,24 +8494,16 @@
 
                         utils.showToast('Éxito', `Descuento ${descuentoId ? 'actualizado' : 'creado'} correctamente`, 'success');
                         document.getElementById('descuentoForm').style.display = 'none';
-
-                        // Reload discounts
                         await loadAdminDiscounts();
-
-                        // Re-habilitar botón
                         if (submitBtn) submitBtn.disabled = false;
                     } catch (error) {
                         console.error('Error saving discount:', error);
                         utils.showToast('Error', 'Hubo un problema al guardar el descuento', 'error');
-
-                        // Re-habilitar botón
                         const submitBtn = e.target.querySelector('button[type="submit"]');
                         if (submitBtn) submitBtn.disabled = false;
                     }
                 });
             }
-
-            // Add media button
             const addMediaBtn = document.getElementById('addMedia');
             if (addMediaBtn) {
                 addMediaBtn.addEventListener('click', () => {
@@ -9080,8 +8516,6 @@
                     if (mediaUploadForm) mediaUploadForm.reset();
                 });
             }
-
-            // Cancel media form
             const cancelMediaFormBtn = document.getElementById('cancelMediaForm');
             if (cancelMediaFormBtn) {
                 cancelMediaFormBtn.addEventListener('click', () => {
@@ -9089,8 +8523,6 @@
                     if (mediaForm) mediaForm.style.display = 'none';
                 });
             }
-
-            // File input preview
             const mediaFileInput = document.getElementById('mediaFile');
             if (mediaFileInput) {
                 mediaFileInput.addEventListener('change', function () {
@@ -9108,8 +8540,6 @@
                     }
                 });
             }
-
-            // Servicio imagen preview
             const servicioImagenInput = document.getElementById('servicioImagen');
             if (servicioImagenInput) {
                 servicioImagenInput.addEventListener('change', function () {
@@ -9127,8 +8557,6 @@
                     }
                 });
             }
-
-            // Submit media form
             const mediaUploadForm = document.getElementById('mediaUploadForm');
             if (mediaUploadForm) {
                 mediaUploadForm.addEventListener('submit', async (e) => {
@@ -9146,11 +8574,8 @@
                     const file = fileInput.files[0];
 
                     try {
-                        // Deshabilitar botón durante el envío
                         const submitBtn = e.target.querySelector('button[type="submit"]');
                         if (submitBtn) submitBtn.disabled = true;
-
-                        // Generate a unique filename
                         const timestamp = new Date().getTime();
                         const fileExt = file.name.split('.').pop();
                         const fileName = `${timestamp}.${fileExt}`;
@@ -9159,10 +8584,8 @@
                             : `general_${fileName}`;
 
                         console.log('Uploading to bucket: pinky-portfolio, path:', filePath);
-
-                        // Upload the file to Supabase Storage
                         const { data: storageData, error: storageError } = await supabase.storage
-                            .from('pinky-portfolio')  // Usar el nombre del bucket que creaste
+                            .from('pinky-portfolio')
                             .upload(filePath, file, {
                                 cacheControl: '3600',
                                 upsert: false
@@ -9172,13 +8595,9 @@
                             console.error('Storage error:', storageError);
                             throw storageError;
                         }
-
-                        // Get public URL for the uploaded file
                         const { data: urlData } = supabase.storage
-                            .from('pinky-portfolio')  // Usar el nombre del bucket que creaste
+                            .from('pinky-portfolio')
                             .getPublicUrl(filePath);
-
-                        // Insert record in media table
                         const { data, error } = await supabase
                             .from('media')
                             .insert([{
@@ -9191,34 +8610,23 @@
 
                         utils.showToast('Éxito', 'Imagen subida correctamente', 'success');
                         document.getElementById('mediaForm').style.display = 'none';
-
-                        // Reload media
                         await loadAdminMedia();
-                        await loadLashbook(); // Update public lashbook
-
-                        // Re-habilitar botón
+                        await loadLashbook();
                         if (submitBtn) submitBtn.disabled = false;
                     } catch (error) {
                         console.error('Error uploading media:', error);
                         utils.showToast('Error', 'Hubo un problema al subir la imagen: ' + error.message, 'error');
-
-                        // Re-habilitar botón
                         const submitBtn = e.target.querySelector('button[type="submit"]');
                         if (submitBtn) submitBtn.disabled = false;
                     }
                 });
             }
-
-            // Metrics date range
             const metricsDateRange = document.getElementById('metricsDateRange');
             if (metricsDateRange) {
                 metricsDateRange.addEventListener('change', function () {
-                    // Refresh metrics based on selected date range
                     updateMetrics(this.value);
                 });
             }
-
-            // Download charts
             const downloadChartButtons = {
                 'downloadChartIngresos': 'chartIngresos',
                 'downloadChartIngresosPorServicio': 'chartIngresosPorServicio',
@@ -9236,8 +8644,6 @@
                     });
                 }
             });
-
-            // Buscador de citas
             const searchAppointmentsInput = document.getElementById('searchAppointments');
             if (searchAppointmentsInput) {
                 searchAppointmentsInput.addEventListener('input', utils.debounce(function () {
@@ -9245,8 +8651,6 @@
                     filterAppointments(searchTerm);
                 }, 300));
             }
-
-            // Buscador de reseñas
             const searchReviewsInput = document.getElementById('searchReviews');
             if (searchReviewsInput) {
                 searchReviewsInput.addEventListener('input', utils.debounce(function () {
@@ -9255,8 +8659,6 @@
                 }, 300));
             }
         }
-
-        // Filtrar citas por término de búsqueda
         function filterAppointments(searchTerm) {
             const rows = document.querySelectorAll('#reservasTable tbody tr');
 
@@ -9269,8 +8671,6 @@
                 }
             });
         }
-
-        // Filtrar reseñas por término de búsqueda
         function filterReviews(searchTerm) {
             const rows = document.querySelectorAll('#resenasTable tbody tr');
 
@@ -9283,8 +8683,6 @@
                 }
             });
         }
-
-        // Función para descargar un gráfico como imagen
         function downloadChart(chartId, filename) {
             try {
                 const canvas = document.getElementById(chartId);
@@ -9305,28 +8703,20 @@
                 utils.showToast('Error', 'Hubo un problema al descargar el gráfico', 'error');
             }
         }
-
-        // Exportar citas a CSV
         function exportAppointmentsToCSV() {
             const activeTab = document.querySelector('#adminReservas .admin-tab.active');
             const status = activeTab ? activeTab.getAttribute('data-status') : 'all';
-
-            // Filter appointments by status
             let filteredAppointments = [...appData.appointments];
 
             if (status !== 'all') {
                 filteredAppointments = filteredAppointments.filter(a => a.status === status);
             }
-
-            // Sort by date and time
             filteredAppointments.sort((a, b) => {
                 if (a.date === b.date) {
                     return a.start_time.localeCompare(b.start_time);
                 }
                 return a.date.localeCompare(b.date);
             });
-
-            // Prepare CSV content
             const headers = ['ID', 'Fecha', 'Hora Inicio', 'Hora Fin', 'Cliente', 'Teléfono', 'Servicio', 'Estado'];
             const rows = [headers];
 
@@ -9358,32 +8748,23 @@
                     statusText
                 ]);
             });
-
-            // Export to CSV
             utils.exportToCSV(rows, `reservas_${new Date().toISOString().split('T')[0]}.csv`);
         }
-
-        // Actualizar métricas basadas en rango de fechas
         function updateMetrics(daysRange) {
             const range = parseInt(daysRange);
             const endDate = new Date();
             const startDate = new Date();
             startDate.setDate(startDate.getDate() - range);
-
-            // Filter appointments within range
             const appointmentsInRange = appData.appointments.filter(a => {
                 const appointmentDate = new Date(a.date);
                 return appointmentDate >= startDate && appointmentDate <= endDate && a.status !== 'CANCELLED';
             });
-
-            // Calculate total income in range
             let totalIncome = 0;
 
             appointmentsInRange.forEach(appointment => {
                 const service = appData.services.find(s => s.id === appointment.service_id);
 
                 if (service) {
-                    // Check for active discounts at the time of appointment
                     const dateAppointment = new Date(appointment.date);
                     const activeDiscounts = appData.discounts.filter(d =>
                         d.service_id === service.id &&
@@ -9406,8 +8787,6 @@
             if (metricaIngresoTotalElement) {
                 metricaIngresoTotalElement.textContent = utils.formatCurrency(totalIncome);
             }
-
-            // Calculate unique clients in range
             const uniqueClients = new Set();
             appointmentsInRange.forEach(appointment => {
                 uniqueClients.add(appointment.customer_phone);
@@ -9417,24 +8796,16 @@
             if (metricaClientesTotalElement) {
                 metricaClientesTotalElement.textContent = uniqueClients.size;
             }
-
-            // Update charts for the selected range
             updateChartsForRange(range);
         }
-
-        // Actualizar gráficos para el rango seleccionado
         function updateChartsForRange(daysRange) {
             const endDate = new Date();
             const startDate = new Date();
             startDate.setDate(startDate.getDate() - daysRange);
-
-            // Filter appointments within range
             const appointmentsInRange = appData.appointments.filter(a => {
                 const appointmentDate = new Date(a.date);
                 return appointmentDate >= startDate && appointmentDate <= endDate && a.status !== 'CANCELLED';
             });
-
-            // Update ingresos por servicio chart
             const ingresosPorServicioData = calculateIncomeByServiceForRange(appointmentsInRange);
             const chartIngresosPorServicio = cache.charts.ingresosPorServicio;
 
@@ -9443,8 +8814,6 @@
                 chartIngresosPorServicio.data.datasets[0].data = ingresosPorServicioData.data;
                 chartIngresosPorServicio.update();
             }
-
-            // Update reservas por día chart
             const reservasPorDiaData = calculateBookingsByDayForRange(appointmentsInRange);
             const chartReservasPorDia = cache.charts.reservasPorDia;
 
@@ -9452,8 +8821,6 @@
                 chartReservasPorDia.data.datasets[0].data = reservasPorDiaData;
                 chartReservasPorDia.update();
             }
-
-            // Update horarios populares chart
             const horarioPopularData = calculatePopularTimeSlotsForRange(appointmentsInRange);
             const chartHorarioPopular = cache.charts.horarioPopular;
 
@@ -9463,8 +8830,6 @@
                 chartHorarioPopular.update();
             }
         }
-
-        // Calcular ingresos por servicio para un rango
         function calculateIncomeByServiceForRange(appointments) {
             const serviceIncome = {};
 
@@ -9473,7 +8838,6 @@
                 const service = appData.services.find(s => s.id === serviceId);
 
                 if (service) {
-                    // Check for active discounts at the time of appointment
                     const dateAppointment = new Date(appointment.date);
                     const activeDiscounts = appData.discounts.filter(d =>
                         d.service_id === service.id &&
@@ -9491,8 +8855,6 @@
                     serviceIncome[serviceId] = (serviceIncome[serviceId] || 0) + finalPrice;
                 }
             });
-
-            // Sort by income
             const sortedServices = Object.entries(serviceIncome)
                 .sort((a, b) => b[1] - a[1]);
 
@@ -9505,8 +8867,6 @@
 
             return { labels, data };
         }
-
-        // Calcular reservas por día para un rango
         function calculateBookingsByDayForRange(appointments) {
             const dayCount = Array(7).fill(0);
 
@@ -9517,8 +8877,6 @@
 
             return dayCount;
         }
-
-        // Calcular horarios populares para un rango
         function calculatePopularTimeSlotsForRange(appointments) {
             const timeSlots = {};
 
@@ -9526,8 +8884,6 @@
                 const hour = appointment.start_time.substring(0, 2);
                 timeSlots[hour] = (timeSlots[hour] || 0) + 1;
             });
-
-            // Generate all hours from 9 to 20
             const labels = [];
             const data = [];
 
@@ -9539,10 +8895,6 @@
 
             return { labels, data };
         }
-
-        // ======== FUNCIONES GLOBALES PARA OPERACIONES DEL ADMIN ========
-
-        // Editar servicio (función global para ser llamada desde el HTML)
         window.editService = function (id) {
             const service = appData.services.find(s => s.id === id);
 
@@ -9582,8 +8934,6 @@
             const servicioForm = document.getElementById('servicioForm');
             if (servicioForm) servicioForm.style.display = 'block';
         };
-
-        // Limpiar imagen del servicio (función global para ser llamada desde el HTML)
         window.clearServicioImagen = function () {
             const servicioImagen = document.getElementById('servicioImagen');
             const servicioImagenPreview = document.getElementById('servicioImagenPreview');
@@ -9593,8 +8943,6 @@
             if (servicioImagenPreview) servicioImagenPreview.style.display = 'none';
             if (previewImageServicio) previewImageServicio.src = '';
         };
-
-        // Activar/desactivar servicio (función global para ser llamada desde el HTML)
         window.toggleServiceStatus = async function (id, isActive) {
             try {
                 const { data, error } = await supabase
@@ -9605,17 +8953,13 @@
                 if (error) throw error;
 
                 utils.showToast('Éxito', `Servicio ${isActive ? 'activado' : 'desactivado'} correctamente`, 'success');
-
-                // Reload services
                 await loadAdminServices();
-                loadServicesAndPrices(); // Update public services
+                loadServicesAndPrices();
             } catch (error) {
                 console.error('Error toggling service status:', error);
                 utils.showToast('Error', 'Hubo un problema al cambiar el estado del servicio', 'error');
             }
         };
-
-        // Editar descuento (función global para ser llamada desde el HTML)
         window.editDiscount = function (id) {
             const discount = appData.discounts.find(d => d.id === id);
 
@@ -9649,8 +8993,6 @@
             const descuentoForm = document.getElementById('descuentoForm');
             if (descuentoForm) descuentoForm.style.display = 'block';
         };
-
-        // Activar/desactivar descuento (función global para ser llamada desde el HTML)
         window.toggleDiscountStatus = async function (id, isActive) {
             try {
                 const { data, error } = await supabase
@@ -9661,16 +9003,12 @@
                 if (error) throw error;
 
                 utils.showToast('Éxito', `Descuento ${isActive ? 'activado' : 'desactivado'} correctamente`, 'success');
-
-                // Reload discounts
                 await loadAdminDiscounts();
             } catch (error) {
                 console.error('Error toggling discount status:', error);
                 utils.showToast('Error', 'Hubo un problema al cambiar el estado del descuento', 'error');
             }
         };
-
-        // Eliminar descuento (función global para ser llamada desde el HTML)
         window.deleteDiscount = async function (id) {
             if (!confirm('¿Estás seguro de que deseas eliminar este descuento? Esta acción no se puede deshacer.')) {
                 return;
@@ -9685,16 +9023,12 @@
                 if (error) throw error;
 
                 utils.showToast('Éxito', 'Descuento eliminado correctamente', 'success');
-
-                // Reload discounts
                 await loadAdminDiscounts();
             } catch (error) {
                 console.error('Error deleting discount:', error);
                 utils.showToast('Error', 'Hubo un problema al eliminar el descuento', 'error');
             }
         };
-
-        // Activar/desactivar visibilidad de imagen (función global para ser llamada desde el HTML)
         window.toggleMediaVisibility = async function (id, isPublic) {
             try {
                 const { data, error } = await supabase
@@ -9705,17 +9039,13 @@
                 if (error) throw error;
 
                 utils.showToast('Éxito', `Imagen ${isPublic ? 'publicada' : 'ocultada'} correctamente`, 'success');
-
-                // Reload media
                 await loadAdminMedia();
-                await loadLashbook(); // Update public lashbook
+                await loadLashbook();
             } catch (error) {
                 console.error('Error toggling media visibility:', error);
                 utils.showToast('Error', 'Hubo un problema al cambiar la visibilidad de la imagen', 'error');
             }
         };
-
-        // Eliminar imagen (función global para ser llamada desde el HTML)
         window.deleteMedia = async function (id) {
             if (!confirm('¿Estás seguro de que deseas eliminar esta imagen? Esta acción no se puede deshacer.')) {
                 return;
@@ -9730,17 +9060,13 @@
                 if (error) throw error;
 
                 utils.showToast('Éxito', 'Imagen eliminada correctamente', 'success');
-
-                // Reload media
                 await loadAdminMedia();
-                await loadLashbook(); // Update public lashbook
+                await loadLashbook();
             } catch (error) {
                 console.error('Error deleting media:', error);
                 utils.showToast('Error', 'Hubo un problema al eliminar la imagen', 'error');
             }
         };
-
-        // Eliminar fecha de cierre (función global para ser llamada desde el HTML)
         window.deleteBlackout = async function (id) {
             if (!confirm('¿Estás seguro de que deseas eliminar esta fecha de cierre? Esta acción no se puede deshacer.')) {
                 return;
@@ -9755,8 +9081,6 @@
                 if (error) throw error;
 
                 utils.showToast('Éxito', 'Fecha de cierre eliminada correctamente', 'success');
-
-                // Reload blackouts
                 await loadAdminBlackouts();
                 await loadBlackoutDates();
             } catch (error) {
@@ -9764,8 +9088,6 @@
                 utils.showToast('Error', 'Hubo un problema al eliminar la fecha de cierre', 'error');
             }
         };
-
-        // Aprobar reseña (función global para ser llamada desde el HTML)
         window.approveReview = async function (id) {
             try {
                 const { data, error } = await supabase
@@ -9776,17 +9098,13 @@
                 if (error) throw error;
 
                 utils.showToast('Éxito', 'Reseña aprobada y publicada', 'success');
-
-                // Reload reviews
                 await loadAdminReviews();
-                await loadReviews(); // Update public reviews
+                await loadReviews();
             } catch (error) {
                 console.error('Error approving review:', error);
                 utils.showToast('Error', 'Hubo un problema al aprobar la reseña', 'error');
             }
         };
-
-        // Eliminar reseña (función global para ser llamada desde el HTML)
         window.deleteReview = async function (id) {
             if (!confirm('¿Estás seguro de que deseas eliminar esta reseña? Esta acción no se puede deshacer.')) {
                 return;
@@ -9801,17 +9119,13 @@
                 if (error) throw error;
 
                 utils.showToast('Éxito', 'Reseña eliminada correctamente', 'success');
-
-                // Reload reviews
                 await loadAdminReviews();
-                await loadReviews(); // Update public reviews
+                await loadReviews();
             } catch (error) {
                 console.error('Error deleting review:', error);
                 utils.showToast('Error', 'Hubo un problema al eliminar la reseña', 'error');
             }
         };
-
-        // Actualizar estado de cita (función global para ser llamada desde el HTML)
         window.updateAppointmentStatus = async function (id, status) {
             try {
                 const { data, error } = await supabase
@@ -9822,8 +9136,6 @@
                 if (error) throw error;
 
                 utils.showToast('Éxito', `Estado de la cita actualizado a ${status === 'CONFIRMED' ? 'Confirmada' : 'Cancelada'}`, 'success');
-
-                // Reload appointments
                 const activeTab = document.querySelector('#adminReservas .admin-tab.active');
                 const currentStatus = activeTab ? activeTab.getAttribute('data-status') : 'all';
                 await loadAdminAppointments(currentStatus);
@@ -9832,8 +9144,6 @@
                 utils.showToast('Error', 'Hubo un problema al actualizar el estado de la cita', 'error');
             }
         };
-
-        // Enviar recordatorio por WhatsApp (función global para ser llamada desde el HTML)
         window.sendWhatsAppReminder = function (appointmentId) {
             const appointment = appData.appointments.find(a => a.id === appointmentId);
 
@@ -9845,8 +9155,6 @@
             const service = appData.services.find(s => s.id === appointment.service_id);
             const formattedDate = utils.formatDate(appointment.date);
             const formattedTime = utils.formatTime(appointment.start_time);
-
-            // Crear mensaje personalizado
             const dayName = new Date(appointment.date).toLocaleDateString('es-CL', { weekday: 'long' });
 
             const message = encodeURIComponent(
@@ -9862,13 +9170,9 @@
 
             window.open(`https://wa.me/${appointment.customer_phone.replace(/\D/g, '')}?text=${message}`, '_blank');
         };
-
-        // Exportar reporte en PDF (función global para ser llamada desde el HTML)
         window.exportReportPDF = function () {
             try {
                 utils.showToast('Info', 'Generando informe PDF...', 'info');
-
-                // Preparar contenido del reporte
                 const reportTitle = 'Informe de Gestión - Pinky Eyelashess';
                 const reportDate = utils.formatDate(new Date(), {
                     year: 'numeric',
@@ -9877,8 +9181,6 @@
                     hour: '2-digit',
                     minute: '2-digit'
                 });
-
-                // Estadísticas para el reporte
                 const now = new Date();
                 const currentMonth = now.getMonth();
                 const currentYear = now.getFullYear();
@@ -9894,8 +9196,6 @@
                 const confirmedAppointments = appData.appointments.filter(a => a.status === 'CONFIRMED').length;
                 const pendingAppointments = appData.appointments.filter(a => a.status === 'PENDING').length;
                 const cancelledAppointments = appData.appointments.filter(a => a.status === 'CANCELLED').length;
-
-                // Calcular ingresos del mes actual
                 let currentMonthIncome = 0;
                 currentMonthAppointments.forEach(appointment => {
                     const service = appData.services.find(s => s.id === appointment.service_id);
@@ -9903,8 +9203,6 @@
                         currentMonthIncome += service.base_price;
                     }
                 });
-
-                // Popular services
                 const serviceCount = {};
                 appData.appointments
                     .filter(a => a.status !== 'CANCELLED')
@@ -9915,7 +9213,7 @@
 
                 const sortedServices = Object.entries(serviceCount)
                     .sort((a, b) => b[1] - a[1])
-                    .slice(0, 3); // Top 3
+                    .slice(0, 3);
 
                 const topServices = sortedServices.map(([serviceId, count]) => {
                     const service = appData.services.find(s => s.id == serviceId);
@@ -9924,11 +9222,7 @@
                         count
                     };
                 });
-
-                // Crear un mensaje con la instrucción de ver PDF generado
                 utils.showToast('Éxito', 'Informe PDF generado. Abriendo descarga...', 'success');
-
-                // Simulamos la descarga del PDF (en producción, habría que usar una biblioteca como jsPDF)
                 setTimeout(() => {
                     alert('Funcionalidad de exportación a PDF: Aquí se generaría un documento PDF con las siguientes estadísticas:\n\n' +
                         `- Título: ${reportTitle}\n` +
@@ -9947,72 +9241,8 @@
             }
         };
 
-        // ======== OPTIMIZACIONES ADICIONALES ========
-
-        // Precarga de imágenes para mejor rendimiento visual
-        function preloadImages() {
-            // Precargar imágenes comunes
-            const imagesToPreload = [
-                'img/logo.png',
-                'img/hero-bg.jpg',
-                'img/before1.jpg',
-                'img/after1.jpg'
-            ];
-
-            imagesToPreload.forEach(src => {
-                const img = new Image();
-                img.src = src;
-            });
-        }
-
-        // Compresión de datos para menor uso de memoria
-        function compressAppData() {
-            // Esta función podría implementarse para optimizar el uso de memoria
-            // en dispositivos de baja capacidad, almacenando sólo los datos esenciales
-            // y descargando el resto según demanda
-            console.log('Data optimization applied');
-        }
-
-        // Gestión avanzada de caché
-        function setupCacheManagement() {
-            // Limpieza periódica de caché para evitar memory leaks
-            setInterval(() => {
-                // Limpiar caché de elementos no utilizados
-                for (const key in cache) {
-                    if (cache[key] && typeof cache[key] === 'object') {
-                        // Mantener solo los datos más recientes
-                        if (cache[key].timestamp && (Date.now() - cache[key].timestamp > 3600000)) {
-                            delete cache[key];
-                        }
-                    }
-                }
-            }, 1800000); // Cada 30 minutos
-        }
-
-        // Inicialización de rendimiento
-        function initPerformance() {
-            preloadImages();
-            setupCacheManagement();
-
-            // Detectar dispositivo para optimizaciones específicas
-            if (utils.isMobile()) {
-                // Reducir animaciones y efectos en móviles
-                document.body.classList.add('mobile-optimized');
-                compressAppData();
-            }
-        }
-
-        // ======== INICIALIZACIÓN DE LA APLICACIÓN ========
-
-        // Iniciar la aplicación cuando el DOM esté completamente cargado
         document.addEventListener('DOMContentLoaded', () => {
-            // Inicializar la aplicación
             initApp();
-
-            // Aplicar optimizaciones de rendimiento
-            initPerformance();
-
-            // Detectar si la página debe cargar en modo admin
             if (window.location.hash === '#admin') {
                 setTimeout(() => {
                     const adminLoginModal = document.getElementById('adminLoginModal');
@@ -10023,7 +9253,6 @@
             }
         });
     </script>
-
 
 </body>
 
