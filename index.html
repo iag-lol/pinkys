@@ -1623,7 +1623,7 @@
             transition: transform var(--transition-normal), box-shadow var(--transition-normal);
             display: flex;
             flex-direction: column;
-            height: 100%;
+            height: auto;
             overflow: hidden;
             position: relative;
         }
@@ -5363,6 +5363,8 @@
                 averageRating: 0
             }
         };
+        let eventListenersInitialized = false;
+        let adminEventListenersInitialized = false;
         const cache = {
             charts: {},
             dateFilters: {
@@ -5641,6 +5643,8 @@
             });
         }
         function setupEventListeners() {
+            if (eventListenersInitialized) return;
+            eventListenersInitialized = true;
             window.addEventListener('scroll', () => {
                 const header = document.getElementById('header');
                 if (!header) return;
@@ -8217,6 +8221,8 @@ async function loadTimeSlots(date) {
             };
         }
         function setupAdminEventHandlers() {
+            if (adminEventListenersInitialized) return;
+            adminEventListenersInitialized = true;
             document.querySelectorAll('#adminReservas .admin-tab').forEach(tab => {
                 tab.addEventListener('click', () => {
                     document.querySelectorAll('#adminReservas .admin-tab').forEach(t => {
