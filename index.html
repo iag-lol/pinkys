@@ -1609,8 +1609,13 @@
 
         .precios-grid {
             display: grid;
+
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: var(--spacing-lg);
+
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: var(--spacing-2xl);
+
             position: relative;
             z-index: 1;
         }
@@ -1619,7 +1624,7 @@
             background-color: var(--color-white);
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-md);
-            padding: var(--spacing-xl);
+            padding: var(--spacing-lg);
             transition: transform var(--transition-normal), box-shadow var(--transition-normal);
             display: flex;
             flex-direction: column;
@@ -1645,7 +1650,7 @@
 
         .precio-image {
             width: 100%;
-            height: 200px;
+            height: 150px;
             border-radius: var(--radius-md);
             margin-bottom: var(--spacing-md);
             overflow: hidden;
@@ -1670,7 +1675,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to bottom, transparent 70%, rgba(0, 0, 0, 0.4));
+            background: linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.25));
             z-index: 1;
         }
 
@@ -1683,25 +1688,25 @@
         }
 
         .precio-title {
-            font-size: 1.5rem;
-            margin-bottom: var(--spacing-md);
+            font-size: 1.25rem;
+            margin-bottom: var(--spacing-sm);
             font-family: var(--font-title);
         }
 
         .precio-amount {
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: var(--color-accent);
-            margin-bottom: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
             display: flex;
             align-items: center;
         }
 
         .precio-original {
-            font-size: 1.25rem;
+            font-size: 1rem;
             color: var(--color-text-light);
             text-decoration: line-through;
-            margin-right: var(--spacing-sm);
+            margin-right: var(--spacing-xs);
         }
 
         .precio-discount {
@@ -1714,13 +1719,13 @@
         }
 
         .precio-description {
-            margin-bottom: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
             flex-grow: 1;
         }
 
         .precio-details {
             list-style: none;
-            margin-bottom: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
         }
 
         .precio-details li {
