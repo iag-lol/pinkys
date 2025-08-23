@@ -1609,8 +1609,8 @@
 
         .precios-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: var(--spacing-xl);
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: var(--spacing-2xl);
             position: relative;
             z-index: 1;
         }
@@ -6127,19 +6127,7 @@
                 if (!preciosGrid) return;
 
                 preciosGrid.innerHTML = '';
-                const servicesByCategory = {};
                 appData.services.forEach(service => {
-                    const category = service.category || 'OTROS';
-                    if (!servicesByCategory[category]) {
-                        servicesByCategory[category] = [];
-                    }
-                    servicesByCategory[category].push(service);
-                });
-                Object.entries(servicesByCategory).forEach(([category, services]) => {
-                    const categoryGrid = document.createElement('div');
-                    categoryGrid.className = 'precio-category-grid';
-
-                    services.forEach(service => {
                         const precioCard = document.createElement('div');
                         precioCard.className = 'precio-card animate-on-scroll';
                         const activeDiscounts = appData.discounts.filter(d =>
@@ -6190,10 +6178,7 @@
                     </div>
                 `;
 
-                        categoryGrid.appendChild(precioCard);
-                    });
-
-                    preciosGrid.appendChild(categoryGrid);
+                        preciosGrid.appendChild(precioCard);
                 });
                 setupObservers();
 
