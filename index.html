@@ -464,7 +464,7 @@
             text-align: center;
             font-size: 1.125rem;
             color: var(--color-text-light);
-            margin-top: -0.75rem;
+            margin-top: var(--spacing-sm);
             margin-bottom: var(--spacing-xl);
             max-width: 700px;
             margin-left: auto;
@@ -2746,6 +2746,7 @@
             height: 100%;
             background-image: url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23FFFFFF" fill-opacity="0.05"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
             opacity: 0.1;
+            pointer-events: none;
         }
 
         .footer-container {
@@ -2948,13 +2949,10 @@
 
             .admin-panel {
                 flex-direction: column;
-                height: calc(100vh - 60px);
             }
 
             .admin-sidebar {
                 width: 100%;
-                max-height: 180px;
-                overflow-y: auto;
                 padding: var(--spacing-sm) 0;
             }
 
@@ -2968,6 +2966,7 @@
                 overflow-x: auto;
                 padding: 0 var(--spacing-sm);
                 gap: var(--spacing-xs);
+                flex: 0 0 auto;
             }
 
             .admin-menu-item {
@@ -2976,13 +2975,26 @@
             }
 
             .admin-menu-link {
-                padding: var(--spacing-sm) var(--spacing-md);
+                padding: var(--spacing-xs) var(--spacing-sm);
                 white-space: nowrap;
                 border-radius: var(--radius-sm);
+                flex-direction: column;
+                align-items: center;
+                gap: var(--spacing-xs);
+                border-left: none;
+                border-bottom: 3px solid transparent;
+            }
+
+            .admin-menu-link.active {
+                border-bottom-color: var(--color-accent);
+            }
+
+            .admin-menu-text {
+                font-size: 0.75rem;
             }
 
             .admin-sidebar-footer {
-                position: relative;
+                margin-top: auto;
                 padding: var(--spacing-sm) var(--spacing-md);
                 border-top: 1px solid rgba(255, 255, 255, 0.1);
             }
@@ -2991,6 +3003,7 @@
                 padding: var(--spacing-md);
                 flex: 1;
                 overflow-y: auto;
+                min-height: 0;
             }
 
             .admin-dashboard {
@@ -3049,10 +3062,10 @@
             border-radius: 0;
             box-shadow: none;
             margin-top: 0;
-            height: calc(90vh - 80px);
             display: flex;
-            overflow: hidden;
             flex: 1;
+            min-height: 0;
+            overflow: hidden;
         }
 
         .admin-sidebar {
@@ -3060,9 +3073,10 @@
             background-color: var(--color-gray-900);
             color: var(--color-white);
             padding: var(--spacing-lg) 0;
-            position: relative;
             z-index: 10;
             flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
         }
 
         .admin-sidebar-header {
@@ -3071,6 +3085,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            flex-shrink: 0;
         }
 
         .admin-sidebar-title {
@@ -3105,6 +3120,8 @@
             list-style: none;
             padding: 0;
             margin: 0;
+            flex: 1;
+            overflow-y: auto;
         }
 
         .admin-menu-item {
@@ -3147,10 +3164,7 @@
         }
 
         .admin-sidebar-footer {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
+            margin-top: auto;
             padding: var(--spacing-md) var(--spacing-lg);
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
@@ -3174,7 +3188,7 @@
             padding: var(--spacing-lg);
             overflow-y: auto;
             background-color: var(--color-gray-100);
-            height: 100%;
+            min-height: 0;
         }
 
         .admin-header {
@@ -5615,6 +5629,19 @@
 
                     if (error) throw error;
 
+                    // Check for active discounts
+                    const activeDiscounts = appData.discounts.filter(d =>
+                        d.service_id === service.id &&
+                        d.is_active &&
+                        new Date(d.date_start) <= new Date() &&
+                        new Date(d.date_end) >= new Date()
+                    );
+                    const hasDiscount = activeDiscounts.length > 0;
+                    const discount = hasDiscount ? activeDiscounts[0] : null;
+                    const finalPrice = hasDiscount
+                        ? Math.round(service.base_price * (1 - discount.percent_off / 100))
+                        : service.base_price;
+
                     // Prepare WhatsApp message
                     const message = encodeURIComponent(
                         `Nueva reserva Pinky Eyelashess:\n` +
@@ -5623,7 +5650,9 @@
                         `Servicio: ${service.name}\n` +
                         `Fecha: ${utils.formatDate(fechaSeleccionada)}\n` +
                         `Hora: ${horaSeleccionada}–${endTime}\n` +
-                        `Precio: ${utils.formatCurrency(service.base_price)}\n` +
+                        (hasDiscount
+                            ? `Precio: ${utils.formatCurrency(service.base_price)} (-${discount.percent_off}% = ${utils.formatCurrency(finalPrice)})\n`
+                            : `Precio: ${utils.formatCurrency(service.base_price)}\n`) +
                         `Origen: Web`
                     );
 
@@ -6183,14 +6212,22 @@
             const weekdayNames = ['LUN','MAR','MIÉ','JUE','VIE','SÁB','DOM'];
             weekdayNames.forEach(d => {
                 const el = document.createElement('div');
+
+                el.className = 'weekday';
+
                 el.textContent = d;
                 daysHeader.appendChild(el);
             });
             calendarContainer.appendChild(daysHeader);
 
             // Cálculos base
+
+            // Posición del primer día del mes considerando semana iniciando en lunes
+            const firstDay = (new Date(year, month, 1).getDay() + 6) % 7;
+
             const firstDayJS = new Date(year, month, 1).getDay();
             const firstDayMonday = (firstDayJS + 6) % 7;
+
             const daysInMonth = new Date(year, month + 1, 0).getDate();
 
             // Contenedor de días
@@ -6198,7 +6235,11 @@
             daysContainer.className = 'calendar-days';
 
             // Días del mes anterior (relleno al inicio)
+
+            const prevMonthDaysCount = firstDay;
+
             const prevMonthDaysCount = firstDayMonday;
+
             const prevMonthLastDay = new Date(year, month, 0).getDate();
             for (let i = prevMonthDaysCount; i > 0; i--) {
                 const dayElement = document.createElement('div');
@@ -6210,11 +6251,16 @@
             // Días del mes actual
             for (let day = 1; day <= daysInMonth; day++) {
                 const dateObj = new Date(year, month, day);
+
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+
                 const dateStr = dateObj.toISOString().split('T')[0];
+
 
                 const dayElement = document.createElement('div');
                 dayElement.className = 'calendar-day';
                 dayElement.textContent = day;
+
 
                 // Estado: hoy, cierre de día o blackout
                 const isToday = (day === today.getDate() && month === today.getMonth() && year === today.getFullYear());
@@ -6223,6 +6269,17 @@
                 const dayOfWeekJS = dateObj.getDay();
                 const closedByWeekday = isDayClosed(dayOfWeekJS);
                 const isBlackout = isBlackoutDate(dateStr);
+
+
+
+                // Estado: hoy, cierre de día o blackout
+                const isToday = (day === today.getDate() && month === today.getMonth() && year === today.getFullYear());
+                if (isToday) dayElement.classList.add('today');
+
+                const dayOfWeekJS = dateObj.getDay();
+                const closedByWeekday = isDayClosed(dayOfWeekJS);
+                const isBlackout = isBlackoutDate(dateStr);
+
 
                 if (closedByWeekday || isBlackout) {
                     dayElement.classList.add('disabled');
@@ -6304,7 +6361,12 @@
             const serviceId = parseInt(servicioSelect.value, 10);
 
             try {
+
+                const [y, m, d] = date.split('-').map(Number);
+                const dayOfWeek = new Date(y, m - 1, d).getDay();
+
                 const dayOfWeek = new Date(date).getDay();
+
                 const dayAvailability = appData.availability.find(a => a.weekday === dayOfWeek);
 
                 if (!dayAvailability || dayAvailability.is_closed) {
@@ -6459,7 +6521,10 @@
 
                 if (error) throw error;
 
-                appData.blackouts = data;
+                appData.blackouts = data.map(b => ({
+                    ...b,
+                    date: (b.date || '').split('T')[0]
+                }));
             } catch (error) {
                 console.error('Error loading blackout dates:', error);
             }
@@ -7125,7 +7190,10 @@
 
                 if (error) throw error;
 
-                appData.blackouts = data;
+                appData.blackouts = data.map(b => ({
+                    ...b,
+                    date: (b.date || '').split('T')[0]
+                }));
 
                 // Update blackouts table
                 const blackoutsTable = document.getElementById('blackoutsTable').querySelector('tbody');
