@@ -1822,40 +1822,67 @@
             margin-top: var(--spacing-xs);
         }
 
-        .time-slots {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-            gap: var(--spacing-xs);
-            margin-top: var(--spacing-sm);
-        }
+      
+/* Estilos actualizados para los time slots - solo lo esencial */
 
-        .time-slot {
-            padding: var(--spacing-sm);
-            border: 1px solid var(--color-gray-300);
-            border-radius: var(--radius-sm);
-            text-align: center;
-            cursor: pointer;
-            transition: all var(--transition-fast);
-            font-size: 0.9375rem;
-        }
+/* Contenedor de horarios */
+.time-slots {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+    margin-top: 15px;
+}
 
-        .time-slot:hover:not(.disabled) {
-            border-color: var(--color-accent);
-            background-color: rgba(210, 121, 165, 0.1);
-        }
+/* Estilo básico para cada slot de tiempo */
+.time-slot {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-primary-light);
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 12px 10px;
+    font-size: 0.9rem;
+    color: var(--color-text);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
 
-        .time-slot.selected {
-            border-color: var(--color-accent);
-            background-color: var(--color-accent);
-            color: var(--color-white);
-        }
+/* Hover sobre slot disponible */
+.time-slot:hover:not(.disabled) {
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
 
-        .time-slot.disabled {
-            background-color: var(--color-gray-100);
-            color: var(--color-gray-500);
-            cursor: not-allowed;
-            border-color: var(--color-gray-200);
-        }
+/* Slot seleccionado */
+.time-slot.selected {
+    background-color: var(--color-accent);
+    color: var(--color-white);
+    border-color: var(--color-accent);
+    font-weight: 500;
+    box-shadow: 0 3px 8px rgba(210, 121, 165, 0.3);
+}
+
+/* Slot no disponible */
+.time-slot.disabled {
+    background-color: var(--color-gray-100);
+    color: var(--color-gray-400);
+    cursor: not-allowed;
+    border-color: var(--color-gray-200);
+}
+
+/* Título de sección de horarios */
+.time-slots-title {
+    font-family: var(--font-title);
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    color: var(--color-text);
+    border-bottom: 2px solid var(--color-primary-light);
+    padding-bottom: 8px;
+}
+
+
+
 
                 .calendar-container {
             width: 100%;
@@ -6451,6 +6478,121 @@
             const today = new Date();
             renderCalendar(today.getMonth(), today.getFullYear());
         }
+
+        async function generateTimeSlots(date) {
+    const timeSlotsContainer = document.getElementById('timeSlots');
+    const noSlotsMessage = document.getElementById('noSlotsMessage');
+    
+    timeSlotsContainer.innerHTML = '';
+    
+    try {
+        // Obtener horarios ya reservados para esta fecha
+        const { data: reservedSlots, error } = await supabase
+            .from('reservas')
+            .select('hora, servicio, servicios(duracion)')
+            .eq('fecha', date)
+            .in('estado', ['pendiente', 'confirmada']);
+        
+        if (error) throw error;
+        
+        // Horario de atención (configurable desde el panel admin)
+        const openTime = '09:00';
+        const closeTime = '19:00';
+        const slotDuration = 30; // minutos
+        
+        // Convertir a minutos desde el inicio del día
+        const openMinutes = parseInt(openTime.split(':')[0]) * 60 + parseInt(openTime.split(':')[1]);
+        const closeMinutes = parseInt(closeTime.split(':')[0]) * 60 + parseInt(closeTime.split(':')[1]);
+        
+        // Crear contenedor para los slots
+        const slotsGrid = document.createElement('div');
+        slotsGrid.className = 'time-slots';
+        
+        // Generar todos los horarios posibles y ordenarlos cronológicamente
+        const allSlots = [];
+        
+        for (let time = openMinutes; time < closeMinutes; time += slotDuration) {
+            const hours = Math.floor(time / 60);
+            const minutes = time % 60;
+            const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+            
+            // Calcular hora de fin para mostrar
+            const endTime = time + slotDuration;
+            const endHours = Math.floor(endTime / 60);
+            const endMinutes = endTime % 60;
+            const endTimeString = `${endHours.toString().padStart(2, '0')}:${endMinutes.toString().padStart(2, '0')}`;
+            
+            allSlots.push({
+                start: timeString,
+                end: endTimeString,
+                minutes: time
+            });
+        }
+        
+        // Ordenar slots por hora (de mañana a tarde)
+        allSlots.sort((a, b) => a.minutes - b.minutes);
+        
+        // Marcar horarios como ocupados
+        const unavailableSlots = new Set();
+        if (reservedSlots && reservedSlots.length > 0) {
+            reservedSlots.forEach(slot => {
+                const reservedTime = slot.hora;
+                const serviceDuration = slot.servicios ? slot.servicios.duracion : 60; // Default 60 min
+                const slotCount = Math.ceil(serviceDuration / slotDuration);
+                
+                // Convertir a minutos desde el inicio del día
+                const reservedMinutes = parseInt(reservedTime.split(':')[0]) * 60 + parseInt(reservedTime.split(':')[1]);
+                
+                // Marcar todos los slots necesarios para este servicio
+                for (let i = 0; i < slotCount; i++) {
+                    const blockedTime = reservedMinutes + (i * slotDuration);
+                    const blockedHours = Math.floor(blockedTime / 60);
+                    const blockedMinutes = blockedTime % 60;
+                    const blockedTimeString = `${blockedHours.toString().padStart(2, '0')}:${blockedMinutes.toString().padStart(2, '0')}`;
+                    unavailableSlots.add(blockedTimeString);
+                }
+            });
+        }
+        
+        // Crear los elementos visuales para los horarios
+        let availableSlotsCount = 0;
+        
+        allSlots.forEach(slotInfo => {
+            const slot = document.createElement('div');
+            slot.className = 'time-slot';
+            slot.textContent = `${formatTime(slotInfo.start)} a ${formatTime(slotInfo.end)}`;
+            slot.dataset.time = slotInfo.start;
+            
+            if (unavailableSlots.has(slotInfo.start)) {
+                slot.classList.add('disabled');
+                slot.title = 'No disponible';
+            } else {
+                availableSlotsCount++;
+                slot.addEventListener('click', () => selectTimeSlot(slot));
+            }
+            
+            slotsGrid.appendChild(slot);
+        });
+        
+        // Agregar grid al contenedor principal
+        timeSlotsContainer.appendChild(slotsGrid);
+        
+        // Mostrar mensaje si no hay horarios disponibles
+        if (availableSlotsCount === 0) {
+            noSlotsMessage.textContent = 'No hay horarios disponibles para esta fecha. Por favor, selecciona otra fecha.';
+            noSlotsMessage.style.display = 'block';
+        } else {
+            noSlotsMessage.style.display = 'none';
+        }
+    } catch (error) {
+        console.error('Error generando horarios:', error);
+        createToast('Error', 'No se pudieron cargar los horarios disponibles. Inténtalo de nuevo más tarde.', 'error');
+        noSlotsMessage.textContent = 'Error al cargar horarios disponibles.';
+        noSlotsMessage.style.display = 'block';
+    }
+}
+
+
         function renderCalendar(month, year) {
             const calendarContainer = document.getElementById('calendar');
             if (!calendarContainer) return;
@@ -6677,7 +6819,7 @@
                     timeSlotsContainer.appendChild(hourContainer);
                 });
                 if (Object.keys(slotsByHour).length > 0) {
-                    timeSlotsContainer.insertAdjacentHTML('afterbegin', '<h3 class="time-slots-title">Horarios disponibles</h3>');
+                    
                 }
 
             } catch (error) {
@@ -6737,6 +6879,8 @@
                 reservaSummary.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }, 100);
         }
+
+        
         function suggestNextAvailableSlot(serviceId) {
             const today = new Date();
             const nextSlot = utils.getNextAvailableSlot(today.toISOString().split('T')[0], serviceId);
