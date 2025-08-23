@@ -5355,9 +5355,6 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-
-    <!-- Script de la aplicación -->
     <script>
         // Configuración de Supabase
         const SUPABASE_URL = 'https://tcmtxvuucjttngcazgff.supabase.co';
@@ -6196,7 +6193,7 @@
             });
         }
 
-        // --- CALENDARIO: inicia en LUNES y usa availability del admin ---
+
         function initCalendar() {
             const calendarContainer = document.getElementById('calendar');
             const today = new Date();
@@ -6218,7 +6215,11 @@
             // Header mes/año + flechas
             const header = document.createElement('div');
             header.className = 'calendar-header';
+
+            const monthNames = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
             const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+
 
             header.innerHTML = `
                 <div class="calendar-month">${monthNames[month]} ${year}</div>
@@ -6231,6 +6232,66 @@
             // Encabezados de días (LUN a DOM)
             const daysHeader = document.createElement('div');
             daysHeader.className = 'calendar-weekdays';
+
+            const weekdayNames = ['LUN','MAR','MIÉ','JUE','VIE','SÁB','DOM'];
+            weekdayNames.forEach(d => {
+                const el = document.createElement('div');
+                el.className = 'weekday';
+                el.textContent = d;
+                daysHeader.appendChild(el);
+            });
+            calendarContainer.appendChild(daysHeader);
+
+            // Cálculos base
+            // Posición del primer día del mes considerando semana iniciando en lunes
+            const firstDayOffset = (new Date(year, month, 1).getDay() + 6) % 7;
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            // Contenedor de días
+            const daysContainer = document.createElement('div');
+            daysContainer.className = 'calendar-days';
+
+            // Días del mes anterior (relleno al inicio)
+            const prevMonthLastDay = new Date(year, month, 0).getDate();
+            for (let i = firstDayOffset; i > 0; i--) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day outside-month';
+                dayElement.textContent = (prevMonthLastDay - i + 1);
+                daysContainer.appendChild(dayElement);
+            }
+
+            // Días del mes actual
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateObj = new Date(year, month, day);
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                dayElement.textContent = day;
+
+                // Estado: hoy, cierre de día o blackout
+                const isToday = (day === today.getDate() && month === today.getMonth() && year === today.getFullYear());
+                if (isToday) dayElement.classList.add('today');
+
+                const dayOfWeekJS = dateObj.getDay();
+                const closedByWeekday = isDayClosed(dayOfWeekJS);
+                const isBlackout = isBlackoutDate(dateStr);
+
+                if (closedByWeekday || isBlackout) {
+                    dayElement.classList.add('disabled');
+                    if (isBlackout) {
+                        dayElement.setAttribute('title', (getBlackoutInfo(dateStr)?.reason || 'Cerrado'));
+                    }
+                } else {
+                    // Click: seleccionar fecha y cargar horarios disponibles (según admin)
+                    dayElement.addEventListener('click', () => {
+                        document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
+                        dayElement.classList.add('selected');
+                        calendarContainer.setAttribute('data-selected-date', dateStr);
+                        loadTimeSlots(dateStr);
+                    });
+                }
+=======
             const weekdayNames = ['LUN', 'MAR', 'MIÉ', 'JUE', 'VIE', 'SÁB', 'DOM'];
             weekdayNames.forEach(d => {
                 const el = document.createElement('div');
@@ -6277,7 +6338,56 @@
 
 
 
+            // Días del mes siguiente (relleno al final para 6 filas)
+            const totalCells = firstDayOffset + daysInMonth;
+            const nextMonthDays = 42 - totalCells;
+            for (let i = 1; i <= nextMonthDays; i++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day outside-month';
+                dayElement.textContent = i;
+                daysContainer.appendChild(dayElement);
+            }
+
+
+
+
                 const prevMonthDaysCount = firstDayMonday;
+
+
+            // Navegación de mes
+            document.getElementById('prevMonth').addEventListener('click', () => {
+                let m = month - 1, y = year;
+                if (m < 0) { m = 11; y--; }
+                renderCalendar(m, y);
+            });
+            document.getElementById('nextMonth').addEventListener('click', () => {
+                let m = month + 1, y = year;
+                if (m > 11) { m = 0; y++; }
+                renderCalendar(m, y);
+            });
+        }
+
+        // --- Utilidades de cierres/availability (ya se cargan de Supabase) ---
+        function isBlackoutDate(dateString) {
+            return appData.blackouts && appData.blackouts.some(b => b.date === dateString);
+        }
+        function getBlackoutInfo(dateString) {
+            return appData.blackouts && appData.blackouts.find(b => b.date === dateString);
+        }
+        function isDayClosed(dayOfWeek) {
+            const dayAvailability = appData.availability && appData.availability.find(a => a.weekday === dayOfWeek);
+            return !dayAvailability || dayAvailability.is_closed;
+        }
+
+        // --- Horarios disponibles (respeta configuración del ADMIN) ---
+        async function loadTimeSlots(date) {
+            const timeSlotsContainer = document.getElementById('timeSlots');
+            const noSlotsMessage = document.getElementById('noSlotsMessage');
+            const servicioSelect = document.getElementById('servicio');
+            const btnReservar = document.getElementById('btnReservar');
+            const reservaSummary = document.getElementById('reservaSummary');
+
+            if (!timeSlotsContainer) return;
 
                 const prevMonthLastDay = new Date(year, month, 0).getDate();
                 for (let i = prevMonthDaysCount; i > 0; i--) {
@@ -6371,7 +6481,31 @@
 
                 // Días del mes siguiente (relleno al final para 6 filas)
 
+
                 const totalCells = firstDayOffset + daysInMonth;
+
+
+            if (!date || !servicioSelect || !servicioSelect.value) {
+                if (noSlotsMessage) {
+                    noSlotsMessage.style.display = 'block';
+                    noSlotsMessage.textContent = 'Selecciona una fecha y servicio para ver horarios disponibles';
+                }
+                if (btnReservar) btnReservar.disabled = true;
+                if (reservaSummary) reservaSummary.style.display = 'none';
+                return;
+            }
+
+            const serviceId = parseInt(servicioSelect.value, 10);
+
+            try {
+                const [y, m, d] = date.split('-').map(Number);
+                const dayOfWeek = new Date(y, m - 1, d).getDay();
+                const dayAvailability = appData.availability.find(a => a.weekday === dayOfWeek);
+
+                if (!dayAvailability || dayAvailability.is_closed) {
+                    if (noSlotsMessage) {
+                        noSlotsMessage.style.display = 'block';
+                        noSlotsMessage.textContent = 'Sin horarios disponibles (día cerrado)';
 
                 const nextMonthDays = 42 - totalCells;
                 for (let i = 1; i <= nextMonthDays; i++) {
@@ -6424,11 +6558,133 @@
                     if (noSlotsMessage) {
                         noSlotsMessage.style.display = 'block';
                         noSlotsMessage.textContent = 'Selecciona una fecha y servicio para ver horarios disponibles';
+
                     }
                     if (btnReservar) btnReservar.disabled = true;
                     if (reservaSummary) reservaSummary.style.display = 'none';
                     return;
                 }
+
+
+                const { open_time, close_time, break_start, break_end, slot_minutes } = dayAvailability;
+                const interval = parseInt(slot_minutes || 15, 10);
+
+                const service = appData.services.find(s => s.id == serviceId);
+                const serviceDuration = service ? parseInt(service.work_minutes, 10) : 30;
+
+                const { data: appointments, error } = await supabase
+                    .from('appointments')
+                    .select('*')
+                    .eq('date', date)
+                    .in('status', ['PENDING','CONFIRMED']);
+                if (error) throw error;
+
+                const toMin = (t) => { const [h,m]=t.split(':').map(Number); return h*60+m; };
+                const toTime = (mins) => `${String(Math.floor(mins/60)).padStart(2,'0')}:${String(mins%60).padStart(2,'0')}`;
+
+                const start = toMin(open_time);
+                const end   = toMin(close_time);
+                const breakS = break_start ? toMin(break_start) : null;
+                const breakE = break_end   ? toMin(break_end)   : null;
+
+                const slots = [];
+                for (let minutes = start; minutes + serviceDuration <= end; minutes += interval) {
+                    if (breakS !== null && breakE !== null) {
+                        const slotEnd = minutes + serviceDuration;
+                        const overlapsBreak = (minutes < breakE) && (slotEnd > breakS);
+                        if (overlapsBreak) continue;
+                    }
+
+                    const slotTime = toTime(minutes);
+                    const slotEndTime = toTime(minutes + serviceDuration);
+
+                    const overlapsAppt = appointments.some(a => {
+                        const aStart = toMin(a.start_time);
+                        const aEnd   = toMin(a.end_time);
+                        return (minutes < aEnd && minutes + serviceDuration > aStart);
+                    });
+                    if (overlapsAppt) continue;
+
+                    slots.push({ time: slotTime, endTime: slotEndTime });
+                }
+
+                if (noSlotsMessage) noSlotsMessage.style.display = slots.length ? 'none' : 'block';
+                if (!slots.length) {
+                    if (noSlotsMessage) noSlotsMessage.textContent = 'No hay horarios disponibles para esta fecha';
+                    return;
+                }
+
+                slots.forEach(slot => {
+                    const el = document.createElement('div');
+                    el.className = 'time-slot';
+                    el.textContent = slot.time;
+                    el.dataset.time = slot.time;
+                    el.dataset.endTime = slot.endTime;
+
+                    el.addEventListener('click', () => {
+                        document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+                        el.classList.add('selected');
+                        if (btnReservar) btnReservar.disabled = false;
+                        updateReservaSummary(date, slot.time, slot.endTime, service);
+                    });
+
+                    timeSlotsContainer.appendChild(el);
+                });
+
+            } catch (e) {
+                console.error('Error loading time slots:', e);
+                if (noSlotsMessage) {
+                    noSlotsMessage.style.display = 'block';
+                    noSlotsMessage.textContent = 'Error al cargar horarios. Intenta nuevamente.';
+                }
+            }
+        }
+        // Actualizar resumen de reserva
+        function updateReservaSummary(date, startTime, endTime, service) {
+            const reservaSummary = document.getElementById('reservaSummary');
+            if (!reservaSummary) {
+                console.error("Element #reservaSummary not found");
+                return;
+            }
+
+            const formattedDate = utils.formatDate(date);
+            const formattedTime = `${startTime} - ${endTime}`;
+
+            const servicioElement = document.getElementById('summaryServicio');
+            const fechaElement = document.getElementById('summaryFecha');
+            const horaElement = document.getElementById('summaryHora');
+            const duracionElement = document.getElementById('summaryDuracion');
+            const precioElement = document.getElementById('summaryPrecio');
+
+            if (servicioElement) servicioElement.textContent = service.name;
+            if (fechaElement) fechaElement.textContent = formattedDate;
+            if (horaElement) horaElement.textContent = formattedTime;
+            if (duracionElement) duracionElement.textContent = `${service.work_minutes} minutos`;
+
+            // Check for active discounts
+            const activeDiscounts = appData.discounts.filter(d =>
+                d.service_id === service.id &&
+                d.is_active &&
+                new Date(d.date_start) <= new Date() &&
+                new Date(d.date_end) >= new Date()
+            );
+
+            const hasDiscount = activeDiscounts.length > 0;
+            const discount = hasDiscount ? activeDiscounts[0] : null;
+            const finalPrice = hasDiscount
+                ? Math.round(service.base_price * (1 - discount.percent_off / 100))
+                : service.base_price;
+
+            if (precioElement) {
+                if (hasDiscount) {
+                    precioElement.innerHTML = `<del>${utils.formatCurrency(service.base_price)}</del> ${utils.formatCurrency(finalPrice)} <span class="badge badge-accent">-${discount.percent_off}%</span>`;
+                } else {
+                    precioElement.textContent = utils.formatCurrency(service.base_price);
+                }
+            }
+
+            reservaSummary.style.display = 'block';
+        }
 
                 const serviceId = parseInt(servicioSelect.value, 10);
 
@@ -6569,6 +6825,7 @@
                 reservaSummary.style.display = 'block';
             }
 
+
             // Cargar disponibilidad
             async function loadAvailability() {
                 try {
@@ -6593,6 +6850,14 @@
 
                     if (error) throw error;
 
+
+                appData.blackouts = data.map(b => ({
+                    ...b,
+                    date: (b.date || '').split('T')[0]
+                }));
+            } catch (error) {
+                console.error('Error loading blackout dates:', error);
+
                     appData.blackouts = data.map(b => ({
                         ...b,
                         date: (b.date || '').split('T')[0]
@@ -6600,6 +6865,7 @@
                 } catch (error) {
                     console.error('Error loading blackout dates:', error);
                 }
+
             }
 
             // Inicializar panel de administración
@@ -7262,10 +7528,17 @@
 
                     if (error) throw error;
 
+
+                appData.blackouts = data.map(b => ({
+                    ...b,
+                    date: (b.date || '').split('T')[0]
+                }));
+
                     appData.blackouts = data.map(b => ({
                         ...b,
                         date: (b.date || '').split('T')[0]
                     }));
+
 
                     // Update blackouts table
                     const blackoutsTable = document.getElementById('blackoutsTable').querySelector('tbody');
