@@ -1881,6 +1881,44 @@
     padding-bottom: 8px;
 }
 
+/* Agrupación por hora */
+.hour-slots {
+    margin-bottom: 20px;
+}
+
+.hour-label {
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.hour-slots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+}
+
+/* Mensajes y enlaces en sección de horarios */
+.loading-slots {
+    text-align: center;
+    padding: 20px;
+    color: var(--color-gray-500);
+}
+
+.next-available {
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+.next-available .link-button {
+    background: none;
+    border: none;
+    color: var(--color-accent);
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+    font: inherit;
+}
+
 
 
 
@@ -6691,7 +6729,9 @@
                 renderCalendar(m, y);
             });
         }
+        let loadTimeSlotsRequestId = 0;
         async function loadTimeSlots(date) {
+            const requestId = ++loadTimeSlotsRequestId;
             const timeSlotsContainer = document.getElementById('timeSlots');
             const noSlotsMessage = document.getElementById('noSlotsMessage');
             const servicioSelect = document.getElementById('servicio');
@@ -6743,6 +6783,7 @@
                     .eq('date', date)
                     .in('status', ['PENDING', 'CONFIRMED']);
                 if (error) throw error;
+                if (requestId !== loadTimeSlotsRequestId) return;
                 const slots = utils.toTimeSlots(open_time, close_time, break_start, break_end, interval, serviceDuration);
                 const availableSlots = slots.filter(slot => {
                     const startMinutes = timeToMinutes(slot.time);
@@ -6755,6 +6796,7 @@
                     });
                 });
 
+                if (requestId !== loadTimeSlotsRequestId) return;
                 timeSlotsContainer.innerHTML = '';
 
                 if (noSlotsMessage) {
@@ -6792,6 +6834,7 @@
                     }
                     slotsByHour[hour].push(slot);
                 });
+                if (requestId !== loadTimeSlotsRequestId) return;
                 Object.entries(slotsByHour).forEach(([hour, hourSlots]) => {
                     const hourContainer = document.createElement('div');
                     hourContainer.className = 'hour-slots';
