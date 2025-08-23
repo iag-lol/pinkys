@@ -1824,6 +1824,10 @@
 
       
 /* Estilos actualizados para los time slots - solo lo esencial */
+#timeSlots.time-slots{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+.hour-slots{display:flex;flex-direction:column;gap:8px}
+.hour-label{font-weight:600;margin-bottom:4px}
+.hour-slots-grid{display:grid;grid-template-columns:1fr;gap:8px}
 
 /* Contenedor de horarios */
 .time-slots {
@@ -1879,44 +1883,6 @@
     color: var(--color-text);
     border-bottom: 2px solid var(--color-primary-light);
     padding-bottom: 8px;
-}
-
-/* Agrupación por hora */
-.hour-slots {
-    margin-bottom: 20px;
-}
-
-.hour-label {
-    font-weight: 600;
-    margin-bottom: 8px;
-}
-
-.hour-slots-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 10px;
-}
-
-/* Mensajes y enlaces en sección de horarios */
-.loading-slots {
-    text-align: center;
-    padding: 20px;
-    color: var(--color-gray-500);
-}
-
-.next-available {
-    margin-top: 10px;
-    font-size: 0.9rem;
-}
-
-.next-available .link-button {
-    background: none;
-    border: none;
-    color: var(--color-accent);
-    cursor: pointer;
-    text-decoration: underline;
-    padding: 0;
-    font: inherit;
 }
 
 
@@ -6729,151 +6695,183 @@
                 renderCalendar(m, y);
             });
         }
-        let loadTimeSlotsRequestId = 0;
-        async function loadTimeSlots(date) {
-            const requestId = ++loadTimeSlotsRequestId;
-            const timeSlotsContainer = document.getElementById('timeSlots');
-            const noSlotsMessage = document.getElementById('noSlotsMessage');
-            const servicioSelect = document.getElementById('servicio');
-            const btnReservar = document.getElementById('btnReservar');
-            const reservaSummary = document.getElementById('reservaSummary');
+       // Reemplaza tu función por esta versión
+async function loadTimeSlots(date) {
+  const timeSlotsContainer = document.getElementById('timeSlots');
+  const noSlotsMessage     = document.getElementById('noSlotsMessage');
+  const servicioSelect     = document.getElementById('servicio');
+  const btnReservar        = document.getElementById('btnReservar');
+  const reservaSummary     = document.getElementById('reservaSummary');
 
-            if (!timeSlotsContainer) return;
+  if (!timeSlotsContainer) return;
 
-            timeSlotsContainer.innerHTML = '';
+  // Reset UI
+  timeSlotsContainer.innerHTML = '';
+  if (btnReservar) btnReservar.disabled = true;
 
-            if (!date || !servicioSelect || !servicioSelect.value) {
-                if (noSlotsMessage) {
-                    noSlotsMessage.style.display = 'block';
-                    noSlotsMessage.textContent = 'Selecciona una fecha y servicio para ver horarios disponibles';
-                }
-                if (btnReservar) btnReservar.disabled = true;
-                if (reservaSummary) reservaSummary.style.display = 'none';
-                return;
-            }
+  // Validaciones básicas
+  if (!date || !servicioSelect || !servicioSelect.value) {
+    if (noSlotsMessage) {
+      noSlotsMessage.style.display = 'block';
+      noSlotsMessage.textContent = 'Selecciona una fecha y servicio para ver horarios disponibles';
+    }
+    if (reservaSummary) reservaSummary.style.display = 'none';
+    return;
+  }
 
-            const serviceId = parseInt(servicioSelect.value, 10);
+  const serviceId = parseInt(servicioSelect.value, 10);
 
-            try {
-                timeSlotsContainer.innerHTML = '<div class="loading-slots">Cargando horarios disponibles...</div>';
+  try {
+    timeSlotsContainer.innerHTML = '<div class="loading-slots">Cargando horarios disponibles...</div>';
 
-                const [y, m, d] = date.split('-').map(Number);
-                const dateObj = new Date(y, m - 1, d);
-                const dayOfWeek = dateObj.getDay();
-                const dayAvailability = appData.availability.find(a => a.weekday === dayOfWeek);
+    // Fecha LOCAL (evita UTC)
+    const [y, m, d] = date.split('-').map(Number);
+    const dateObj   = new Date(y, m - 1, d);
+    const dayOfWeek = dateObj.getDay(); // 0=Dom..6=Sáb
 
-                if (!dayAvailability || dayAvailability.is_closed) {
-                    if (noSlotsMessage) {
-                        noSlotsMessage.style.display = 'block';
-                        noSlotsMessage.textContent = 'Sin horarios disponibles (día cerrado)';
-                    }
-                    timeSlotsContainer.innerHTML = '';
-                    return;
-                }
+    // Disponibilidad configurada por el admin
+    const dayAvailability = appData?.availability?.find(a => a.weekday === dayOfWeek);
+    if (!dayAvailability || dayAvailability.is_closed) {
+      if (noSlotsMessage) {
+        noSlotsMessage.style.display = 'block';
+        noSlotsMessage.textContent = 'Sin horarios disponibles (día cerrado)';
+      }
+      timeSlotsContainer.innerHTML = '';
+      return;
+    }
 
-                const { open_time, close_time, break_start, break_end, slot_minutes } = dayAvailability;
-                const interval = parseInt(slot_minutes || 15, 10);
+    // Servicio
+    const service = appData?.services?.find(s => s.id == serviceId);
+    if (!service) {
+      if (noSlotsMessage) {
+        noSlotsMessage.style.display = 'block';
+        noSlotsMessage.textContent = 'Servicio no encontrado';
+      }
+      timeSlotsContainer.innerHTML = '';
+      return;
+    }
 
-                const service = appData.services.find(s => s.id == serviceId);
-                const serviceDuration = service ? parseInt(service.work_minutes, 10) : 30;
+    // Citas existentes (bloquean solapamientos)
+    const { data: appointments, error } = await supabase
+      .from('appointments')
+      .select('*')
+      .eq('date', date)
+      .in('status', ['PENDING', 'CONFIRMED']);
+    if (error) throw error;
 
-                const { data: appointments, error } = await supabase
-                    .from('appointments')
-                    .select('*')
-                    .eq('date', date)
-                    .in('status', ['PENDING', 'CONFIRMED']);
-                if (error) throw error;
-                if (requestId !== loadTimeSlotsRequestId) return;
-                const slots = utils.toTimeSlots(open_time, close_time, break_start, break_end, interval, serviceDuration);
-                const availableSlots = slots.filter(slot => {
-                    const startMinutes = timeToMinutes(slot.time);
-                    const endMinutes = startMinutes + serviceDuration;
+    // Helpers locales
+    const toMin = (t) => {
+      if (!t && t !== 0) return null;
+      const [hh, mm] = String(t).split(':').map(Number);
+      return hh * 60 + mm;
+    };
+    const toTime = (mins) => {
+      const hh = Math.floor(mins / 60);
+      const mm = mins % 60;
+      return `${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}`;
+    };
+    const overlapsAppt = (start, end) => {
+      return (appointments || []).some(a => {
+        const aStart = toMin(a.start_time);
+        const aEnd   = toMin(a.end_time);
+        return start < aEnd && end > aStart;
+      });
+    };
 
-                    return !appointments.some(appt => {
-                        const apptStartMinutes = timeToMinutes(appt.start_time);
-                        const apptEndMinutes = timeToMinutes(appt.end_time);
-                        return startMinutes < apptEndMinutes && endMinutes > apptStartMinutes;
-                    });
-                });
+    // Config admin del día
+    const OPEN        = toMin(dayAvailability.open_time);
+    const CLOSE       = toMin(dayAvailability.close_time);
+    const BREAK_START = toMin(dayAvailability.break_start);
+    const BREAK_END   = toMin(dayAvailability.break_end);
+    const interval    = parseInt(dayAvailability.slot_minutes || 15, 10);
+    const serviceDur  = parseInt(service.work_minutes, 10);
 
-                if (requestId !== loadTimeSlotsRequestId) return;
-                timeSlotsContainer.innerHTML = '';
+    // Generar slots crudos (respetando break y cierre)
+    const rawSlots = [];
+    for (let start = OPEN; start + serviceDur <= CLOSE; start += interval) {
+      const end = start + serviceDur;
 
-                if (noSlotsMessage) {
-                    noSlotsMessage.style.display = availableSlots.length ? 'none' : 'block';
-                    if (!availableSlots.length) {
-                        noSlotsMessage.textContent = 'No hay horarios disponibles para esta fecha';
-                        const nextAvailable = utils.getNextAvailableSlot(date, serviceId);
-                        if (nextAvailable) {
-                            noSlotsMessage.innerHTML += `<div class="next-available">Próximo día disponible: <button class="link-button">${nextAvailable.formattedDate}</button></div>`;
-                            noSlotsMessage.querySelector('.link-button').addEventListener('click', () => {
-                                const calendarContainer = document.getElementById('calendar');
-                                if (calendarContainer) {
-                                    const [nextY, nextM, nextD] = nextAvailable.date.split('-').map(Number);
-                                    renderCalendar(nextM - 1, nextY);
-                                    setTimeout(() => {
-                                        const dayElements = document.querySelectorAll('.calendar-day:not(.outside-month)');
-                                        dayElements.forEach(dayEl => {
-                                            if (parseInt(dayEl.textContent, 10) === nextD) {
-                                                dayEl.click();
-                                            }
-                                        });
-                                    }, 100);
-                                }
-                            });
-                        }
+      // Saltar si cruza el break
+      const crossesBreak = (BREAK_START != null && BREAK_END != null) &&
+                           (start < BREAK_END) && (end > BREAK_START);
+      if (crossesBreak) continue;
 
-                        return;
-                    }
-                }
-                const slotsByHour = {};
-                availableSlots.forEach(slot => {
-                    const hour = slot.time.substring(0, 2);
-                    if (!slotsByHour[hour]) {
-                        slotsByHour[hour] = [];
-                    }
-                    slotsByHour[hour].push(slot);
-                });
-                if (requestId !== loadTimeSlotsRequestId) return;
-                Object.entries(slotsByHour).forEach(([hour, hourSlots]) => {
-                    const hourContainer = document.createElement('div');
-                    hourContainer.className = 'hour-slots';
-                    hourContainer.innerHTML = `<div class="hour-label">${hour}:00</div><div class="hour-slots-grid"></div>`;
+      rawSlots.push({ time: toTime(start), endTime: toTime(end), startMinutes: start });
+    }
 
-                    const slotsGrid = hourContainer.querySelector('.hour-slots-grid');
+    // Quitar los que chocan con citas
+    const available = rawSlots.filter(s => !overlapsAppt(s.startMinutes, s.startMinutes + serviceDur));
 
-                    hourSlots.forEach(slot => {
-                        const el = document.createElement('div');
-                        el.className = 'time-slot';
-                        el.textContent = slot.time;
-                        el.dataset.time = slot.time;
-                        el.dataset.endTime = slot.endTime;
+    // Mostrar estado "sin horarios"
+    if (!available.length) {
+      timeSlotsContainer.innerHTML = '';
+      if (noSlotsMessage) {
+        noSlotsMessage.style.display = 'block';
+        noSlotsMessage.textContent = 'No hay horarios disponibles para esta fecha';
+      }
+      return;
+    }
 
-                        el.addEventListener('click', () => {
-                            document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
-                            el.classList.add('selected');
-                            if (btnReservar) btnReservar.disabled = false;
-                            updateReservaSummary(date, slot.time, slot.endTime, service);
-                        });
+    // --- ordenar y agrupar por hora, evitando duplicados ---
+    const dedup = new Set();
+    const uniqueSlots = available.filter(s => {
+      if (dedup.has(s.time)) return false;
+      dedup.add(s.time);
+      return true;
+    }).sort((a, b) => a.startMinutes - b.startMinutes);
 
-                        slotsGrid.appendChild(el);
-                    });
+    const groups = new Map();
+    for (const s of uniqueSlots) {
+      const hourNum = parseInt(s.time.split(':')[0], 10); // 0..23
+      if (!groups.has(hourNum)) groups.set(hourNum, []);
+      groups.get(hourNum).push(s);
+    }
 
-                    timeSlotsContainer.appendChild(hourContainer);
-                });
-                if (Object.keys(slotsByHour).length > 0) {
-                    
-                }
+    // Render
+    timeSlotsContainer.innerHTML = '';
+    timeSlotsContainer.classList.add('time-slots'); // asegura layout en CSS
+    if (noSlotsMessage) noSlotsMessage.style.display = 'none';
 
-            } catch (error) {
-                console.error('Error loading time slots:', error);
-                if (noSlotsMessage) {
-                    noSlotsMessage.style.display = 'block';
-                    noSlotsMessage.textContent = 'Error al cargar horarios. Intenta nuevamente.';
-                }
-                timeSlotsContainer.innerHTML = '';
-            }
-        }
+    [...groups.entries()].sort((a, b) => a[0] - b[0]).forEach(([hour, hourSlots]) => {
+      const hourContainer = document.createElement('div');
+      hourContainer.className = 'hour-slots';
+      hourContainer.innerHTML = `
+        <div class="hour-label">${String(hour).padStart(2,'0')}:00</div>
+        <div class="hour-slots-grid"></div>
+      `;
+      const slotsGrid = hourContainer.querySelector('.hour-slots-grid');
+
+      hourSlots.forEach(slot => {
+        const el = document.createElement('div');
+        el.className = 'time-slot';
+        el.textContent = slot.time;
+        el.dataset.time = slot.time;
+        el.dataset.endTime = slot.endTime;
+
+        el.addEventListener('click', () => {
+          document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+          el.classList.add('selected');
+          if (btnReservar) btnReservar.disabled = false;
+          // Asume que updateReservaSummary existe en tu código
+          updateReservaSummary(date, slot.time, slot.endTime, service);
+        });
+
+        slotsGrid.appendChild(el);
+      });
+
+      timeSlotsContainer.appendChild(hourContainer);
+    });
+
+  } catch (err) {
+    console.error('Error loading time slots:', err);
+    if (noSlotsMessage) {
+      noSlotsMessage.style.display = 'block';
+      noSlotsMessage.textContent = 'Error al cargar horarios. Intenta nuevamente.';
+    }
+    timeSlotsContainer.innerHTML = '';
+  }
+}
+
         function timeToMinutes(time) {
             if (!time) return 0;
             const [hours, minutes] = time.split(':').map(Number);
