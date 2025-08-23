@@ -1609,8 +1609,13 @@
 
         .precios-grid {
             display: grid;
+
             grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: var(--spacing-lg);
+
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: var(--spacing-2xl);
+
             position: relative;
             z-index: 1;
         }
