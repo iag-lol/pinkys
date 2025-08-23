@@ -28,8 +28,12 @@
 
     <link rel="manifest" href="manifest.webmanifest">
 
+
+    <link rel="manifest" href="manifest.webmanifest">
+
     <!-- Manifest -->
     <link rel="manifest" href="/manifest.webmanifest">
+
 
     <meta name="theme-color" content="#FFE9F5">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,10 +45,14 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.38.4/dist/umd/supabase.min.js"></script>
 
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.38.4/dist/umd/supabase.min.js"></script>
+
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.38.4/dist/umd/supabase.min.js"></script>
 
     <!-- Chart.js para métricas en panel admin -->
+
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js" defer></script>
     <script type="application/ld+json">
@@ -88,6 +96,7 @@
 
 
         :root {
+
 
             --color-primary: #FFDFF2;
             --color-primary-light: #FFF0F9;
@@ -5334,7 +5343,8 @@
 
             formatDate: (dateString, options = { year: 'numeric', month: 'long', day: 'numeric' }) => {
                 if (!dateString) return '';
-                return new Date(dateString).toLocaleDateString('es-CL', options);
+                const [y, m, d] = dateString.split('-').map(Number);
+                return new Date(y, m - 1, d).toLocaleDateString('es-CL', options);
             },
 
             formatTime: (timeString) => {
@@ -5457,7 +5467,8 @@
                 if (!service) return null;
 
                 const serviceDuration = service ? parseInt(service.work_minutes, 10) : 30;
-                const dateObj = new Date(date);
+                const [y, m, d] = date.split('-').map(Number);
+                const dateObj = new Date(y, m - 1, d);
                 let checkDate = new Date(dateObj);
                 for (let i = 0; i < 14; i++) {
                     const dateStr = checkDate.toISOString().split('T')[0];
@@ -5683,7 +5694,7 @@
                     const selectedDate = calendarContainer ? calendarContainer.getAttribute('data-selected-date') : null;
                     if (selectedDate) loadTimeSlots(selectedDate);
                     if (!selectedDate && servicioSelect.value) {
-                        suggestNextAvailableDate(servicioSelect.value);
+                        suggestNextAvailableSlot(servicioSelect.value);
                     }
                 });
             }
@@ -8159,13 +8170,19 @@
                     try {
                         const submitBtn = e.target.querySelector('button[type="submit"]');
                         if (submitBtn) submitBtn.disabled = true;
-
-                        const { data, error } = await supabase
+                        const { data: existing } = await supabase
+                            .from('blackouts')
+                            .select('id')
+                            .eq('date', date);
+                        if (existing && existing.length) {
+                            utils.showToast('Error', 'La fecha ya está registrada', 'error');
+                            if (submitBtn) submitBtn.disabled = false;
+                            return;
+                        }
+                        const { error } = await supabase
                             .from('blackouts')
                             .insert([{ date, reason }]);
-
                         if (error) throw error;
-
                         utils.showToast('Éxito', 'Cierre añadido correctamente', 'success');
                         e.target.reset();
                         await loadAdminBlackouts();
