@@ -2180,6 +2180,11 @@
 
         .comparison-before {
             clip-path: polygon(0 0, var(--slider-position) 0, var(--slider-position) 100%, 0 100%);
+            z-index: 2;
+        }
+
+        .comparison-after {
+            z-index: 1;
         }
 
         .comparison-image {
@@ -3884,14 +3889,14 @@
             <h2 class="section-title">Antes y Después</h2>
             <p class="section-subtitle">Transformaciones reales que muestran el impacto de nuestros servicios</p>
 
-                        <div class="comparison-slider" id="comparisonSlider" style="--slider-position: 50%">
+                <div class="comparison-slider" id="comparisonSlider" style="--slider-position: 50%">
                 <div class="comparison-before">
-                    <img src="/img/antes.png"
+                    <img src="img/antes.png"
                         alt="Antes del tratamiento" class="comparison-image">
                     <div class="comparison-slider-label comparison-before-label">Antes</div>
                 </div>
                 <div class="comparison-after">
-                    <img src="/img/despues.png"
+                    <img src="img/despues.png"
                         alt="Después del tratamiento" class="comparison-image">
                     <div class="comparison-slider-label comparison-after-label">Después</div>
                 </div>
