@@ -6212,15 +6212,22 @@
             const weekdayNames = ['LUN','MAR','MIÉ','JUE','VIE','SÁB','DOM'];
             weekdayNames.forEach(d => {
                 const el = document.createElement('div');
+
                 el.className = 'weekday';
+
                 el.textContent = d;
                 daysHeader.appendChild(el);
             });
             calendarContainer.appendChild(daysHeader);
 
             // Cálculos base
+
             // Posición del primer día del mes considerando semana iniciando en lunes
             const firstDay = (new Date(year, month, 1).getDay() + 6) % 7;
+
+            const firstDayJS = new Date(year, month, 1).getDay();
+            const firstDayMonday = (firstDayJS + 6) % 7;
+
             const daysInMonth = new Date(year, month + 1, 0).getDate();
 
             // Contenedor de días
@@ -6228,7 +6235,11 @@
             daysContainer.className = 'calendar-days';
 
             // Días del mes anterior (relleno al inicio)
+
             const prevMonthDaysCount = firstDay;
+
+            const prevMonthDaysCount = firstDayMonday;
+
             const prevMonthLastDay = new Date(year, month, 0).getDate();
             for (let i = prevMonthDaysCount; i > 0; i--) {
                 const dayElement = document.createElement('div');
@@ -6240,11 +6251,16 @@
             // Días del mes actual
             for (let day = 1; day <= daysInMonth; day++) {
                 const dateObj = new Date(year, month, day);
+
                 const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+
+                const dateStr = dateObj.toISOString().split('T')[0];
+
 
                 const dayElement = document.createElement('div');
                 dayElement.className = 'calendar-day';
                 dayElement.textContent = day;
+
 
                 // Estado: hoy, cierre de día o blackout
                 const isToday = (day === today.getDate() && month === today.getMonth() && year === today.getFullYear());
@@ -6253,6 +6269,17 @@
                 const dayOfWeekJS = dateObj.getDay();
                 const closedByWeekday = isDayClosed(dayOfWeekJS);
                 const isBlackout = isBlackoutDate(dateStr);
+
+
+
+                // Estado: hoy, cierre de día o blackout
+                const isToday = (day === today.getDate() && month === today.getMonth() && year === today.getFullYear());
+                if (isToday) dayElement.classList.add('today');
+
+                const dayOfWeekJS = dateObj.getDay();
+                const closedByWeekday = isDayClosed(dayOfWeekJS);
+                const isBlackout = isBlackoutDate(dateStr);
+
 
                 if (closedByWeekday || isBlackout) {
                     dayElement.classList.add('disabled');
@@ -6334,8 +6361,12 @@
             const serviceId = parseInt(servicioSelect.value, 10);
 
             try {
+
                 const [y, m, d] = date.split('-').map(Number);
                 const dayOfWeek = new Date(y, m - 1, d).getDay();
+
+                const dayOfWeek = new Date(date).getDay();
+
                 const dayAvailability = appData.availability.find(a => a.weekday === dayOfWeek);
 
                 if (!dayAvailability || dayAvailability.is_closed) {
