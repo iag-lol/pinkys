@@ -5738,19 +5738,16 @@
             });
         });
 
-        // Initialización de la aplicación
+        // --- INIT: garantiza datos antes del calendario ---
         async function initApp() {
             try {
-                // Load services
+                // 1) Servicios públicos activos
                 const { data: services, error: servicesError } = await supabase
-                    .from('services')
-                    .select('*')
-                    .eq('is_active', true);
-
+                    .from('services').select('*').eq('is_active', true);
                 if (servicesError) throw servicesError;
                 appData.services = services;
 
-                // Load available services in the reservar form
+                // Llenar select de servicio (reserva)
                 const servicioSelect = document.getElementById('servicio');
                 services.forEach(service => {
                     const option = document.createElement('option');
@@ -5759,28 +5756,22 @@
                     servicioSelect.appendChild(option);
                 });
 
-                // Load lashbook images
+                // 2) Portafolio y precios públicos
                 await loadLashbook();
-
-                // Load services and prices
                 await loadServicesAndPrices();
-
-                // Load reviews
                 await loadReviews();
 
-                // Initialize calendar for booking
+                // 3) **Cargar disponibilidad del ADMIN y cierres antes del calendario**
+                await Promise.all([
+                    loadAvailability(),
+                    loadBlackoutDates()
+                ]);
+
+                // 4) Inicializa calendario (ya con availability/blackouts en appData)
                 initCalendar();
-
-                // Load availability
-                await loadAvailability();
-
-                // Load blackout dates
-                await loadBlackoutDates();
-
-                console.log('App initialized successfully');
             } catch (error) {
-                console.error('Error initializing app:', error);
-                utils.showToast('Error', 'Hubo un problema al cargar la aplicación. Por favor recarga la página.', 'error');
+                console.error('Error initApp:', error);
+                utils.showToast('Error', 'No se pudo inicializar la página', 'error');
             }
         }
 
@@ -6154,153 +6145,106 @@
             });
         }
 
-        // Inicializar calendario para reservas
+                // --- CALENDARIO: inicia en LUNES y usa availability del admin ---
         function initCalendar() {
             const calendarContainer = document.getElementById('calendar');
-
-            // Set initial date to today
             const today = new Date();
-            const currentMonth = today.getMonth();
-            const currentYear = today.getFullYear();
+            renderCalendar(today.getMonth(), today.getFullYear());
 
-            renderCalendar(currentMonth, currentYear);
-
-            // Handle service selection
+            // Al cambiar servicio, recalcula horarios del día seleccionado
             document.getElementById('servicio').addEventListener('change', () => {
                 const selectedDate = calendarContainer.getAttribute('data-selected-date');
-                if (selectedDate) {
-                    loadTimeSlots(selectedDate);
-                }
+                if (selectedDate) loadTimeSlots(selectedDate);
             });
         }
 
-        // Renderizar calendario
+        // Renderizar calendario (semana LUN–DOM)
         function renderCalendar(month, year) {
             const calendarContainer = document.getElementById('calendar');
             const today = new Date();
-
-            // Clear previous content
             calendarContainer.innerHTML = '';
 
-            // Create header
+            // Header mes/año + flechas
             const header = document.createElement('div');
             header.className = 'calendar-header';
-
-            const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+            const monthNames = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 
             header.innerHTML = `
-        <div class="calendar-month">${monthNames[month]} ${year}</div>
-        <div class="calendar-nav">
-          <button class="calendar-btn" id="prevMonth">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-            </svg>
-          </button>
-          <button class="calendar-btn" id="nextMonth">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-            </svg>
-          </button>
-        </div>
-      `;
-
+                <div class="calendar-month">${monthNames[month]} ${year}</div>
+                <div class="calendar-controls">
+                    <button class="button-text" id="prevMonth">‹</button>
+                    <button class="button-text" id="nextMonth">›</button>
+                </div>`;
             calendarContainer.appendChild(header);
 
-            // Create weekdays
-            const weekdays = document.createElement('div');
-            weekdays.className = 'calendar-weekdays';
-
-            const dayNames = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
-
-            dayNames.forEach(day => {
-                const dayElement = document.createElement('div');
-                dayElement.className = 'weekday';
-                dayElement.textContent = day;
-                weekdays.appendChild(dayElement);
+            // Encabezados de días (LUN a DOM)
+            const daysHeader = document.createElement('div');
+            daysHeader.className = 'calendar-weekdays';
+            const weekdayNames = ['LUN','MAR','MIÉ','JUE','VIE','SÁB','DOM'];
+            weekdayNames.forEach(d => {
+                const el = document.createElement('div');
+                el.textContent = d;
+                daysHeader.appendChild(el);
             });
+            calendarContainer.appendChild(daysHeader);
 
-            calendarContainer.appendChild(weekdays);
+            // Cálculos base
+            const firstDayJS = new Date(year, month, 1).getDay();
+            const firstDayMonday = (firstDayJS + 6) % 7;
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-            // Create days
+            // Contenedor de días
             const daysContainer = document.createElement('div');
             daysContainer.className = 'calendar-days';
 
-            // Get first day of month
-            const firstDay = new Date(year, month, 1).getDay();
-
-            // Get number of days in month
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-            // Get days from previous month
-            const prevMonthDays = new Date(year, month, 0).getDate();
-
-            // Create days from previous month
-            for (let i = firstDay - 1; i >= 0; i--) {
+            // Días del mes anterior (relleno al inicio)
+            const prevMonthDaysCount = firstDayMonday;
+            const prevMonthLastDay = new Date(year, month, 0).getDate();
+            for (let i = prevMonthDaysCount; i > 0; i--) {
                 const dayElement = document.createElement('div');
                 dayElement.className = 'calendar-day outside-month';
-                dayElement.textContent = prevMonthDays - i;
+                dayElement.textContent = (prevMonthLastDay - i + 1);
                 daysContainer.appendChild(dayElement);
             }
 
-            // Create days for current month
-            for (let i = 1; i <= daysInMonth; i++) {
+            // Días del mes actual
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateObj = new Date(year, month, day);
+                const dateStr = dateObj.toISOString().split('T')[0];
+
                 const dayElement = document.createElement('div');
                 dayElement.className = 'calendar-day';
-                dayElement.textContent = i;
+                dayElement.textContent = day;
 
-                const currentDate = new Date(year, month, i);
-                const dateString = currentDate.toISOString().split('T')[0];
+                // Estado: hoy, cierre de día o blackout
+                const isToday = (day === today.getDate() && month === today.getMonth() && year === today.getFullYear());
+                if (isToday) dayElement.classList.add('today');
 
-                dayElement.setAttribute('data-date', dateString);
+                const dayOfWeekJS = dateObj.getDay();
+                const closedByWeekday = isDayClosed(dayOfWeekJS);
+                const isBlackout = isBlackoutDate(dateStr);
 
-                // Check if day is today
-                if (currentDate.toDateString() === today.toDateString()) {
-                    dayElement.classList.add('today');
-                }
-
-                // Check if day is in the past
-                if (currentDate < new Date(today.setHours(0, 0, 0, 0))) {
+                if (closedByWeekday || isBlackout) {
                     dayElement.classList.add('disabled');
-                    dayElement.title = 'Fecha pasada - No disponible';
-                }
-                // Check if day is a blackout date
-                else if (isBlackoutDate(dateString)) {
-                    dayElement.classList.add('disabled', 'blackout');
-                    const blackoutInfo = getBlackoutInfo(dateString);
-                    dayElement.title = `Cerrado: ${blackoutInfo?.reason || 'Fecha no disponible'}`;
-                }
-                // Check if day of week is closed
-                else if (isDayClosed(currentDate.getDay())) {
-                    dayElement.classList.add('disabled', 'closed-day');
-                    const dayNames = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-                    dayElement.title = `${dayNames[currentDate.getDay()]} - Día cerrado`;
-                }
-                else {
-                    // Add click event for selectable days
+                    if (isBlackout) {
+                        dayElement.setAttribute('title', (getBlackoutInfo(dateStr)?.reason || 'Cerrado'));
+                    }
+                } else {
+                    // Click: seleccionar fecha y cargar horarios disponibles (según admin)
                     dayElement.addEventListener('click', () => {
-                        // Remove selection from all days
-                        document.querySelectorAll('.calendar-day').forEach(day => {
-                            day.classList.remove('selected');
-                        });
-
-                        // Add selection to clicked day
+                        document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
                         dayElement.classList.add('selected');
-
-                        // Store selected date in calendar data attribute
-                        calendarContainer.setAttribute('data-selected-date', dateString);
-
-                        // Load time slots for this date
-                        loadTimeSlots(dateString);
+                        calendarContainer.setAttribute('data-selected-date', dateStr);
+                        loadTimeSlots(dateStr);
                     });
                 }
 
                 daysContainer.appendChild(dayElement);
             }
 
-            // Create days for next month if needed
-            const totalDays = firstDay + daysInMonth;
-            const nextMonthDays = 42 - totalDays; // 6 rows of 7 days
-
+            // Días del mes siguiente (relleno al final para 6 filas)
+            const totalCells = prevMonthDaysCount + daysInMonth;
+            const nextMonthDays = 42 - totalCells;
             for (let i = 1; i <= nextMonthDays; i++) {
                 const dayElement = document.createElement('div');
                 dayElement.className = 'calendar-day outside-month';
@@ -6310,47 +6254,32 @@
 
             calendarContainer.appendChild(daysContainer);
 
-            // Add event listeners for navigation
+            // Navegación de mes
             document.getElementById('prevMonth').addEventListener('click', () => {
-                let newMonth = month - 1;
-                let newYear = year;
-
-                if (newMonth < 0) {
-                    newMonth = 11;
-                    newYear--;
-                }
-
-                renderCalendar(newMonth, newYear);
+                let m = month - 1, y = year;
+                if (m < 0) { m = 11; y--; }
+                renderCalendar(m, y);
             });
-
             document.getElementById('nextMonth').addEventListener('click', () => {
-                let newMonth = month + 1;
-                let newYear = year;
-
-                if (newMonth > 11) {
-                    newMonth = 0;
-                    newYear++;
-                }
-
-                renderCalendar(newMonth, newYear);
+                let m = month + 1, y = year;
+                if (m > 11) { m = 0; y++; }
+                renderCalendar(m, y);
             });
         }
 
-        // Funciones auxiliares para el calendario
+        // --- Utilidades de cierres/availability (ya se cargan de Supabase) ---
         function isBlackoutDate(dateString) {
-            return appData.blackouts && appData.blackouts.some(blackout => blackout.date === dateString);
+            return appData.blackouts && appData.blackouts.some(b => b.date === dateString);
         }
-
         function getBlackoutInfo(dateString) {
-            return appData.blackouts && appData.blackouts.find(blackout => blackout.date === dateString);
+            return appData.blackouts && appData.blackouts.find(b => b.date === dateString);
         }
-
         function isDayClosed(dayOfWeek) {
             const dayAvailability = appData.availability && appData.availability.find(a => a.weekday === dayOfWeek);
             return !dayAvailability || dayAvailability.is_closed;
         }
 
-        // Cargar horarios disponibles
+        // --- Horarios disponibles (respeta configuración del ADMIN) ---
         async function loadTimeSlots(date) {
             const timeSlotsContainer = document.getElementById('timeSlots');
             const noSlotsMessage = document.getElementById('noSlotsMessage');
@@ -6358,158 +6287,107 @@
             const btnReservar = document.getElementById('btnReservar');
             const reservaSummary = document.getElementById('reservaSummary');
 
-            // Verificar que los elementos existan antes de manipularlos
-            if (!timeSlotsContainer) {
-                console.error("Element #timeSlots not found");
-                return;
-            }
+            if (!timeSlotsContainer) return;
 
             timeSlotsContainer.innerHTML = '';
 
             if (!date || !servicioSelect || !servicioSelect.value) {
-                // Verificar si noSlotsMessage existe antes de manipularlo
                 if (noSlotsMessage) {
                     noSlotsMessage.style.display = 'block';
                     noSlotsMessage.textContent = 'Selecciona una fecha y servicio para ver horarios disponibles';
                 }
-
-                // Verificar si btnReservar existe antes de manipularlo
-                if (btnReservar) {
-                    btnReservar.disabled = true;
-                }
-
-                // Verificar si reservaSummary existe antes de manipularlo
-                if (reservaSummary) {
-                    reservaSummary.style.display = 'none';
-                }
-
+                if (btnReservar) btnReservar.disabled = true;
+                if (reservaSummary) reservaSummary.style.display = 'none';
                 return;
             }
 
-            const serviceId = servicioSelect.value;
+            const serviceId = parseInt(servicioSelect.value, 10);
 
             try {
-                // Get the day of the week (0-6, Sunday-Saturday)
                 const dayOfWeek = new Date(date).getDay();
-
-                // Check if this day is available
                 const dayAvailability = appData.availability.find(a => a.weekday === dayOfWeek);
 
                 if (!dayAvailability || dayAvailability.is_closed) {
-                    // Verificar si noSlotsMessage existe antes de manipularlo
                     if (noSlotsMessage) {
                         noSlotsMessage.style.display = 'block';
-                        noSlotsMessage.textContent = 'No hay horarios disponibles para esta fecha';
+                        noSlotsMessage.textContent = 'Sin horarios disponibles (día cerrado)';
                     }
                     return;
                 }
 
-                // Get selected service
+                const { open_time, close_time, break_start, break_end, slot_minutes } = dayAvailability;
+                const interval = parseInt(slot_minutes || 15, 10);
+
                 const service = appData.services.find(s => s.id == serviceId);
+                const serviceDuration = service ? parseInt(service.work_minutes, 10) : 30;
 
-                if (!service) {
-                    // Verificar si noSlotsMessage existe antes de manipularlo
-                    if (noSlotsMessage) {
-                        noSlotsMessage.style.display = 'block';
-                        noSlotsMessage.textContent = 'Servicio no encontrado';
-                    }
-                    return;
-                }
-
-                // Get existing appointments for this date
                 const { data: appointments, error } = await supabase
                     .from('appointments')
                     .select('*')
                     .eq('date', date)
-                    .neq('status', 'CANCELLED');
-
+                    .in('status', ['PENDING','CONFIRMED']);
                 if (error) throw error;
 
-                // Generate time slots from opening to closing time
-                const openTime = dayAvailability.open_time;
-                const closeTime = dayAvailability.close_time;
+                const toMin = (t) => { const [h,m]=t.split(':').map(Number); return h*60+m; };
+                const toTime = (mins) => `${String(Math.floor(mins/60)).padStart(2,'0')}:${String(mins%60).padStart(2,'0')}`;
 
-                // Convert times to minutes for easier comparison
-                const openMinutes = convertTimeToMinutes(openTime);
-                const closeMinutes = convertTimeToMinutes(closeTime);
-                const serviceDuration = service.work_minutes;
+                const start = toMin(open_time);
+                const end   = toMin(close_time);
+                const breakS = break_start ? toMin(break_start) : null;
+                const breakE = break_end   ? toMin(break_end)   : null;
 
-                // Create time slots at 15-minute intervals
                 const slots = [];
-                for (let minutes = openMinutes; minutes <= closeMinutes - serviceDuration; minutes += 15) {
-                    const slotTime = convertMinutesToTime(minutes);
-                    const slotEndTime = convertMinutesToTime(minutes + serviceDuration);
+                for (let minutes = start; minutes + serviceDuration <= end; minutes += interval) {
+                    if (breakS !== null && breakE !== null) {
+                        const slotEnd = minutes + serviceDuration;
+                        const overlapsBreak = (minutes < breakE) && (slotEnd > breakS);
+                        if (overlapsBreak) continue;
+                    }
 
-                    // Check if this slot overlaps with any existing appointment
-                    const isOverlapping = appointments.some(appointment => {
-                        const apptStartMinutes = convertTimeToMinutes(appointment.start_time);
-                        const apptEndMinutes = convertTimeToMinutes(appointment.end_time);
+                    const slotTime = toTime(minutes);
+                    const slotEndTime = toTime(minutes + serviceDuration);
 
-                        // Check for overlap
-                        return (minutes < apptEndMinutes && minutes + serviceDuration > apptStartMinutes);
+                    const overlapsAppt = appointments.some(a => {
+                        const aStart = toMin(a.start_time);
+                        const aEnd   = toMin(a.end_time);
+                        return (minutes < aEnd && minutes + serviceDuration > aStart);
                     });
+                    if (overlapsAppt) continue;
 
-                    if (!isOverlapping) {
-                        slots.push({
-                            time: slotTime,
-                            endTime: slotEndTime
-                        });
-                    }
+                    slots.push({ time: slotTime, endTime: slotEndTime });
                 }
 
-                // Verificar si noSlotsMessage existe antes de manipularlo
-                if (noSlotsMessage) {
-                    noSlotsMessage.style.display = 'none';
-                }
-
-                if (slots.length === 0) {
-                    // Verificar si noSlotsMessage existe antes de manipularlo
-                    if (noSlotsMessage) {
-                        noSlotsMessage.style.display = 'block';
-                        noSlotsMessage.textContent = 'No hay horarios disponibles para esta fecha';
-                    }
+                if (noSlotsMessage) noSlotsMessage.style.display = slots.length ? 'none' : 'block';
+                if (!slots.length) {
+                    if (noSlotsMessage) noSlotsMessage.textContent = 'No hay horarios disponibles para esta fecha';
                     return;
                 }
 
-                // Display available slots
                 slots.forEach(slot => {
-                    const slotElement = document.createElement('div');
-                    slotElement.className = 'time-slot';
-                    slotElement.textContent = slot.time;
-                    slotElement.setAttribute('data-time', slot.time);
-                    slotElement.setAttribute('data-end-time', slot.endTime);
+                    const el = document.createElement('div');
+                    el.className = 'time-slot';
+                    el.textContent = slot.time;
+                    el.dataset.time = slot.time;
+                    el.dataset.endTime = slot.endTime;
 
-                    slotElement.addEventListener('click', () => {
-                        // Remove selection from all slots
-                        document.querySelectorAll('.time-slot').forEach(s => {
-                            s.classList.remove('selected');
-                        });
-
-                        // Add selection to clicked slot
-                        slotElement.classList.add('selected');
-
-                        // Enable book button if it exists
-                        if (btnReservar) {
-                            btnReservar.disabled = false;
-                        }
-
-                        // Show booking summary
+                    el.addEventListener('click', () => {
+                        document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+                        el.classList.add('selected');
+                        if (btnReservar) btnReservar.disabled = false;
                         updateReservaSummary(date, slot.time, slot.endTime, service);
                     });
 
-                    timeSlotsContainer.appendChild(slotElement);
+                    timeSlotsContainer.appendChild(el);
                 });
-            } catch (error) {
-                console.error('Error loading time slots:', error);
-                // Verificar si noSlotsMessage existe antes de manipularlo
+
+            } catch (e) {
+                console.error('Error loading time slots:', e);
                 if (noSlotsMessage) {
                     noSlotsMessage.style.display = 'block';
                     noSlotsMessage.textContent = 'Error al cargar horarios. Intenta nuevamente.';
                 }
             }
         }
-
-
         // Actualizar resumen de reserva
         function updateReservaSummary(date, startTime, endTime, service) {
             const reservaSummary = document.getElementById('reservaSummary');
@@ -6555,31 +6433,6 @@
             }
 
             reservaSummary.style.display = 'block';
-        }
-        document.getElementById('reservaSummary').style.display = 'block';
-
-        // Verificar si una fecha es un día cerrado
-        function isBlackoutDate(dateString) {
-            return appData.blackouts.some(blackout => blackout.date === dateString);
-        }
-
-        // Verificar si un día de la semana está cerrado
-        function isDayClosed(dayOfWeek) {
-            const dayAvailability = appData.availability.find(a => a.weekday === dayOfWeek);
-            return !dayAvailability || dayAvailability.is_closed;
-        }
-
-        // Convertir hora en formato HH:MM a minutos
-        function convertTimeToMinutes(timeString) {
-            const [hours, minutes] = timeString.split(':').map(Number);
-            return hours * 60 + minutes;
-        }
-
-        // Convertir minutos a formato HH:MM
-        function convertMinutesToTime(minutes) {
-            const hours = Math.floor(minutes / 60);
-            const mins = minutes % 60;
-            return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
         }
 
         // Cargar disponibilidad
