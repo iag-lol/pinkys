@@ -1407,6 +1407,36 @@
             z-index: 0;
         }
 
+        .gallery-carousel {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery-track {
+            display: flex;
+            transition: transform var(--transition-slow);
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+            z-index: 2;
+        }
+
+        .carousel-btn.prev { left: var(--spacing-sm); }
+        .carousel-btn.next { right: var(--spacing-sm); }
+
         .lashbook-filters {
             display: flex;
             flex-wrap: wrap;
@@ -1435,9 +1465,8 @@
         }
 
         .lashbook-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: var(--spacing-lg);
+            display: flex;
+            overflow: hidden;
             position: relative;
             z-index: 1;
         }
@@ -1449,7 +1478,7 @@
             box-shadow: var(--shadow-md);
             cursor: pointer;
             transition: all var(--transition-normal);
-            aspect-ratio: 3/4;
+            flex: 0 0 100%;
         }
 
         .lashbook-item:hover {
@@ -1459,7 +1488,7 @@
 
         .lashbook-img {
             width: 100%;
-            height: 100%;
+            height: 400px;
             object-fit: cover;
             transition: transform var(--transition-slow);
             user-select: none;
@@ -1608,6 +1637,12 @@
         }
 
         .precios-grid {
+
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-lg);
+            justify-content: center;
+
             display: grid;
 
             grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -1615,6 +1650,7 @@
 
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: var(--spacing-2xl);
+
 
             position: relative;
             z-index: 1;
@@ -1624,10 +1660,20 @@
             background-color: var(--color-white);
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-md);
+
+            padding: var(--spacing-md);
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 200px;
+            flex: 0 1 200px;
+
             padding: var(--spacing-lg);
             transition: transform var(--transition-normal), box-shadow var(--transition-normal);
             display: flex;
             flex-direction: column;
+
             height: auto;
             overflow: hidden;
             position: relative;
@@ -1650,7 +1696,11 @@
 
         .precio-image {
             width: 100%;
+
+            height: 220px;
+
             height: 150px;
+
             border-radius: var(--radius-md);
             margin-bottom: var(--spacing-md);
             overflow: hidden;
@@ -3659,6 +3709,10 @@
                 --section-padding: var(--spacing-xl);
             }
 
+            .lashbook-img {
+                height: 300px;
+            }
+
             h1 {
                 font-size: 2.25rem;
             }
@@ -3671,12 +3725,12 @@
                 padding: var(--spacing-2xl) 0;
             }
 
-            .lashbook-grid {
-                grid-template-columns: 1fr;
-            }
-
             .precios-grid {
-                grid-template-columns: 1fr;
+                flex-direction: column;
+                align-items: center;
+            }
+            .precio-card {
+                max-width: 100%;
             }
 
             .form-row {
@@ -3798,19 +3852,11 @@
             <h2 class="section-title">Nuestra Galería</h2>
             <p class="section-subtitle">Descubre nuestros diferentes estilos y técnicas que realzarán tu mirada</p>
 
-            <div class="lashbook-filters">
-                <button class="filter-btn active" data-filter="all">Todos</button>
-                <button class="filter-btn" data-filter="LASH">Pestañas</button>
-                <button class="filter-btn" data-filter="CEJA">Cejas</button>
-                <button class="filter-btn" data-filter="Clásico">Clásico</button>
-                <button class="filter-btn" data-filter="Híbrido">Híbrido</button>
-                <button class="filter-btn" data-filter="Volumen">Volumen</button>
-                <button class="filter-btn" data-filter="Foxy">Foxy</button>
-                <button class="filter-btn" data-filter="Doll">Doll</button>
+            <div class="gallery-carousel" id="galleryCarousel">
+                <button class="carousel-btn prev" id="galleryPrev" aria-label="Anterior">&#10094;</button>
+                <div class="gallery-track" id="galleryTrack"></div>
+                <button class="carousel-btn next" id="galleryNext" aria-label="Siguiente">&#10095;</button>
             </div>
-
-            <div class="lashbook-grid" id="lashbookGrid">
-                            </div>
         </div>
     </section>
 
@@ -6040,10 +6086,10 @@
 
                 if (error) throw error;
 
-                const lashbookGrid = document.getElementById('lashbookGrid');
-                if (!lashbookGrid) return;
+                const galleryTrack = document.getElementById('galleryTrack');
+                if (!galleryTrack) return;
 
-                lashbookGrid.innerHTML = '';
+                galleryTrack.innerHTML = '';
                 const sortedMedia = data.sort((a, b) => {
                     return new Date(b.created_at || 0) - new Date(a.created_at || 0);
                 });
@@ -6052,15 +6098,12 @@
                     const category = item.services?.category || '';
                     const effect = item.services?.effect || '';
 
-                    const lashbookItem = document.createElement('div');
-                    lashbookItem.className = 'lashbook-item animate-on-scroll';
-                    lashbookItem.setAttribute('data-category', category);
-                    lashbookItem.setAttribute('data-effect', effect);
-
-                    lashbookItem.innerHTML = `
-                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" 
-                     data-src="${item.url_storage}" 
-                     alt="${item.services?.name || 'Trabajo de Pinky Eyelashess'}" 
+                    const slide = document.createElement('div');
+                    slide.className = 'lashbook-item animate-on-scroll';
+                    slide.innerHTML = `
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E"
+                     data-src="${item.url_storage}"
+                     alt="${item.services?.name || 'Trabajo de Pinky Eyelashess'}"
                      class="lashbook-img">
                 <div class="lashbook-overlay">
                   <h3 class="lashbook-title">${item.services?.name || 'Nuestro trabajo'}</h3>
@@ -6068,44 +6111,53 @@
                 </div>
             `;
 
-                    lashbookItem.addEventListener('click', () => {
+                    slide.addEventListener('click', () => {
                         showLashbookModal(item);
                     });
 
-                    lashbookGrid.appendChild(lashbookItem);
+                    galleryTrack.appendChild(slide);
                 });
+                initGalleryCarousel();
                 setupObservers();
-                document.querySelectorAll('.filter-btn').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        const filter = btn.getAttribute('data-filter');
-                        document.querySelectorAll('.filter-btn').forEach(filterBtn => {
-                            filterBtn.classList.remove('active');
-                        });
-                        btn.classList.add('active');
-                        document.querySelectorAll('.lashbook-item').forEach(item => {
-                            item.classList.remove('filtered-in', 'filtered-out');
-
-                            if (filter === 'all' ||
-                                item.getAttribute('data-category') === filter ||
-                                item.getAttribute('data-effect') === filter) {
-                                item.classList.add('filtered-in');
-                                setTimeout(() => {
-                                    item.style.display = 'block';
-                                }, 300);
-                            } else {
-                                item.classList.add('filtered-out');
-                                setTimeout(() => {
-                                    item.style.display = 'none';
-                                }, 300);
-                            }
-                        });
-                    });
-                });
             } catch (error) {
                 console.error('Error loading lashbook:', error);
                 utils.showToast('Error', 'No se pudo cargar la galería de trabajos', 'error', 2000);
             }
         }
+        function initGalleryCarousel() {
+            const track = document.getElementById('galleryTrack');
+            const prev = document.getElementById('galleryPrev');
+            const next = document.getElementById('galleryNext');
+            if (!track || !prev || !next) return;
+
+            let index = 0;
+            const slides = track.querySelectorAll('.lashbook-item');
+            if (slides.length === 0) return;
+
+            function update() {
+                track.style.transform = `translateX(-${index * 100}%)`;
+            }
+
+            function go(step) {
+                index = (index + step + slides.length) % slides.length;
+                update();
+            }
+
+            let auto = setInterval(() => go(1), 5000);
+            function reset() { clearInterval(auto); auto = setInterval(() => go(1), 5000); }
+
+            prev.addEventListener('click', () => { go(-1); reset(); });
+            next.addEventListener('click', () => { go(1); reset(); });
+
+            let startX = 0;
+            track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
+            track.addEventListener('touchend', e => {
+                const endX = e.changedTouches[0].clientX;
+                if (endX - startX > 50) { go(-1); reset(); }
+                if (startX - endX > 50) { go(1); reset(); }
+            });
+        }
+
         function showLashbookModal(item) {
             const modal = document.getElementById('lashbookModal');
             const modalContent = document.getElementById('modalContent');
