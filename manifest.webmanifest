@@ -1,0 +1,9 @@
+{
+  "name": "Pinky Eyelashess",
+  "short_name": "Pinky",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#FFE9F5",
+  "theme_color": "#FFE9F5",
+  "icons": []
+}
