@@ -1721,6 +1721,18 @@
         .precio-description {
             margin-bottom: var(--spacing-sm);
             flex-grow: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .precio-cta {
+            align-self: center;
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+            justify-content: center;
         }
 
         .precio-details {
@@ -1739,10 +1751,6 @@
             color: var(--color-accent);
             margin-right: var(--spacing-sm);
             font-weight: bold;
-        }
-
-        .precio-cta {
-            align-self: center;
         }
 
                 .reservar {
@@ -3828,10 +3836,17 @@
             <p class="section-subtitle">Descubre nuestros tratamientos exclusivos diseñados para realzar tu belleza
                 natural</p>
 
-            <div class="precios-grid" id="preciosGrid">
+        <div class="precios-grid" id="preciosGrid">
                             </div>
         </div>
     </section>
+
+    <div class="modal-backdrop" id="serviceModal">
+        <div class="modal">
+            <button class="modal-close" id="serviceModalClose" aria-label="Cerrar">×</button>
+            <div class="modal-content" id="serviceModalContent"></div>
+        </div>
+    </div>
 
         <section class="section reservar" id="reservar">
         <div class="container">
@@ -5711,6 +5726,19 @@
                     }
                 });
             }
+            const serviceModal = document.getElementById('serviceModal');
+            const serviceModalClose = document.getElementById('serviceModalClose');
+
+            if (serviceModal && serviceModalClose) {
+                serviceModalClose.addEventListener('click', () => {
+                    serviceModal.classList.remove('active');
+                });
+                serviceModal.addEventListener('click', (e) => {
+                    if (e.target === serviceModal) {
+                        serviceModal.classList.remove('active');
+                    }
+                });
+            }
             const reviewForm = document.getElementById('reviewForm');
             const ratingButtons = document.querySelectorAll('.rating-btn');
 
@@ -6044,7 +6072,17 @@
                 if (!lashbookGrid) return;
 
                 lashbookGrid.innerHTML = '';
-                const sortedMedia = data.sort((a, b) => {
+
+                const uniqueMedia = [];
+                const seenUrls = new Set();
+                data.forEach(item => {
+                    if (!seenUrls.has(item.url_storage)) {
+                        seenUrls.add(item.url_storage);
+                        uniqueMedia.push(item);
+                    }
+                });
+
+                const sortedMedia = uniqueMedia.sort((a, b) => {
                     return new Date(b.created_at || 0) - new Date(a.created_at || 0);
                 });
 
@@ -6126,6 +6164,33 @@
 
             modal.classList.add('active');
         }
+        window.showServiceModal = function (serviceId) {
+            const modal = document.getElementById('serviceModal');
+            const modalContent = document.getElementById('serviceModalContent');
+            if (!modal || !modalContent) return;
+
+            const service = appData.services.find(s => s.id === serviceId);
+            if (!service) return;
+
+            const serviceMedia = appData.media.find(m => m.service_id === service.id && m.is_public);
+            const imageUrl = serviceMedia ? serviceMedia.url_storage : '';
+
+            modalContent.innerHTML = `
+        ${imageUrl ? `<img src="${imageUrl}" alt="${service.name}" class="modal-image">` : ''}
+        <p class="modal-category">${service.category === 'LASH' ? 'Pestañas' : 'Cejas'} ${service.effect ? '• ' + service.effect : ''}</p>
+        <h3 class="modal-title">${service.name}</h3>
+        <div class="modal-description">${service.description || ''}</div>
+        <ul class="precio-details">
+            <li>Duración: ${service.work_minutes} minutos</li>
+            ${service.result_duration_days ? `<li>Duración del resultado: ${service.result_duration_days} días</li>` : ''}
+            ${service.retouch_price ? `<li>Retoque: ${utils.formatCurrency(service.retouch_price)}</li>` : ''}
+        </ul>
+        <div class="precio-cta">
+            <a href="#reservar" class="button" onclick="document.getElementById('serviceModal').classList.remove('active'); document.getElementById('servicio').value = ${service.id};">Reservar Ahora</a>
+        </div>`;
+
+            modal.classList.add('active');
+        };
         async function loadServicesAndPrices() {
             try {
                 const preciosGrid = document.getElementById('preciosGrid');
@@ -6173,12 +6238,8 @@
                     <div class="precio-description">
                         ${service.description || 'Servicio profesional personalizado para realzar tu belleza natural.'}
                     </div>
-                    <ul class="precio-details">
-                        <li>Duración: ${service.work_minutes} minutos</li>
-                        ${service.result_duration_days ? `<li>Duración del resultado: ${service.result_duration_days} días</li>` : ''}
-                        ${service.retouch_price ? `<li>Retoque: ${utils.formatCurrency(service.retouch_price)}</li>` : ''}
-                    </ul>
                     <div class="precio-cta">
+                        <button class="button button-secondary" onclick="showServiceModal(${service.id})">Ver más</button>
                         <a href="#reservar" class="button" onclick="document.getElementById('servicio').value = ${service.id};">Reservar Ahora</a>
                     </div>
                 `;
@@ -6219,12 +6280,8 @@
                 <div class="precio-description">
                     ${service.description || 'Servicio profesional personalizado para realzar tu belleza natural.'}
                 </div>
-                <ul class="precio-details">
-                    <li>Duración: ${service.work_minutes} minutos</li>
-                    ${service.result_duration_days ? `<li>Duración del resultado: ${service.result_duration_days} días</li>` : ''}
-                    ${service.retouch_price ? `<li>Retoque: ${utils.formatCurrency(service.retouch_price)}</li>` : ''}
-                </ul>
                 <div class="precio-cta">
+                    <button class="button button-secondary" onclick="showServiceModal(${service.id})">Ver más</button>
                     <a href="#reservar" class="button" onclick="document.getElementById('servicio').value = ${service.id};">Reservar Ahora</a>
                 </div>
             `;
