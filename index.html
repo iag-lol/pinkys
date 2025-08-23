@@ -1960,6 +1960,35 @@
             color: var(--color-gray-400);
             cursor: not-allowed;
             background-color: var(--color-gray-100);
+            position: relative;
+            opacity: 0.6;
+        }
+        
+        .calendar-day.disabled::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background-color: var(--color-gray-400);
+            transform: translateY(-50%);
+        }
+        
+        .calendar-day.blackout {
+            background-color: #ffe6e6;
+            color: #d32f2f;
+            border: 1px solid #ffcdd2;
+        }
+        
+        .calendar-day.blackout::before {
+            background-color: #d32f2f;
+        }
+        
+        .calendar-day.closed-day {
+            background-color: #f5f5f5;
+            color: var(--color-gray-500);
+            border: 1px solid #e0e0e0;
         }
 
         .calendar-day.outside-month {
@@ -4224,7 +4253,7 @@
 
             <div class="footer-bottom">
                 <p>&copy; 2025 Pinky Eyelashess. Todos los derechos reservados.</p>
-                <button id="adminAccessBtn" style="background: none; border: none; color: #666; font-size: 0.75rem; cursor: pointer; opacity: 0.5; transition: opacity 0.3s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.5'">Admin</button>
+                <button id="adminAccessBtn" style="background: none; border: none; color: #888; font-size: 0.8rem; cursor: pointer; opacity: 0.7; transition: all 0.3s; padding: 5px 10px; border-radius: 4px;" onmouseover="this.style.opacity='1'; this.style.backgroundColor='rgba(0,0,0,0.1)'" onmouseout="this.style.opacity='0.7'; this.style.backgroundColor='transparent'" title="Acceso al panel administrativo">⚙️ Admin</button>
             </div>
         </div>
     </footer>
@@ -5676,9 +5705,16 @@
             });
 
             // Botón de acceso al panel admin
-            document.getElementById('adminAccessBtn').addEventListener('click', () => {
-                document.getElementById('adminLoginModal').style.display = 'flex';
-            });
+            const adminAccessBtn = document.getElementById('adminAccessBtn');
+            if (adminAccessBtn) {
+                adminAccessBtn.addEventListener('click', () => {
+                    console.log('Admin button clicked');
+                    document.getElementById('adminLoginModal').style.display = 'flex';
+                });
+                console.log('Admin button event listener added');
+            } else {
+                console.error('Admin button not found');
+            }
 
             // Admin Panel Navigation
             document.querySelectorAll('.admin-menu-link').forEach(link => {
@@ -5727,7 +5763,7 @@
                 await loadLashbook();
 
                 // Load services and prices
-                loadServicesAndPrices();
+                await loadServicesAndPrices();
 
                 // Load reviews
                 await loadReviews();
@@ -5834,31 +5870,52 @@
         }
 
         // Cargar servicios y precios
-        function loadServicesAndPrices() {
-            const preciosGrid = document.getElementById('preciosGrid');
-            preciosGrid.innerHTML = '';
+        async function loadServicesAndPrices() {
+            try {
+                // Load media for services
+                const { data: media, error: mediaError } = await supabase
+                    .from('media')
+                    .select('*')
+                    .eq('is_public', true);
 
-            appData.services.forEach(service => {
-                const precioCard = document.createElement('div');
-                precioCard.className = 'precio-card';
+                if (mediaError) throw mediaError;
+                appData.media = media || [];
 
-                // Load discounts for this service
-                const activeDiscounts = appData.discounts.filter(d =>
-                    d.service_id === service.id &&
-                    d.is_active &&
-                    new Date(d.date_start) <= new Date() &&
-                    new Date(d.date_end) >= new Date()
-                );
+                // Load discounts
+                const { data: discounts, error: discountsError } = await supabase
+                    .from('discounts')
+                    .select('*')
+                    .eq('is_active', true);
 
-                const hasDiscount = activeDiscounts.length > 0;
-                const discount = hasDiscount ? activeDiscounts[0] : null;
-                const discountedPrice = hasDiscount
-                    ? Math.round(service.base_price * (1 - discount.percent_off / 100))
-                    : null;
+                if (discountsError) throw discountsError;
+                appData.discounts = discounts || [];
 
-                // Find image for this service
-                const serviceMedia = appData.media.find(m => m.service_id === service.id && m.is_public);
-                const imageUrl = serviceMedia ? serviceMedia.url_storage : '';
+                const preciosGrid = document.getElementById('preciosGrid');
+                preciosGrid.innerHTML = '';
+
+                appData.services.forEach(service => {
+                    const precioCard = document.createElement('div');
+                    precioCard.className = 'precio-card';
+
+                    // Load discounts for this service
+                    const activeDiscounts = appData.discounts.filter(d =>
+                        d.service_id === service.id &&
+                        d.is_active &&
+                        new Date(d.date_start) <= new Date() &&
+                        new Date(d.date_end) >= new Date()
+                    );
+
+                    const hasDiscount = activeDiscounts.length > 0;
+                    const discount = hasDiscount ? activeDiscounts[0] : null;
+                    const discountedPrice = hasDiscount
+                        ? Math.round(service.base_price * (1 - discount.percent_off / 100))
+                        : null;
+
+                    // Find image for this service
+                    const serviceMedia = appData.media.find(m => m.service_id === service.id && m.is_public);
+                    const imageUrl = serviceMedia ? serviceMedia.url_storage : '';
+                    
+                    console.log('Service:', service.name, 'Media found:', serviceMedia, 'Image URL:', imageUrl);
 
                 precioCard.innerHTML = `
           <div class="precio-image">
@@ -5893,8 +5950,51 @@
           </div>
         `;
 
-                preciosGrid.appendChild(precioCard);
-            });
+                    preciosGrid.appendChild(precioCard);
+                });
+            } catch (error) {
+                console.error('Error loading services and prices:', error);
+                // Fallback: load services without images
+                const preciosGrid = document.getElementById('preciosGrid');
+                preciosGrid.innerHTML = '';
+
+                appData.services.forEach(service => {
+                    const precioCard = document.createElement('div');
+                    precioCard.className = 'precio-card';
+
+                    precioCard.innerHTML = `
+                      <div class="precio-image">
+                        <div class="no-image-placeholder" style="background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%); height: 200px; display: flex; align-items: center; justify-content: center; border-radius: 8px; color: #999; font-size: 14px; text-align: center;">
+                          <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="#ccc" viewBox="0 0 16 16" style="margin-bottom: 10px;">
+                              <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                              <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z"/>
+                            </svg>
+                            <div>Sin imagen</div>
+                          </div>
+                        </div>
+                      </div>
+                      <p class="precio-category">${service.category === 'LASH' ? 'Pestañas' : 'Cejas'} ${service.effect ? '• ' + service.effect : ''}</p>
+                      <h3 class="precio-title">${service.name}</h3>
+                      <div class="precio-amount">
+                        ${utils.formatCurrency(service.base_price)}
+                      </div>
+                      <div class="precio-description">
+                        ${service.description || 'Servicio profesional personalizado para realzar tu belleza natural.'}
+                      </div>
+                      <ul class="precio-details">
+                        <li>Duración: ${service.work_minutes} minutos</li>
+                        ${service.result_duration_days ? `<li>Duración del resultado: ${service.result_duration_days} días</li>` : ''}
+                        ${service.retouch_price ? `<li>Retoque: ${utils.formatCurrency(service.retouch_price)}</li>` : ''}
+                      </ul>
+                      <div class="precio-cta">
+                        <a href="#reservar" class="button" onclick="document.getElementById('servicio').value = ${service.id};">Reservar Ahora</a>
+                      </div>
+                    `;
+
+                    preciosGrid.appendChild(precioCard);
+                });
+            }
         }
 
         // Cargar reseñas
@@ -6161,14 +6261,19 @@
                 // Check if day is in the past
                 if (currentDate < new Date(today.setHours(0, 0, 0, 0))) {
                     dayElement.classList.add('disabled');
+                    dayElement.title = 'Fecha pasada - No disponible';
                 }
                 // Check if day is a blackout date
                 else if (isBlackoutDate(dateString)) {
-                    dayElement.classList.add('disabled');
+                    dayElement.classList.add('disabled', 'blackout');
+                    const blackoutInfo = getBlackoutInfo(dateString);
+                    dayElement.title = `Cerrado: ${blackoutInfo?.reason || 'Fecha no disponible'}`;
                 }
                 // Check if day of week is closed
                 else if (isDayClosed(currentDate.getDay())) {
-                    dayElement.classList.add('disabled');
+                    dayElement.classList.add('disabled', 'closed-day');
+                    const dayNames = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+                    dayElement.title = `${dayNames[currentDate.getDay()]} - Día cerrado`;
                 }
                 else {
                     // Add click event for selectable days
@@ -6229,6 +6334,20 @@
 
                 renderCalendar(newMonth, newYear);
             });
+        }
+
+        // Funciones auxiliares para el calendario
+        function isBlackoutDate(dateString) {
+            return appData.blackouts && appData.blackouts.some(blackout => blackout.date === dateString);
+        }
+
+        function getBlackoutInfo(dateString) {
+            return appData.blackouts && appData.blackouts.find(blackout => blackout.date === dateString);
+        }
+
+        function isDayClosed(dayOfWeek) {
+            const dayAvailability = appData.availability && appData.availability.find(a => a.weekday === dayOfWeek);
+            return !dayAvailability || dayAvailability.is_closed;
         }
 
         // Cargar horarios disponibles
@@ -8718,7 +8837,7 @@
 
         // Eliminar imagen (función global para ser llamada desde el HTML)
         window.deleteMedia = async function (id) {
-            if (!confirm('¿Estás seguro de que deseas eliminar esta imagen? Esta acción no se puede deshacer.')) {
+            if (!confirm('¿Estás seguro de que deseas eliminsar esta imagen? Esta acción no se puede deshacer.')) {
                 return;
             }
 
