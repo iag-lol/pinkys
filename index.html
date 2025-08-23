@@ -1609,8 +1609,8 @@
 
         .precios-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: var(--spacing-xl);
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: var(--spacing-2xl);
             position: relative;
             z-index: 1;
         }
@@ -1623,7 +1623,7 @@
             transition: transform var(--transition-normal), box-shadow var(--transition-normal);
             display: flex;
             flex-direction: column;
-            height: 100%;
+            height: auto;
             overflow: hidden;
             position: relative;
         }
@@ -5363,6 +5363,8 @@
                 averageRating: 0
             }
         };
+        let eventListenersInitialized = false;
+        let adminEventListenersInitialized = false;
         const cache = {
             charts: {},
             dateFilters: {
@@ -5641,6 +5643,8 @@
             });
         }
         function setupEventListeners() {
+            if (eventListenersInitialized) return;
+            eventListenersInitialized = true;
             window.addEventListener('scroll', () => {
                 const header = document.getElementById('header');
                 if (!header) return;
@@ -6123,19 +6127,7 @@
                 if (!preciosGrid) return;
 
                 preciosGrid.innerHTML = '';
-                const servicesByCategory = {};
                 appData.services.forEach(service => {
-                    const category = service.category || 'OTROS';
-                    if (!servicesByCategory[category]) {
-                        servicesByCategory[category] = [];
-                    }
-                    servicesByCategory[category].push(service);
-                });
-                Object.entries(servicesByCategory).forEach(([category, services]) => {
-                    const categoryGrid = document.createElement('div');
-                    categoryGrid.className = 'precio-category-grid';
-
-                    services.forEach(service => {
                         const precioCard = document.createElement('div');
                         precioCard.className = 'precio-card animate-on-scroll';
                         const activeDiscounts = appData.discounts.filter(d =>
@@ -6186,10 +6178,7 @@
                     </div>
                 `;
 
-                        categoryGrid.appendChild(precioCard);
-                    });
-
-                    preciosGrid.appendChild(categoryGrid);
+                        preciosGrid.appendChild(precioCard);
                 });
                 setupObservers();
 
@@ -8217,6 +8206,8 @@ async function loadTimeSlots(date) {
             };
         }
         function setupAdminEventHandlers() {
+            if (adminEventListenersInitialized) return;
+            adminEventListenersInitialized = true;
             document.querySelectorAll('#adminReservas .admin-tab').forEach(tab => {
                 tab.addEventListener('click', () => {
                     document.querySelectorAll('#adminReservas .admin-tab').forEach(t => {
