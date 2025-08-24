@@ -6800,16 +6800,6 @@ async function loadTimeSlots(date) {
         return isNaN(parsed) ? null : parsed;
       }
       return null;
-
-
-      if (typeof t === 'string' && t.includes(':')) {
-        const [hh, mm] = t.split(':').map(Number);
-        return hh * 60 + mm;
-      }
-      const parsed = parseInt(t, 10);
-      return isNaN(parsed) ? null : parsed;
-
-
     };
     const toTime = (mins) => {
       const hh = Math.floor(mins / 60);
@@ -6822,29 +6812,14 @@ async function loadTimeSlots(date) {
     const dayOfWeek = dateObj.getDay();
 
 
-    let dayAvail = appData?.availability?.find(a => a.weekday === dayOfWeek);
-    if (!dayAvail) {
-
-
     let dayAvailability = appData?.availability?.find(a => a.weekday === dayOfWeek);
     if (!dayAvailability) {
-
       const { data: availRows, error: availError } = await supabase
         .from('availability')
         .select('*')
         .eq('weekday', dayOfWeek)
         .limit(1);
       if (availError) throw availError;
-
-      dayAvail = (availRows && availRows[0]) || null;
-      if (dayAvail) {
-        appData.availability = appData.availability || [];
-        const existing = appData.availability.findIndex(a => a.weekday === dayOfWeek);
-        if (existing >= 0) appData.availability[existing] = dayAvail;
-        else appData.availability.push(dayAvail);
-      }
-    }
-    if (!dayAvail || dayAvail.is_closed) {
 
       dayAvailability = (availRows && availRows[0]) || null;
       if (dayAvailability) {
@@ -6854,8 +6829,6 @@ async function loadTimeSlots(date) {
         else appData.availability.push(dayAvailability);
       }
     }
-
-    const dayAvailability = appData?.availability?.find(a => a.weekday === dayOfWeek);
 
     if (!dayAvailability || dayAvailability.is_closed) {
 
@@ -6886,12 +6859,6 @@ async function loadTimeSlots(date) {
       });
     };
 
-
-    const OPEN        = toMinutes(dayAvail.open_time);
-    const CLOSE       = toMinutes(dayAvail.close_time);
-    const BREAK_START = toMinutes(dayAvail.break_start);
-    const BREAK_END   = toMinutes(dayAvail.break_end);
-    const interval    = toMinutes(dayAvail.slot_minutes) || 15;
 
     const OPEN        = toMinutes(dayAvailability.open_time);
     const CLOSE       = toMinutes(dayAvailability.close_time);
