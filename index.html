@@ -6792,12 +6792,22 @@ async function loadTimeSlots(date) {
     const toMinutes = (t) => {
       if (t == null) return null;
       if (typeof t === 'number') return t;
+
+      if (typeof t === 'string') {
+        const match = t.match(/^(\d{1,2}):(\d{2})/);
+        if (match) return parseInt(match[1], 10) * 60 + parseInt(match[2], 10);
+        const parsed = parseInt(t, 10);
+        return isNaN(parsed) ? null : parsed;
+      }
+      return null;
+
       if (typeof t === 'string' && t.includes(':')) {
         const [hh, mm] = t.split(':').map(Number);
         return hh * 60 + mm;
       }
       const parsed = parseInt(t, 10);
       return isNaN(parsed) ? null : parsed;
+
     };
     const toTime = (mins) => {
       const hh = Math.floor(mins / 60);
@@ -6809,7 +6819,26 @@ async function loadTimeSlots(date) {
     const dateObj   = new Date(y, m - 1, d);
     const dayOfWeek = dateObj.getDay();
 
+
+    let dayAvailability = appData?.availability?.find(a => a.weekday === dayOfWeek);
+    if (!dayAvailability) {
+      const { data: availRows, error: availError } = await supabase
+        .from('availability')
+        .select('*')
+        .eq('weekday', dayOfWeek)
+        .limit(1);
+      if (availError) throw availError;
+      dayAvailability = (availRows && availRows[0]) || null;
+      if (dayAvailability) {
+        appData.availability = appData.availability || [];
+        const existing = appData.availability.findIndex(a => a.weekday === dayOfWeek);
+        if (existing >= 0) appData.availability[existing] = dayAvailability;
+        else appData.availability.push(dayAvailability);
+      }
+    }
+
     const dayAvailability = appData?.availability?.find(a => a.weekday === dayOfWeek);
+
     if (!dayAvailability || dayAvailability.is_closed) {
       timeSlotsContainer.innerHTML = '';
       ensureMessage('Sin horarios disponibles (día cerrado)');
