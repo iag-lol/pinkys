@@ -5861,7 +5861,7 @@
         async function handleBookingSubmit(e) {
             e.preventDefault();
 
-            const servicioId = document.getElementById('servicio').value;
+            const servicioId = parseInt(document.getElementById('servicio').value, 10);
             const nombre = document.getElementById('nombre').value;
             const telefono = document.getElementById('telefono').value;
             const calendar = document.getElementById('calendar');
@@ -5877,7 +5877,7 @@
                 utils.showToast('Error', 'Por favor ingresa un número de teléfono válido (ej: +56912345678).', 'error');
                 return;
             }
-            const service = appData.services.find(s => s.id == servicioId);
+            const service = appData.services.find(s => s.id === servicioId);
             if (!service) {
                 utils.showToast('Error', 'Servicio no encontrado.', 'error');
                 return;
@@ -5904,7 +5904,7 @@
 
                 if (error) throw error;
                 const activeDiscounts = appData.discounts.filter(d =>
-                    d.service_id === parseInt(service.id) &&
+                    d.service_id === service.id &&
                     d.is_active &&
                     new Date(d.date_start) <= new Date() &&
                     new Date(d.date_end) >= new Date()
@@ -6545,11 +6545,12 @@
     
     try {
         // Obtener horarios ya reservados para esta fecha
+        // Obtener citas reservadas desde la tabla correcta
         const { data: reservedSlots, error } = await supabase
-            .from('reservas')
-            .select('hora, servicio, servicios(duracion)')
-            .eq('fecha', date)
-            .in('estado', ['pendiente', 'confirmada']);
+            .from('appointments')
+            .select('start_time, service_id, services(work_minutes)')
+            .eq('date', date)
+            .in('status', ['PENDING', 'CONFIRMED']);
         
         if (error) throw error;
         
@@ -6594,8 +6595,8 @@
         const unavailableSlots = new Set();
         if (reservedSlots && reservedSlots.length > 0) {
             reservedSlots.forEach(slot => {
-                const reservedTime = slot.hora;
-                const serviceDuration = slot.servicios ? slot.servicios.duracion : 60; // Default 60 min
+                const reservedTime = slot.start_time;
+                const serviceDuration = slot.services ? slot.services.work_minutes : 60; // Default 60 min
                 const slotCount = Math.ceil(serviceDuration / slotDuration);
                 
                 // Convertir a minutos desde el inicio del día
